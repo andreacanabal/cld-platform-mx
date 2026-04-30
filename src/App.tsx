@@ -1,0 +1,2369 @@
+import { useState, useEffect } from 'react';
+
+const fbq = (event, name, params) => {
+  console.log(
+    `[META PIXEL] ${event}("${name}", ${JSON.stringify(params || {})})`
+  );
+};
+
+const C = {
+  blue: '#1a56db',
+  blueDark: '#1648c4',
+  blueLight: '#eff6ff',
+  green: '#16a34a',
+  greenLight: '#f0fdf4',
+  orange: '#ea580c',
+  orangeLight: '#fff7ed',
+  white: '#ffffff',
+  surface: '#f8fafc',
+  border: '#e2e8f0',
+  text: '#0f172a',
+  muted: '#64748b',
+  subtle: '#94a3b8',
+};
+
+const PRODUCTOS = [
+  // ── PAQUETES ──────────────────────────────────────────────────────────────
+  {
+    id: 'P012',
+    tipo: 'PAQUETE',
+    nombre: 'Paquete Confianza',
+    paga: 500,
+    recibe: 1500,
+    disponibles: 8,
+    tiempo: '1 – 3 días hábiles · Todo México',
+    badge: 'NUEVO',
+    badgeType: 'blue',
+    envioGratis: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2fefe20f81ed6ab9a36e3',
+  },
+  {
+    id: 'P001',
+    tipo: 'PAQUETE',
+    nombre: 'Paquete Básico',
+    paga: 1000,
+    recibe: 4000,
+    disponibles: 7,
+    tiempo: '1 – 3 días hábiles · Todo México',
+    badge: 'MÁS SOLICITADO',
+    badgeType: 'orange',
+    envioGratis: true,
+    popular: true,
+    link: 'https://pay.ecart.com/payment_link/69f300a128061d954c02e6ec',
+  },
+  {
+    id: 'P004',
+    tipo: 'PAQUETE',
+    nombre: 'Paquete Pro',
+    paga: 1500,
+    recibe: 6000,
+    disponibles: 5,
+    tiempo: '1 – 3 días hábiles · Todo México',
+    badge: 'ALTA DEMANDA',
+    badgeType: 'orange',
+    envioGratis: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f3008b28061d954c02e5cf',
+  },
+  {
+    id: 'P007',
+    tipo: 'PAQUETE',
+    nombre: 'Paquete VIP',
+    paga: 2500,
+    recibe: 15000,
+    disponibles: 3,
+    tiempo: '1 – 3 días hábiles · Todo México',
+    badge: 'EXCLUSIVO',
+    badgeType: 'blue',
+    envioGratis: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f3007228061d954c02e52a',
+  },
+
+  // ── RETIROS ───────────────────────────────────────────────────────────────
+  {
+    id: 'P013',
+    tipo: 'RETIRO',
+    nombre: 'Retiro Confianza',
+    paga: 500,
+    recibe: 1500,
+    disponibles: 8,
+    tiempo: '1 – 6 hrs',
+    badge: 'NUEVO',
+    badgeType: 'blue',
+    envioGratis: false,
+    sinTarjeta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2fe7d28061d954c02d658',
+  },
+  {
+    id: 'P002',
+    tipo: 'RETIRO',
+    nombre: 'Retiro Capital',
+    paga: 1000,
+    recibe: 3000,
+    disponibles: 6,
+    tiempo: '1 – 6 hrs',
+    badge: 'MÁS SOLICITADO',
+    badgeType: 'orange',
+    envioGratis: false,
+    sinTarjeta: true,
+    popular: true,
+    link: 'https://pay.ecart.com/payment_link/69f2ffe920f81ed6ab9a3e54',
+  },
+  {
+    id: 'P005',
+    tipo: 'RETIRO',
+    nombre: 'Retiro Elite',
+    paga: 1500,
+    recibe: 5000,
+    disponibles: 5,
+    tiempo: '1 – 6 hrs',
+    badge: 'ALTA DEMANDA',
+    badgeType: 'orange',
+    envioGratis: false,
+    sinTarjeta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2ffd428061d954c02e14e',
+  },
+  {
+    id: 'P008',
+    tipo: 'RETIRO',
+    nombre: 'Retiro VIP',
+    paga: 2000,
+    recibe: 9000,
+    disponibles: 4,
+    tiempo: '1 – 6 hrs',
+    badge: 'ACCESO LIMITADO',
+    badgeType: 'blue',
+    envioGratis: false,
+    sinTarjeta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2ffa928061d954c02df9b',
+  },
+  {
+    id: 'P009',
+    tipo: 'RETIRO',
+    nombre: 'Retiro GOLD',
+    paga: 2500,
+    recibe: 12000,
+    disponibles: 2,
+    tiempo: '1 – 6 hrs',
+    badge: 'EXCLUSIVO',
+    badgeType: 'blue',
+    envioGratis: false,
+    sinTarjeta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2ff9128061d954c02deab',
+  },
+
+  // ── TRANSFERENCIAS ────────────────────────────────────────────────────────
+  {
+    id: 'P014',
+    tipo: 'TRANSFERENCIA',
+    nombre: 'Transfer Confianza',
+    paga: 500,
+    recibe: 1500,
+    disponibles: 8,
+    tiempo: '1 – 6 hrs',
+    badge: 'NUEVO',
+    badgeType: 'blue',
+    envioGratis: false,
+    aCuenta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2fe2a20f81ed6ab9a2fad',
+  },
+  {
+    id: 'P003',
+    tipo: 'TRANSFERENCIA',
+    nombre: 'Transfer Capital',
+    paga: 1000,
+    recibe: 3000,
+    disponibles: 6,
+    tiempo: '1 – 6 hrs',
+    badge: 'MÁS SOLICITADO',
+    badgeType: 'orange',
+    envioGratis: false,
+    aCuenta: true,
+    popular: true,
+    link: 'https://pay.ecart.com/payment_link/69f2ff7820f81ed6ab9a3b5f',
+  },
+  {
+    id: 'P006',
+    tipo: 'TRANSFERENCIA',
+    nombre: 'Transfer Elite',
+    paga: 1500,
+    recibe: 5000,
+    disponibles: 5,
+    tiempo: '1 – 6 hrs',
+    badge: 'ALTA DEMANDA',
+    badgeType: 'orange',
+    envioGratis: false,
+    aCuenta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2ff6020f81ed6ab9a3ab4',
+  },
+  {
+    id: 'P010',
+    tipo: 'TRANSFERENCIA',
+    nombre: 'Transfer VIP',
+    paga: 2000,
+    recibe: 9000,
+    disponibles: 4,
+    tiempo: '1 – 6 hrs',
+    badge: 'ACCESO LIMITADO',
+    badgeType: 'blue',
+    envioGratis: false,
+    aCuenta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2ff3828061d954c02dbd8',
+  },
+  {
+    id: 'P011',
+    tipo: 'TRANSFERENCIA',
+    nombre: 'Transfer GOLD',
+    paga: 2500,
+    recibe: 12000,
+    disponibles: 2,
+    tiempo: '1 – 6 hrs',
+    badge: 'EXCLUSIVO',
+    badgeType: 'blue',
+    envioGratis: false,
+    aCuenta: true,
+    popular: false,
+    link: 'https://pay.ecart.com/payment_link/69f2ff2028061d954c02db5e',
+  },
+];
+
+const REVIEWS_DATA = [
+  {
+    nombre: 'Roberto M.',
+    ciudad: 'CDMX',
+    estrellas: 5,
+    texto:
+      'Excelente servicio. Me llegó en menos de 3 horas, sin complicaciones. Ya es mi segunda operación.',
+    fecha: 'hace 2 días',
+  },
+  {
+    nombre: 'Mariana L.',
+    ciudad: 'Guadalajara',
+    estrellas: 5,
+    texto:
+      'Proceso limpio y rápido. El soporte respondió en minutos cuando tuve una duda. 100% recomendado.',
+    fecha: 'hace 4 días',
+  },
+  {
+    nombre: 'Andrés F.',
+    ciudad: 'Monterrey',
+    estrellas: 5,
+    texto:
+      'Al principio dudé, pero funcionó perfecto. El sistema es serio y confiable.',
+    fecha: 'hace 5 días',
+  },
+  {
+    nombre: 'Carmen R.',
+    ciudad: 'Puebla',
+    estrellas: 5,
+    texto:
+      'Sencillo, claro y cumplió exactamente lo que prometió. Muy satisfecha.',
+    fecha: 'hace 1 semana',
+  },
+  {
+    nombre: 'Jorge V.',
+    ciudad: 'Tijuana',
+    estrellas: 4,
+    texto:
+      'Muy bueno. Tardó un poco más de lo esperado pero al final todo correcto.',
+    fecha: 'hace 1 semana',
+  },
+  {
+    nombre: 'Sofía P.',
+    ciudad: 'Cancún',
+    estrellas: 5,
+    texto:
+      'Lo usé por recomendación y no me arrepiento. Volvería a usar el servicio sin duda.',
+    fecha: 'hace 8 días',
+  },
+];
+
+const ACTIVIDAD_LIVE = [
+  'CDMX — operación confirmada hace 1 min',
+  'Guadalajara — retiro procesado hace 3 min',
+  'Monterrey — paquete activado hace 5 min',
+  'Puebla — transferencia completada hace 7 min',
+  'Tijuana — paquete básico confirmado hace 9 min',
+  'León — operación completada hace 11 min',
+  'CDMX — capital transferido hace 14 min',
+  'Cancún — retiro confirmado hace 16 min',
+];
+
+const fmt = (n) => '$' + n.toLocaleString('es-MX');
+
+function Estrellas({ n = 5, size = 14 }) {
+  return (
+    <span style={{ display: 'inline-flex', gap: 2 }}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <span
+          key={i}
+          style={{ fontSize: size, color: i <= n ? '#f59e0b' : '#d1d5db' }}
+        >
+          ★
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function Loader({ onDone }) {
+  const [step, setStep] = useState(0);
+  const steps = [
+    'INICIALIZANDO SISTEMA…',
+    'VALIDANDO ACCESO…',
+    'ACCESO AUTORIZADO',
+  ];
+  useEffect(() => {
+    const t1 = setTimeout(() => setStep(1), 900);
+    const t2 = setTimeout(() => setStep(2), 1800);
+    const t3 = setTimeout(() => onDone(), 2700);
+    return () => [t1, t2, t3].forEach(clearTimeout);
+  }, []);
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: C.blue,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 9999,
+        fontFamily: "'Plus Jakarta Sans',sans-serif",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 32,
+          fontWeight: 800,
+          color: '#fff',
+          letterSpacing: -1,
+          marginBottom: 6,
+        }}
+      >
+        CLD
+      </div>
+      <div
+        style={{
+          fontSize: 11,
+          letterSpacing: 4,
+          color: 'rgba(255,255,255,0.5)',
+          marginBottom: 40,
+        }}
+      >
+        CASH LAUNDRY DEPARTMENT
+      </div>
+      <div
+        style={{
+          fontSize: 13,
+          letterSpacing: 2,
+          fontWeight: 600,
+          color: step === 2 ? '#86efac' : 'rgba(255,255,255,0.9)',
+          transition: 'color 0.4s',
+          marginBottom: 28,
+        }}
+      >
+        {steps[step]}
+      </div>
+      <div
+        style={{
+          width: 220,
+          height: 3,
+          background: 'rgba(255,255,255,0.15)',
+          borderRadius: 99,
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            height: '100%',
+            background: '#fff',
+            borderRadius: 99,
+            width: step === 0 ? '25%' : step === 1 ? '65%' : '100%',
+            transition: 'width 0.8s cubic-bezier(.4,0,.2,1)',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function LiveTicker() {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    const t = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % ACTIVIDAD_LIVE.length);
+        setVisible(true);
+      }, 350);
+    }, 3000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div
+      style={{
+        background: C.greenLight,
+        borderBottom: '1px solid #bbf7d0',
+        padding: '9px 24px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+      }}
+    >
+      <span
+        style={{
+          background: C.green,
+          color: '#fff',
+          borderRadius: 99,
+          fontSize: 9,
+          fontWeight: 700,
+          padding: '2px 8px',
+          letterSpacing: 1,
+          fontFamily: "'Plus Jakarta Sans',sans-serif",
+        }}
+      >
+        ● EN VIVO
+      </span>
+      <span
+        style={{
+          color: C.green,
+          fontSize: 13,
+          fontWeight: 500,
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.3s',
+          fontFamily: "'Plus Jakarta Sans',sans-serif",
+        }}
+      >
+        {ACTIVIDAD_LIVE[idx]}
+      </span>
+    </div>
+  );
+}
+
+function Nav({ setView, view }) {
+  return (
+    <nav
+      style={{
+        background: C.white,
+        borderBottom: '1px solid ' + C.border,
+        padding: '0 32px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: 60,
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          cursor: 'pointer',
+        }}
+        onClick={() => setView('home')}
+      >
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            background: C.blue,
+            borderRadius: 8,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 800,
+              color: '#fff',
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            CLD
+          </span>
+        </div>
+        <div>
+          <div
+            style={{
+              fontSize: 15,
+              fontWeight: 700,
+              color: C.text,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              lineHeight: 1.1,
+            }}
+          >
+            Cash Laundry
+          </div>
+          <div
+            style={{
+              fontSize: 10,
+              color: C.muted,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              letterSpacing: 1,
+            }}
+          >
+            DEPARTMENT
+          </div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <button
+          onClick={() => setView('home')}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: view === 'home' ? C.blue : C.muted,
+            fontSize: 14,
+            fontWeight: 600,
+            padding: '8px 16px',
+            fontFamily: "'Plus Jakarta Sans',sans-serif",
+            borderBottom:
+              view === 'home' ? '2px solid ' + C.blue : '2px solid transparent',
+          }}
+        >
+          Inicio
+        </button>
+        <button
+          onClick={() => setView('productos')}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: view === 'productos' ? C.blue : C.muted,
+            fontSize: 14,
+            fontWeight: 600,
+            padding: '8px 16px',
+            fontFamily: "'Plus Jakarta Sans',sans-serif",
+            borderBottom:
+              view === 'productos'
+                ? '2px solid ' + C.blue
+                : '2px solid transparent',
+          }}
+        >
+          Operaciones
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+function Sellos() {
+  const items = [
+    { icon: '🔒', label: 'Pago 100% seguro' },
+    { icon: '✅', label: '5,200+ operaciones' },
+    { icon: '⚡', label: 'Entrega garantizada' },
+    { icon: '🇲🇽', label: 'Todo México' },
+    { icon: '💬', label: 'Soporte en español' },
+  ];
+  return (
+    <div
+      style={{
+        background: C.surface,
+        borderBottom: '1px solid ' + C.border,
+        padding: '12px 32px',
+        display: 'flex',
+        gap: 32,
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
+      {items.map((s) => (
+        <div
+          key={s.label}
+          style={{ display: 'flex', alignItems: 'center', gap: 7 }}
+        >
+          <span style={{ fontSize: 15 }}>{s.icon}</span>
+          <span
+            style={{
+              fontSize: 13,
+              color: C.muted,
+              fontWeight: 500,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            {s.label}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Hero({ setView }) {
+  const [ops, setOps] = useState(7);
+  useEffect(() => {
+    const t = setInterval(() => setOps((o) => Math.max(3, o)), 20000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <section
+      style={{
+        background: 'linear-gradient(135deg,' + C.blueLight + ' 0%,#fff 60%)',
+        padding: '64px 32px 56px',
+        borderBottom: '1px solid ' + C.border,
+      }}
+    >
+      <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            background: C.white,
+            border: '1px solid ' + C.border,
+            borderRadius: 99,
+            padding: '6px 14px',
+            marginBottom: 24,
+            boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+          }}
+        >
+          <Estrellas n={5} size={13} />
+          <span
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: C.text,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            4.9 / 5
+          </span>
+          <span
+            style={{
+              fontSize: 12,
+              color: C.muted,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            · +5,200 operaciones completadas
+          </span>
+        </div>
+        <h1
+          style={{
+            fontFamily: "'Plus Jakarta Sans',sans-serif",
+            fontSize: 'clamp(36px,6vw,62px)',
+            fontWeight: 800,
+            color: C.text,
+            lineHeight: 1.1,
+            margin: '0 0 16px',
+            letterSpacing: -1.5,
+          }}
+        >
+          Acceso a liquidez
+          <br />
+          <span style={{ color: C.blue }}>rápido y seguro</span>
+        </h1>
+        <p
+          style={{
+            fontSize: 18,
+            color: C.muted,
+            maxWidth: 540,
+            lineHeight: 1.65,
+            marginBottom: 36,
+            fontFamily: "'Plus Jakarta Sans',sans-serif",
+          }}
+        >
+          Paquetes, retiros y transferencias de capital para todo México.
+          Proceso verificado, soporte en español, entrega garantizada.
+        </p>
+        <div
+          style={{
+            display: 'flex',
+            gap: 12,
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            marginBottom: 40,
+          }}
+        >
+          <button
+            onClick={() => setView('productos')}
+            style={{
+              background: C.blue,
+              color: '#fff',
+              border: 'none',
+              padding: '15px 32px',
+              borderRadius: 10,
+              fontSize: 16,
+              fontWeight: 700,
+              cursor: 'pointer',
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              boxShadow: '0 4px 14px rgba(26,86,219,0.35)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = C.blueDark;
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = C.blue;
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            Ver operaciones disponibles →
+          </button>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              background: C.orangeLight,
+              border: '1px solid #fed7aa',
+              borderRadius: 8,
+              padding: '10px 16px',
+            }}
+          >
+            <span style={{ fontSize: 14 }}>🔥</span>
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                color: C.orange,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+              }}
+            >
+              Solo quedan {ops} operaciones disponibles
+            </span>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
+          {[
+            { n: '+5,200', l: 'Operaciones completadas' },
+            { n: '96%', l: 'Clientes satisfechos' },
+            { n: '182', l: 'Operaciones hoy' },
+            { n: '< 24 hrs', l: 'Tiempo promedio' },
+          ].map((s) => (
+            <div key={s.l}>
+              <div
+                style={{
+                  fontSize: 26,
+                  fontWeight: 800,
+                  color: C.blue,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  lineHeight: 1,
+                }}
+              >
+                {s.n}
+              </div>
+              <div
+                style={{
+                  fontSize: 13,
+                  color: C.muted,
+                  marginTop: 4,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                {s.l}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SeccionGarantias() {
+  const items = [
+    {
+      icon: '🛡️',
+      titulo: 'Garantía de operación',
+      desc: 'Si tu operación no se completa correctamente, recibirás soporte prioritario y resolución total. Sin letras chiquitas.',
+      bg: C.blueLight,
+      border: '#bfdbfe',
+    },
+    {
+      icon: '⚡',
+      titulo: 'Entrega en tiempo',
+      desc: '182 operaciones procesadas hoy. Tu operación entra al sistema en minutos y se procesa dentro del tiempo estimado.',
+      bg: C.greenLight,
+      border: '#bbf7d0',
+    },
+    {
+      icon: '🔒',
+      titulo: 'Datos protegidos',
+      desc: 'Tu información es confidencial. Operamos con cifrado y nunca compartimos datos con terceros.',
+      bg: C.orangeLight,
+      border: '#fed7aa',
+    },
+    {
+      icon: '💬',
+      titulo: 'Soporte en español',
+      desc: 'Equipo de soporte disponible para resolver cualquier duda antes, durante y después de tu operación.',
+      bg: '#fdf4ff',
+      border: '#e9d5ff',
+    },
+  ];
+  return (
+    <section
+      style={{
+        background: C.white,
+        padding: '56px 32px',
+        borderBottom: '1px solid ' + C.border,
+      }}
+    >
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <h2
+            style={{
+              fontSize: 32,
+              fontWeight: 800,
+              color: C.text,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              marginBottom: 8,
+              letterSpacing: -0.5,
+            }}
+          >
+            Tu operación está respaldada
+          </h2>
+          <p
+            style={{
+              fontSize: 15,
+              color: C.muted,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            Garantías reales, no promesas vacías
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))',
+            gap: 16,
+          }}
+        >
+          {items.map((g) => (
+            <div
+              key={g.titulo}
+              style={{
+                background: g.bg,
+                border: '1px solid ' + g.border,
+                borderRadius: 12,
+                padding: '24px 22px',
+              }}
+            >
+              <div style={{ fontSize: 32, marginBottom: 12 }}>{g.icon}</div>
+              <div
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color: C.text,
+                  marginBottom: 8,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                {g.titulo}
+              </div>
+              <div
+                style={{
+                  fontSize: 14,
+                  color: C.muted,
+                  lineHeight: 1.6,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                {g.desc}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SeccionReviews() {
+  return (
+    <section
+      style={{
+        background: C.surface,
+        padding: '56px 32px',
+        borderBottom: '1px solid ' + C.border,
+      }}
+    >
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              marginBottom: 12,
+            }}
+          >
+            <Estrellas n={5} size={20} />
+            <span
+              style={{
+                fontSize: 22,
+                fontWeight: 800,
+                color: C.text,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+              }}
+            >
+              4.9 de 5
+            </span>
+          </div>
+          <div
+            style={{
+              fontSize: 15,
+              color: C.muted,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            Basado en +1,200 reseñas verificadas
+          </div>
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))',
+            gap: 16,
+          }}
+        >
+          {REVIEWS_DATA.map((r, i) => (
+            <div
+              key={i}
+              style={{
+                background: C.white,
+                border: '1px solid ' + C.border,
+                borderRadius: 12,
+                padding: '20px 22px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  marginBottom: 10,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: '50%',
+                      background: C.blue,
+                      color: '#fff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 14,
+                      fontWeight: 700,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {r.nombre[0]}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: C.text,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      }}
+                    >
+                      {r.nombre}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: C.muted,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      }}
+                    >
+                      {r.ciudad}
+                    </div>
+                  </div>
+                </div>
+                <span
+                  style={{
+                    background: C.greenLight,
+                    color: C.green,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    padding: '3px 8px',
+                    borderRadius: 99,
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  }}
+                >
+                  ✓ Verificado
+                </span>
+              </div>
+              <Estrellas n={r.estrellas} size={13} />
+              <p
+                style={{
+                  fontSize: 14,
+                  color: '#334155',
+                  lineHeight: 1.6,
+                  margin: '8px 0 10px',
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                "{r.texto}"
+              </p>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: C.subtle,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                {r.fecha}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Productos({ setView, setCarrito }) {
+  const [filtro, setFiltro] = useState('PAQUETE');
+  const tipos = ['PAQUETE', 'RETIRO', 'TRANSFERENCIA'];
+  const filtrados = PRODUCTOS.filter((p) => p.tipo === filtro);
+
+  const handleComprar = (prod) => {
+    fbq('track', 'AddToCart', {
+      content_name: prod.nombre,
+      value: prod.paga,
+      currency: 'MXN',
+    });
+    fbq('track', 'InitiateCheckout', {
+      content_name: prod.nombre,
+      value: prod.paga,
+    });
+    setCarrito(prod);
+    setView('checkout');
+  };
+
+  useEffect(() => {
+    fbq('track', 'ViewContent', { content_name: 'Catálogo CLD' });
+  }, []);
+
+  return (
+    <div style={{ background: C.white, minHeight: '60vh' }}>
+      <div
+        style={{
+          background: C.surface,
+          borderBottom: '1px solid ' + C.border,
+          padding: '32px 32px 0',
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <h2
+            style={{
+              fontSize: 30,
+              fontWeight: 800,
+              color: C.text,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+              marginBottom: 4,
+              letterSpacing: -0.5,
+            }}
+          >
+            Selecciona tu operación
+          </h2>
+          <p
+            style={{
+              fontSize: 15,
+              color: C.muted,
+              marginBottom: 24,
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            Elige la categoría y el plan que mejor se adapte a ti
+          </p>
+          <div style={{ display: 'flex', gap: 4 }}>
+            {tipos.map((t) => (
+              <button
+                key={t}
+                onClick={() => setFiltro(t)}
+                style={{
+                  background: filtro === t ? C.blue : 'transparent',
+                  color: filtro === t ? '#fff' : C.muted,
+                  border: '1px solid ' + (filtro === t ? C.blue : C.border),
+                  borderBottom: 'none',
+                  padding: '10px 24px',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  cursor: 'pointer',
+                  borderRadius: '8px 8px 0 0',
+                  transition: 'all 0.15s',
+                }}
+              >
+                {t.charAt(0) + t.slice(1).toLowerCase()}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div style={{ borderTop: '2px solid ' + C.blue, background: C.surface }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '32px' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))',
+              gap: 20,
+            }}
+          >
+            {filtrados.map((p) => (
+              <div
+                key={p.id}
+                style={{
+                  background: C.white,
+                  border: p.popular
+                    ? '2px solid ' + C.blue
+                    : '1px solid ' + C.border,
+                  borderRadius: 16,
+                  overflow: 'hidden',
+                  boxShadow: p.popular
+                    ? '0 4px 20px rgba(26,86,219,0.12)'
+                    : '0 1px 4px rgba(0,0,0,0.06)',
+                  position: 'relative',
+                  transition: 'box-shadow 0.2s,transform 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 28px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = p.popular
+                    ? '0 4px 20px rgba(26,86,219,0.12)'
+                    : '0 1px 4px rgba(0,0,0,0.06)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                {p.popular && (
+                  <div
+                    style={{
+                      background: C.blue,
+                      color: '#fff',
+                      textAlign: 'center',
+                      padding: '6px',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: 1,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    ⭐ EL MÁS ELEGIDO POR NUESTROS CLIENTES
+                  </div>
+                )}
+                <div style={{ padding: '22px 22px 20px' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      marginBottom: 14,
+                    }}
+                  >
+                    <span
+                      style={{
+                        background:
+                          p.badgeType === 'orange'
+                            ? C.orangeLight
+                            : C.blueLight,
+                        color: p.badgeType === 'orange' ? C.orange : C.blue,
+                        border:
+                          '1px solid ' +
+                          (p.badgeType === 'orange' ? '#fed7aa' : '#bfdbfe'),
+                        fontSize: 10,
+                        fontWeight: 700,
+                        padding: '3px 10px',
+                        borderRadius: 99,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      }}
+                    >
+                      {p.badge}
+                    </span>
+                    {p.envioGratis && (
+                      <span
+                        style={{
+                          background: C.greenLight,
+                          color: C.green,
+                          border: '1px solid #bbf7d0',
+                          fontSize: 10,
+                          fontWeight: 700,
+                          padding: '3px 10px',
+                          borderRadius: 99,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        }}
+                      >
+                        🚀 Envío gratis
+                      </span>
+                    )}
+                    {p.sinTarjeta && (
+                      <span
+                        style={{
+                          background: '#fdf4ff',
+                          color: '#7c3aed',
+                          border: '1px solid #e9d5ff',
+                          fontSize: 10,
+                          fontWeight: 700,
+                          padding: '3px 10px',
+                          borderRadius: 99,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        }}
+                      >
+                        💳 Sin tarjeta
+                      </span>
+                    )}
+                    {p.aCuenta && (
+                      <span
+                        style={{
+                          background: '#eff6ff',
+                          color: C.blue,
+                          border: '1px solid #bfdbfe',
+                          fontSize: 10,
+                          fontWeight: 700,
+                          padding: '3px 10px',
+                          borderRadius: 99,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        }}
+                      >
+                        🏦 A tu cuenta
+                      </span>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 800,
+                      color: C.text,
+                      marginBottom: 18,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    {p.nombre}
+                  </div>
+                  <div
+                    style={{
+                      background: C.surface,
+                      border: '1px solid ' + C.border,
+                      borderRadius: 10,
+                      padding: '16px',
+                      marginBottom: 16,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: C.muted,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                          marginBottom: 2,
+                          fontWeight: 500,
+                        }}
+                      >
+                        PAGAS
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 800,
+                          color: C.text,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        }}
+                      >
+                        {fmt(p.paga)}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        width: 32,
+                        height: 32,
+                        background: C.blueLight,
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 16,
+                        color: C.blue,
+                      }}
+                    >
+                      →
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: C.muted,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                          marginBottom: 2,
+                          fontWeight: 500,
+                        }}
+                      >
+                        RECIBES
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 800,
+                          color: C.green,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        }}
+                      >
+                        {fmt(p.recibe)}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginBottom: 18,
+                    }}
+                  >
+                    <div
+                      style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                    >
+                      <span style={{ fontSize: 14 }}>⏱</span>
+                      <span
+                        style={{
+                          fontSize: 13,
+                          color: C.muted,
+                          fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        }}
+                      >
+                        {p.tiempo}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        fontWeight: 600,
+                        color: p.disponibles <= 2 ? C.orange : C.muted,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      }}
+                    >
+                      {p.disponibles <= 2
+                        ? '⚠️ Solo ' + p.disponibles + ' disp.'
+                        : p.disponibles + ' disponibles'}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleComprar(p)}
+                    style={{
+                      width: '100%',
+                      background: C.blue,
+                      color: '#fff',
+                      border: 'none',
+                      padding: '14px',
+                      borderRadius: 10,
+                      fontSize: 15,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      boxShadow: '0 3px 10px rgba(26,86,219,0.25)',
+                      transition: 'all 0.15s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = C.blueDark;
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = C.blue;
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    Comprar ahora
+                  </button>
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 10,
+                      fontSize: 12,
+                      color: C.muted,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    <span>🔒</span> Proceso seguro · Soporte incluido
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div
+            style={{
+              marginTop: 40,
+              background: C.white,
+              border: '1px solid ' + C.border,
+              borderRadius: 12,
+              padding: '24px',
+              display: 'flex',
+              gap: 32,
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <Estrellas n={5} size={16} />
+              <span
+                style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: C.text,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                4.9/5
+              </span>
+              <span
+                style={{
+                  fontSize: 14,
+                  color: C.muted,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                promedio de +1,200 reseñas
+              </span>
+            </div>
+            <div style={{ width: 1, height: 32, background: C.border }} />
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              {REVIEWS_DATA.slice(0, 3).map((r, i) => (
+                <div
+                  key={i}
+                  style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+                >
+                  <div
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: '50%',
+                      background: C.blue,
+                      color: '#fff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    {r.nombre[0]}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        fontWeight: 600,
+                        color: C.text,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      }}
+                    >
+                      {r.nombre}
+                    </div>
+                    <Estrellas n={r.estrellas} size={10} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── ECART PAY CONFIG ────────────────────────────────────────────────────────
+const ECARTPAY = {
+  accountId: '69f2f95200c40f24311dbe64',
+  publicId: 'pub69f2f95300c40f24311dbe6b',
+  privateKey: 'priv69f2f95300c40f24311dbe6c',
+  apiBase: 'https://app.ecartpay.com',
+};
+
+async function crearCheckoutEcartPay(producto, cliente) {
+  const body = {
+    account_id: ECARTPAY.accountId,
+    currency: 'MXN',
+    amounts: [producto.paga],
+    concept: producto.nombre,
+    items: [
+      {
+        name: producto.nombre,
+        quantity: 1,
+        price: producto.paga,
+        discount: 0,
+        is_service: true,
+        id: producto.id,
+      },
+    ],
+    customer: {
+      name: cliente.nombre,
+      email: cliente.email,
+      phone: cliente.telefono,
+    },
+    notify_url: 'https://tudominio.com/api/webhook/ecartpay',
+  };
+
+  const res = await fetch(`${ECARTPAY.apiBase}/api/checkouts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: ECARTPAY.privateKey,
+      'x-public-id': ECARTPAY.publicId,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error('Ecart Pay error: ' + err);
+  }
+
+  const data = await res.json();
+  return data.link; // URL de pago
+}
+
+function Checkout({ carrito, setView }) {
+  const [step, setStep] = useState(0);
+  const [error, setError] = useState(null);
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [calle, setCalle] = useState('');
+  const [colonia, setColonia] = useState('');
+  const [ciudad, setCiudad] = useState('');
+  const [cp, setCp] = useState('');
+
+  const esPaquete = carrito && carrito.tipo === 'PAQUETE';
+
+  const confirmar = () => {
+    const camposBase = !nombre.trim() || !email.trim() || !telefono.trim();
+    const camposDireccion =
+      esPaquete &&
+      (!calle.trim() || !colonia.trim() || !ciudad.trim() || !cp.trim());
+    if (camposBase || camposDireccion) {
+      setError('Por favor completa todos los campos.');
+      return;
+    }
+    setError(null);
+    fbq('track', 'InitiateCheckout', {
+      value: carrito.paga,
+      currency: 'MXN',
+      content_name: carrito.nombre,
+    });
+    fbq('track', 'Purchase', {
+      value: carrito.paga,
+      currency: 'MXN',
+      content_name: carrito.nombre,
+    });
+    window.location.href = carrito.link;
+  };
+
+  if (!carrito) return null;
+
+  return (
+    <div
+      style={{ background: C.surface, minHeight: '70vh', padding: '40px 32px' }}
+    >
+      <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        {step === 0 && (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                marginBottom: 28,
+              }}
+            >
+              <button
+                onClick={() => setView('productos')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: C.muted,
+                  cursor: 'pointer',
+                  fontSize: 14,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                ← Volver
+              </button>
+              <h2
+                style={{
+                  fontSize: 24,
+                  fontWeight: 800,
+                  color: C.text,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  margin: 0,
+                }}
+              >
+                Confirmar operación
+              </h2>
+            </div>
+            <div
+              style={{
+                background: C.white,
+                border: '1px solid ' + C.border,
+                borderRadius: 12,
+                padding: 24,
+                marginBottom: 20,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: C.muted,
+                  letterSpacing: 1,
+                  marginBottom: 14,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                RESUMEN DE TU OPERACIÓN
+              </div>
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 700,
+                  color: C.text,
+                  marginBottom: 16,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                {carrito.nombre}
+              </div>
+              <div
+                style={{
+                  background: C.surface,
+                  borderRadius: 10,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '14px 18px',
+                  marginBottom: 12,
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      color: C.muted,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    PAGAS
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 800,
+                      color: C.text,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    {fmt(carrito.paga)}
+                  </div>
+                </div>
+                <div
+                  style={{ fontSize: 20, color: C.border, alignSelf: 'center' }}
+                >
+                  →
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      color: C.muted,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    RECIBES
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 800,
+                      color: C.green,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    {fmt(carrito.recibe)}
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 8,
+                  fontSize: 13,
+                  color: C.muted,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                <span>⏱</span>
+                <span>{carrito.tiempo}</span>
+                {carrito.envioGratis && (
+                  <>
+                    <span>·</span>
+                    <span style={{ color: C.green, fontWeight: 600 }}>
+                      🚀 Envío gratis
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+            {/* AVISO RETIROS Y TRANSFERENCIAS */}
+            {!esPaquete && (
+              <div
+                style={{
+                  background: '#eff6ff',
+                  border: '1px solid #bfdbfe',
+                  borderRadius: 12,
+                  padding: '18px 20px',
+                  marginBottom: 20,
+                  display: 'flex',
+                  gap: 14,
+                  alignItems: 'flex-start',
+                }}
+              >
+                <span style={{ fontSize: 24, flexShrink: 0 }}>💬</span>
+                <div>
+                  <div
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: C.blue,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      marginBottom: 4,
+                    }}
+                  >
+                    Un asesor se pondrá en contacto contigo
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      color: C.muted,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Una vez confirmado el pago, un asesor de CLD te contactará
+                    por <strong>WhatsApp</strong> para continuar y completar tu
+                    operación. El proceso toma {carrito.tiempo}.
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div
+              style={{
+                background: C.white,
+                border: '1px solid ' + C.border,
+                borderRadius: 12,
+                padding: 24,
+                marginBottom: 16,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: C.muted,
+                  letterSpacing: 1,
+                  marginBottom: 18,
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                TUS DATOS
+              </div>
+              {[
+                {
+                  label: 'Nombre completo',
+                  ph: '¿Cómo te llamas?',
+                  val: nombre,
+                  set: setNombre,
+                },
+                {
+                  label: 'Correo electrónico',
+                  ph: 'correo@ejemplo.com',
+                  val: email,
+                  set: setEmail,
+                },
+                {
+                  label: 'Teléfono / WhatsApp',
+                  ph: '+52 55 0000 0000',
+                  val: telefono,
+                  set: setTelefono,
+                },
+              ].map((f) => (
+                <div key={f.label} style={{ marginBottom: 16 }}>
+                  <label
+                    style={{
+                      display: 'block',
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: C.text,
+                      marginBottom: 6,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    {f.label}
+                  </label>
+                  <input
+                    placeholder={f.ph}
+                    value={f.val}
+                    onChange={(e) => f.set(e.target.value)}
+                    style={{
+                      width: '100%',
+                      background: C.white,
+                      border: '1.5px solid ' + C.border,
+                      borderRadius: 8,
+                      color: C.text,
+                      padding: '11px 14px',
+                      fontSize: 14,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      outline: 'none',
+                      boxSizing: 'border-box',
+                    }}
+                    onFocus={(e) =>
+                      (e.currentTarget.style.borderColor = C.blue)
+                    }
+                    onBlur={(e) =>
+                      (e.currentTarget.style.borderColor = C.border)
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* DIRECCIÓN — solo paquetes */}
+            {esPaquete && (
+              <div
+                style={{
+                  background: C.white,
+                  border: '1px solid ' + C.border,
+                  borderRadius: 12,
+                  padding: 24,
+                  marginBottom: 16,
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: C.muted,
+                    letterSpacing: 1,
+                    marginBottom: 18,
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  }}
+                >
+                  DIRECCIÓN DE ENTREGA
+                </div>
+                {[
+                  {
+                    label: 'Calle y número',
+                    ph: 'Ej: Av. Insurgentes 123',
+                    val: calle,
+                    set: setCalle,
+                  },
+                  {
+                    label: 'Colonia',
+                    ph: 'Ej: Roma Norte',
+                    val: colonia,
+                    set: setColonia,
+                  },
+                  {
+                    label: 'Ciudad / Municipio',
+                    ph: 'Ej: Ciudad de México',
+                    val: ciudad,
+                    set: setCiudad,
+                  },
+                  {
+                    label: 'Código postal',
+                    ph: 'Ej: 06600',
+                    val: cp,
+                    set: setCp,
+                  },
+                ].map((f) => (
+                  <div key={f.label} style={{ marginBottom: 16 }}>
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: 13,
+                        fontWeight: 600,
+                        color: C.text,
+                        marginBottom: 6,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      }}
+                    >
+                      {f.label}
+                    </label>
+                    <input
+                      placeholder={f.ph}
+                      value={f.val}
+                      onChange={(e) => f.set(e.target.value)}
+                      style={{
+                        width: '100%',
+                        background: C.white,
+                        border: '1.5px solid ' + C.border,
+                        borderRadius: 8,
+                        color: C.text,
+                        padding: '11px 14px',
+                        fontSize: 14,
+                        fontFamily: "'Plus Jakarta Sans',sans-serif",
+                        outline: 'none',
+                        boxSizing: 'border-box',
+                      }}
+                      onFocus={(e) =>
+                        (e.currentTarget.style.borderColor = C.blue)
+                      }
+                      onBlur={(e) =>
+                        (e.currentTarget.style.borderColor = C.border)
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {error && (
+              <div
+                style={{
+                  background: '#fef2f2',
+                  border: '1px solid #fecaca',
+                  borderRadius: 8,
+                  padding: '10px 14px',
+                  marginBottom: 16,
+                  fontSize: 13,
+                  color: '#dc2626',
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                ⚠️ {error}
+              </div>
+            )}
+
+            <div
+              style={{
+                display: 'flex',
+                gap: 16,
+                justifyContent: 'center',
+                marginBottom: 16,
+                flexWrap: 'wrap',
+              }}
+            >
+              {[
+                '🔒 Pago seguro',
+                '✅ Garantía incluida',
+                '💬 Soporte 24/7',
+              ].map((s) => (
+                <span
+                  key={s}
+                  style={{
+                    fontSize: 13,
+                    color: C.muted,
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <button
+              onClick={confirmar}
+              style={{
+                width: '100%',
+                background: C.blue,
+                color: '#fff',
+                border: 'none',
+                padding: '16px',
+                borderRadius: 10,
+                fontSize: 16,
+                fontWeight: 700,
+                cursor: 'pointer',
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+                boxShadow: '0 4px 14px rgba(26,86,219,0.35)',
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = C.blueDark)
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.background = C.blue)}
+            >
+              Ir a pagar — {fmt(carrito.paga)}
+            </button>
+          </>
+        )}
+
+        {step === 1 && (
+          <div style={{ textAlign: 'center', padding: '80px 0' }}>
+            <div
+              style={{
+                width: 52,
+                height: 52,
+                borderRadius: '50%',
+                border: '4px solid ' + C.blue,
+                borderTopColor: 'transparent',
+                margin: '0 auto 24px',
+                animation: 'spin 0.8s linear infinite',
+              }}
+            />
+            <div
+              style={{
+                fontSize: 18,
+                fontWeight: 700,
+                color: C.text,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+                marginBottom: 8,
+              }}
+            >
+              Conectando con Ecart Pay…
+            </div>
+            <div
+              style={{
+                fontSize: 14,
+                color: C.muted,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+              }}
+            >
+              Preparando tu pago seguro
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div style={{ textAlign: 'center', padding: '60px 0' }}>
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: '50%',
+                background: C.greenLight,
+                border: '2px solid ' + C.green,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px',
+                fontSize: 28,
+              }}
+            >
+              ✓
+            </div>
+            <h2
+              style={{
+                fontSize: 26,
+                fontWeight: 800,
+                color: C.green,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+                marginBottom: 8,
+              }}
+            >
+              ¡Operación confirmada!
+            </h2>
+            <div
+              style={{
+                fontSize: 14,
+                color: C.muted,
+                marginBottom: 6,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+              }}
+            >
+              Referencia: <strong>{ref}</strong>
+            </div>
+            <div
+              style={{
+                fontSize: 15,
+                color: C.text,
+                marginBottom: 28,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+              }}
+            >
+              Recibirás{' '}
+              <strong style={{ color: C.green }}>{fmt(carrito.recibe)}</strong>{' '}
+              en {carrito.tiempo}
+            </div>
+            <div
+              style={{
+                background: C.greenLight,
+                border: '1px solid #bbf7d0',
+                borderRadius: 10,
+                padding: '16px 24px',
+                marginBottom: 28,
+                fontSize: 14,
+                color: C.green,
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+                fontWeight: 500,
+              }}
+            >
+              ✅ Tu operación está en el sistema. Recibirás confirmación por
+              correo.
+            </div>
+            <button
+              onClick={() => setView('home')}
+              style={{
+                background: C.blue,
+                color: '#fff',
+                border: 'none',
+                padding: '12px 28px',
+                borderRadius: 8,
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: 'pointer',
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+              }}
+            >
+              Volver al inicio
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function HomePage({ setView }) {
+  return (
+    <>
+      <Hero setView={setView} />
+      <Sellos />
+      <SeccionGarantias />
+      <Productos setView={setView} setCarrito={() => {}} />
+      <SeccionReviews />
+    </>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ background: C.text, padding: '40px 32px 32px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 24,
+            marginBottom: 32,
+          }}
+        >
+          <div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                marginBottom: 12,
+              }}
+            >
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  background: C.blue,
+                  borderRadius: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 800,
+                    color: '#fff',
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  }}
+                >
+                  CLD
+                </span>
+              </div>
+              <span
+                style={{
+                  fontSize: 16,
+                  fontWeight: 700,
+                  color: '#fff',
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                Cash Laundry Department
+              </span>
+            </div>
+            <p
+              style={{
+                fontSize: 13,
+                color: '#94a3b8',
+                fontFamily: "'Plus Jakarta Sans',sans-serif",
+                maxWidth: 280,
+                lineHeight: 1.6,
+              }}
+            >
+              Acceso a liquidez, operaciones de capital y transferencias para
+              todo México.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
+            {[
+              {
+                title: 'Operaciones',
+                links: ['Paquetes', 'Retiros', 'Transferencias'],
+              },
+              { title: 'Empresa', links: ['Garantías', 'Soporte', 'Reseñas'] },
+            ].map((col) => (
+              <div key={col.title}>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: '#64748b',
+                    letterSpacing: 1,
+                    marginBottom: 12,
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  }}
+                >
+                  {col.title.toUpperCase()}
+                </div>
+                {col.links.map((l) => (
+                  <div
+                    key={l}
+                    style={{
+                      fontSize: 13,
+                      color: '#94a3b8',
+                      marginBottom: 8,
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    }}
+                  >
+                    {l}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div
+          style={{
+            borderTop: '1px solid #1e293b',
+            paddingTop: 20,
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 8,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 12,
+              color: '#475569',
+              fontFamily: "'Plus Jakarta Sans',sans-serif",
+            }}
+          >
+            © 2026 Cash Laundry Department · Todos los derechos reservados
+          </span>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            {[
+              '🔒 Operaciones seguras',
+              '🇲🇽 Todo México',
+              '✅ +5,200 clientes',
+            ].map((s) => (
+              <span
+                key={s}
+                style={{
+                  fontSize: 12,
+                  color: '#475569',
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                }}
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default function App() {
+  const [loaded, setLoaded] = useState(false);
+  const [view, setView] = useState('home');
+  const [carrito, setCarrito] = useState(null);
+
+  const handleSetView = (v) => {
+    setView(v);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href =
+      'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+      @keyframes load{from{width:0%}to{width:100%}}
+      @keyframes spin{to{transform:rotate(360deg)}}
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{background:#f8fafc;}
+      input::placeholder{color:#94a3b8;}
+      ::-webkit-scrollbar{width:6px;}
+      ::-webkit-scrollbar-track{background:#f1f5f9;}
+      ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:99px;}
+    `;
+    document.head.appendChild(style);
+    fbq('track', 'PageView');
+  }, []);
+
+  return (
+    <div style={{ background: C.surface, minHeight: '100vh' }}>
+      {!loaded && <Loader onDone={() => setLoaded(true)} />}
+      {loaded && (
+        <>
+          <Nav view={view} setView={handleSetView} />
+          <LiveTicker />
+          {view === 'home' && <HomePage setView={handleSetView} />}
+          {view === 'productos' && (
+            <>
+              <Productos setView={handleSetView} setCarrito={setCarrito} />
+              <SeccionReviews />
+              <SeccionGarantias />
+            </>
+          )}
+          {view === 'checkout' && (
+            <Checkout carrito={carrito} setView={handleSetView} />
+          )}
+          <Footer />
+        </>
+      )}
+    </div>
+  );
+}
