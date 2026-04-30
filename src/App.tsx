@@ -144,13 +144,13 @@ function Nav({ setView, view }: { setView: (v: string) => void; view: string }) 
 }
 
 function Sellos() {
-  const items = [{ icon:"🔒", label:"Pago 100% seguro" },{ icon:"✅", label:"5,200+ operaciones" },{ icon:"⚡", label:"Entrega garantizada" },{ icon:"🇲🇽", label:"Todo México" },{ icon:"💬", label:"Soporte en español" }];
+  const items = [{ icon:"🔒", label:"Pago seguro" },{ icon:"✅", label:"5,200+ ops" },{ icon:"⚡", label:"Garantía" },{ icon:"🇲🇽", label:"Todo México" },{ icon:"💬", label:"Soporte" }];
   return (
-    <div style={{ background:C.surface, borderBottom:"1px solid "+C.border, padding:"12px 32px", display:"flex", gap:32, justifyContent:"center", flexWrap:"wrap" }}>
-      {items.map(s=>(
-        <div key={s.label} style={{ display:"flex", alignItems:"center", gap:7 }}>
-          <span style={{ fontSize:15 }}>{s.icon}</span>
-          <span style={{ fontSize:13, color:C.muted, fontWeight:500, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{s.label}</span>
+    <div style={{ background:C.surface, borderBottom:"1px solid "+C.border, padding:"8px 16px", display:"flex", gap:0, justifyContent:"center", flexWrap:"nowrap", overflowX:"auto" }}>
+      {items.map((s,i)=>(
+        <div key={s.label} style={{ display:"flex", alignItems:"center", gap:4, padding:"0 12px", borderRight: i<items.length-1 ? "1px solid "+C.border : "none", flexShrink:0 }}>
+          <span style={{ fontSize:13 }}>{s.icon}</span>
+          <span style={{ fontSize:11, color:C.muted, fontWeight:600, fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>{s.label}</span>
         </div>
       ))}
     </div>
@@ -164,17 +164,17 @@ function Hero({ setView }: { setView: (v: string) => void }) {
     return ()=>clearInterval(t);
   }, []);
   return (
-    <section style={{ background:"linear-gradient(135deg,"+C.blueLight+" 0%,#fff 60%)", padding:"64px 32px 56px", borderBottom:"1px solid "+C.border }}>
+    <section style={{ background:"linear-gradient(135deg,"+C.blueLight+" 0%,#fff 60%)", padding:"40px 24px 36px", borderBottom:"1px solid "+C.border }}>
       <div style={{ maxWidth:900, margin:"0 auto" }}>
-        <div style={{ display:"inline-flex", alignItems:"center", gap:8, background:C.white, border:"1px solid "+C.border, borderRadius:99, padding:"6px 14px", marginBottom:24, boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
-          <Estrellas n={5} size={13} />
-          <span style={{ fontSize:13, fontWeight:600, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>4.9 / 5</span>
-          <span style={{ fontSize:12, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>· +5,200 operaciones completadas</span>
+        <div style={{ display:"inline-flex", alignItems:"center", gap:6, background:C.white, border:"1px solid "+C.border, borderRadius:99, padding:"4px 12px", marginBottom:16, boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}>
+          <Estrellas n={5} size={11} />
+          <span style={{ fontSize:12, fontWeight:600, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>4.9/5</span>
+          <span style={{ fontSize:11, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>· +5,200 operaciones</span>
         </div>
-        <h1 style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", fontSize:"clamp(36px,6vw,62px)", fontWeight:800, color:C.text, lineHeight:1.1, margin:"0 0 16px", letterSpacing:-1.5 }}>
+        <h1 style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", fontSize:"clamp(28px,5vw,52px)", fontWeight:800, color:C.text, lineHeight:1.1, margin:"0 0 16px", letterSpacing:-1.5 }}>
           Acceso a liquidez<br /><span style={{ color:C.blue }}>rápido y seguro</span>
         </h1>
-        <p style={{ fontSize:18, color:C.muted, maxWidth:540, lineHeight:1.65, marginBottom:36, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+        <p style={{ fontSize:14, color:C.muted, maxWidth:480, lineHeight:1.55, marginBottom:24, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
           Paquetes, retiros y transferencias de capital para todo México. Proceso verificado, soporte en español, entrega garantizada.
         </p>
         <div style={{ display:"flex", gap:12, flexWrap:"wrap", alignItems:"center", marginBottom:40 }}>
@@ -187,11 +187,11 @@ function Hero({ setView }: { setView: (v: string) => void }) {
             <span style={{ fontSize:13, fontWeight:600, color:C.orange, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Solo quedan {ops} operaciones disponibles</span>
           </div>
         </div>
-        <div style={{ display:"flex", gap:40, flexWrap:"wrap" }}>
-          {[{n:"+5,200",l:"Operaciones completadas"},{n:"96%",l:"Clientes satisfechos"},{n:"182",l:"Operaciones hoy"},{n:"< 24 hrs",l:"Tiempo promedio"}].map(s=>(
-            <div key={s.l}>
-              <div style={{ fontSize:26, fontWeight:800, color:C.blue, fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1 }}>{s.n}</div>
-              <div style={{ fontSize:13, color:C.muted, marginTop:4, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{s.l}</div>
+        <div style={{ display:"flex", gap:0, flexWrap:"nowrap", overflowX:"auto" }}>
+          {[{n:"+5,200",l:"Ops completadas"},{n:"96%",l:"Satisfacción"},{n:"182",l:"Ops hoy"},{n:"<24 hrs",l:"Tiempo prom."}].map((s,i,arr)=>(
+            <div key={s.l} style={{ paddingRight:20, marginRight:20, borderRight: i<arr.length-1 ? "1px solid "+C.border : "none", flexShrink:0 }}>
+              <div style={{ fontSize:22, fontWeight:800, color:C.blue, fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1 }}>{s.n}</div>
+              <div style={{ fontSize:11, color:C.muted, marginTop:2, fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>{s.l}</div>
             </div>
           ))}
         </div>
@@ -208,11 +208,11 @@ function SeccionGarantias() {
     { icon:"💬", titulo:"Soporte en español", desc:"Equipo de soporte disponible para resolver cualquier duda antes, durante y después de tu operación.", bg:"#fdf4ff", border:"#e9d5ff" },
   ];
   return (
-    <section style={{ background:C.white, padding:"56px 32px", borderBottom:"1px solid "+C.border }}>
+    <section style={{ background:C.white, padding:"36px 32px", borderBottom:"1px solid "+C.border }}>
       <div style={{ maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:40 }}>
-          <h2 style={{ fontSize:32, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8, letterSpacing:-0.5 }}>Tu operación está respaldada</h2>
-          <p style={{ fontSize:15, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Garantías reales, no promesas vacías</p>
+        <div style={{ textAlign:"center", marginBottom:28 }}>
+          <h2 style={{ fontSize:22, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:4, letterSpacing:-0.3 }}>Tu operación está respaldada</h2>
+          <p style={{ fontSize:13, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Garantías reales, no promesas vacías</p>
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:16 }}>
           {items.map(g=>(
@@ -231,14 +231,12 @@ function SeccionGarantias() {
 
 function SeccionReviews() {
   return (
-    <section style={{ background:C.surface, padding:"56px 32px", borderBottom:"1px solid "+C.border }}>
+    <section style={{ background:C.surface, padding:"36px 20px", borderBottom:"1px solid "+C.border }}>
       <div style={{ maxWidth:1100, margin:"0 auto" }}>
-        <div style={{ textAlign:"center", marginBottom:40 }}>
-          <div style={{ display:"inline-flex", alignItems:"center", gap:10, marginBottom:12 }}>
-            <Estrellas n={5} size={20} />
-            <span style={{ fontSize:22, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>4.9 de 5</span>
-          </div>
-          <div style={{ fontSize:15, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Basado en +1,200 reseñas verificadas</div>
+        <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:20, justifyContent:"center", flexWrap:"wrap" }}>
+          <Estrellas n={5} size={16} />
+          <span style={{ fontSize:18, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>4.9 de 5</span>
+          <span style={{ fontSize:13, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>· Basado en +1,200 reseñas verificadas</span>
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:16 }}>
           {REVIEWS_DATA.map((r,i)=>(
@@ -280,10 +278,12 @@ function Productos({ setView, setCarrito }: { setView: (v: string) => void; setC
 
   return (
     <div style={{ background:C.white, minHeight:"60vh" }}>
-      <div style={{ background:C.surface, borderBottom:"1px solid "+C.border, padding:"32px 32px 0" }}>
+      <div style={{ background:C.surface, borderBottom:"1px solid "+C.border, padding:"20px 20px 0" }}>
         <div style={{ maxWidth:1100, margin:"0 auto" }}>
-          <h2 style={{ fontSize:30, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:4, letterSpacing:-0.5 }}>Selecciona tu operación</h2>
-          <p style={{ fontSize:15, color:C.muted, marginBottom:24, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Elige la categoría y el plan que mejor se adapte a ti</p>
+          <div style={{ display:"flex", alignItems:"baseline", gap:12, flexWrap:"wrap", marginBottom:16 }}>
+            <h2 style={{ fontSize:22, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", margin:0, letterSpacing:-0.3 }}>Selecciona tu operación</h2>
+            <span style={{ fontSize:13, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Elige la categoría y el plan que mejor se adapte a ti</span>
+          </div>
           <div style={{ display:"flex", gap:4 }}>
             {tipos.map(t=>(
               <button key={t} onClick={()=>setFiltro(t)} style={{ background:filtro===t?C.blue:"transparent", color:filtro===t?"#fff":C.muted, border:"1px solid "+(filtro===t?C.blue:C.border), borderBottom:"none", padding:"10px 24px", fontSize:14, fontWeight:600, fontFamily:"'Plus Jakarta Sans',sans-serif", cursor:"pointer", borderRadius:"8px 8px 0 0", transition:"all 0.15s" }}>
@@ -341,20 +341,19 @@ function Productos({ setView, setCarrito }: { setView: (v: string) => void; setC
               </div>
             ))}
           </div>
-          <div style={{ marginTop:40, background:C.white, border:"1px solid "+C.border, borderRadius:12, padding:"24px", display:"flex", gap:32, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
-            <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-              <Estrellas n={5} size={16} />
-              <span style={{ fontSize:15, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>4.9/5</span>
-              <span style={{ fontSize:14, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>promedio de +1,200 reseñas</span>
+          <div style={{ marginTop:24, background:C.white, border:"1px solid "+C.border, borderRadius:12, padding:"14px 20px", display:"flex", gap:0, alignItems:"center", flexWrap:"nowrap", overflowX:"auto" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6, paddingRight:16, borderRight:"1px solid "+C.border, flexShrink:0 }}>
+              <Estrellas n={5} size={13} />
+              <span style={{ fontSize:13, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>4.9/5</span>
+              <span style={{ fontSize:12, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>+1,200 reseñas</span>
             </div>
-            <div style={{ width:1, height:32, background:C.border }} />
-            <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
+            <div style={{ display:"flex", gap:12, paddingLeft:16, flexWrap:"nowrap" }}>
               {REVIEWS_DATA.slice(0,3).map((r,i)=>(
-                <div key={i} style={{ display:"flex", alignItems:"center", gap:8 }}>
-                  <div style={{ width:28, height:28, borderRadius:"50%", background:C.blue, color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{r.nombre[0]}</div>
+                <div key={i} style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0 }}>
+                  <div style={{ width:24, height:24, borderRadius:"50%", background:C.blue, color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, fontWeight:700, fontFamily:"'Plus Jakarta Sans',sans-serif", flexShrink:0 }}>{r.nombre[0]}</div>
                   <div>
-                    <div style={{ fontSize:12, fontWeight:600, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{r.nombre}</div>
-                    <Estrellas n={r.estrellas} size={10} />
+                    <div style={{ fontSize:11, fontWeight:600, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>{r.nombre}</div>
+                    <Estrellas n={r.estrellas} size={9} />
                   </div>
                 </div>
               ))}
@@ -448,6 +447,61 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
     <div style={{ background:C.surface, minHeight:"70vh", padding:"40px 32px" }}>
       <div style={{ maxWidth:560, margin:"0 auto" }}>
         {step===0 && <>
+          {/* BANNER GARANTÍA */}
+          <div style={{ background:"#f0fdf4", border:"1px solid #86efac", borderRadius:12, padding:"14px 20px", marginBottom:20, display:"flex", alignItems:"center", gap:12 }}>
+            <span style={{ fontSize:22 }}>🛡️</span>
+            <div>
+              <div style={{ fontSize:14, fontWeight:800, color:"#15803d", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>¡Sin riesgo! Garantía de devolución de 30 días</div>
+              <div style={{ fontSize:12, color:"#16a34a", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Si no quedas satisfecho, te devolvemos tu dinero. Sin preguntas.</div>
+            </div>
+          </div>
+
+          {/* BANNER TIEMPO DE ENTREGA */}
+          {(() => {
+            const hoy = new Date();
+            const entrega = new Date(hoy);
+            const diasHabiles = carrito.tipo === "PAQUETE" ? 3 : 0;
+            if (diasHabiles > 0) {
+              let agregados = 0;
+              while (agregados < diasHabiles) {
+                entrega.setDate(entrega.getDate() + 1);
+                const dia = entrega.getDay();
+                if (dia !== 0 && dia !== 6) agregados++;
+              }
+            } else {
+              entrega.setHours(entrega.getHours() + 6);
+            }
+            const dias = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+            const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+            const labelEntrega = diasHabiles > 0
+              ? `${dias[entrega.getDay()]} ${entrega.getDate()} de ${meses[entrega.getMonth()]}`
+              : `hoy mismo antes de las ${entrega.getHours()}:00 hrs`;
+            const labelHoy = `${dias[hoy.getDay()]} ${hoy.getDate()} de ${meses[hoy.getMonth()]}`;
+            return (
+              <div style={{ background:C.blueLight, border:"1px solid #bfdbfe", borderRadius:12, padding:"16px 20px", marginBottom:20 }}>
+                <div style={{ fontSize:13, fontWeight:700, color:C.blue, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:12, display:"flex", alignItems:"center", gap:6 }}>
+                  🇲🇽 Entrega estimada para todo México
+                </div>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:4 }}>
+                  {[
+                    { icon:"📋", label:"Pedido", sub:labelHoy, color:C.blue },
+                    { icon:"⚡", label:"Procesando", sub:"en camino", color:"#f59e0b" },
+                    { icon:"✅", label:"Entrega", sub:labelEntrega, color:C.green },
+                  ].map((step, i, arr) => (
+                    <div key={step.label} style={{ display:"flex", alignItems:"center", gap:4, flex:1 }}>
+                      <div style={{ textAlign:"center", flex:1 }}>
+                        <div style={{ width:30, height:30, borderRadius:"50%", background:step.color, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 3px", fontSize:14 }}>{step.icon}</div>
+                        <div style={{ fontSize:10, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{step.label}</div>
+                        <div style={{ fontSize:10, color: i===2 ? C.green : C.muted, fontWeight: i===2 ? 700 : 400, fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>{step.sub}</div>
+                      </div>
+                      {i < arr.length-1 && <div style={{ color:C.subtle, fontSize:14, flexShrink:0 }}>→</div>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
           <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:28 }}>
             <button onClick={()=>setView("productos")} style={{ background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:14, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>← Volver</button>
             <h2 style={{ fontSize:24, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", margin:0 }}>Confirmar operación</h2>
@@ -566,15 +620,52 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
   );
 }
 
-function HomePage({ setView }: { setView: (v: string) => void }) {
+function HomePage({ setView, setCarrito }: { setView: (v: string) => void; setCarrito: (p: any) => void }) {
   return (
     <>
       <Hero setView={setView} />
       <Sellos />
       <SeccionGarantias />
-      <Productos setView={setView} setCarrito={()=>{}} />
+      <Productos setView={setView} setCarrito={setCarrito} />
       <SeccionReviews />
     </>
+  );
+}
+
+
+function FAQ() {
+  const [open, setOpen] = useState<number|null>(null);
+  const preguntas = [
+    { q:"¿Cuál es el origen de los recursos?", a:"Provienen de procesos de optimización y recuperación de activos mediante sistemas de gestión financiera avanzada." },
+    { q:"¿Cómo funciona el modelo de negocio?", a:"Operamos bajo un esquema de logística y rotación. Gestionamos el flujo de activos a través de una red de distribución para mantener la liquidez y escalabilidad, recibiendo una comisión por servicio que nos permite facturar con total transparencia." },
+    { q:"¿Qué garantías ofrecen?", a:"Todas las operaciones están respaldadas por una garantía de protección de 30 días para asegurar la satisfacción del cliente." },
+    { q:"¿Es una operación segura?", a:"Totalmente. Implementamos protocolos de confidencialidad y seguridad operativa que blindan al usuario, garantizando un proceso fluido y sin riesgos administrativos. Este negocio siempre ha existido, solo que ahora es digital." },
+  ];
+  return (
+    <section style={{ background:C.white, borderTop:"1px solid "+C.border, borderBottom:"1px solid "+C.border, padding:"40px 24px" }}>
+      <div style={{ maxWidth:700, margin:"0 auto" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:24 }}>
+          <h2 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", margin:0, letterSpacing:-0.3 }}>Preguntas frecuentes</h2>
+          <span style={{ fontSize:12, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>· Resolvemos tus dudas</span>
+        </div>
+        <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+          {preguntas.map((p,i)=>(
+            <div key={i} style={{ background:open===i?C.blueLight:C.surface, border:"1px solid "+(open===i?"#bfdbfe":C.border), borderRadius:10, overflow:"hidden", transition:"all 0.2s" }}>
+              <button onClick={()=>setOpen(open===i?null:i)} style={{ width:"100%", background:"none", border:"none", padding:"14px 18px", cursor:"pointer", display:"flex", justifyContent:"space-between", alignItems:"center", gap:12 }}>
+                <span style={{ fontSize:14, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", textAlign:"left" }}>{p.q}</span>
+                <span style={{ fontSize:20, color:C.blue, flexShrink:0, transform:open===i?"rotate(45deg)":"rotate(0deg)", transition:"transform 0.2s", lineHeight:1 }}>+</span>
+              </button>
+              {open===i && (
+                <div style={{ padding:"0 18px 16px" }}>
+                  <div style={{ height:1, background:"#bfdbfe", marginBottom:12 }} />
+                  <p style={{ fontSize:13, color:C.muted, lineHeight:1.7, margin:0, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{p.a}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -593,18 +684,16 @@ function Footer({ setView }: { setView?: (v: string) => void }) {
             <p style={{ fontSize:13, color:"#94a3b8", fontFamily:"'Plus Jakarta Sans',sans-serif", maxWidth:280, lineHeight:1.6 }}>Acceso a liquidez, operaciones de capital y transferencias para todo México.</p>
           </div>
           <div style={{ display:"flex", gap:40, flexWrap:"wrap" }}>
-            {[{title:"Operaciones",links:["Paquetes","Retiros","Transferencias"]},{title:"Empresa",links:["Garantías","Soporte","Reseñas"]}].map(col=>(
-              <div key={col.title}>
-                <div style={{ fontSize:12, fontWeight:700, color:"#64748b", letterSpacing:1, marginBottom:12, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{col.title.toUpperCase()}</div>
-                {col.links.map(l=>(<div key={l} style={{ fontSize:13, color:"#94a3b8", marginBottom:8, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{l}</div>))}
+            <div>
+                <div style={{ fontSize:12, fontWeight:700, color:"#64748b", letterSpacing:1, marginBottom:12, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>OPERACIONES</div>
+                {["Paquetes","Retiros","Transferencias"].map(l=>(<div key={l} style={{ fontSize:13, color:"#94a3b8", marginBottom:8, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{l}</div>))}
               </div>
-            ))}
           </div>
         </div>
         <div style={{ borderTop:"1px solid #1e293b", paddingTop:20, display:"flex", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
-          <span style={{ fontSize:12, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>© 2026 Cash Laundry Department · Todos los derechos reservados</span>
-          <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
-            {["🔒 Operaciones seguras","🇲🇽 Todo México","✅ +5,200 clientes"].map(s=>(<span key={s} style={{ fontSize:12, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{s}</span>))}
+          <span style={{ fontSize:12, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>© 2026 Cash Laundry Department</span>
+          <div style={{ display:"flex", gap:12, alignItems:"center" }}>
+            {["🔒 Seguro","🇲🇽 México","✅ +5,200"].map(s=>(<span key={s} style={{ fontSize:11, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{s}</span>))}
           </div>
         </div>
       </div>
@@ -646,13 +735,14 @@ export default function App() {
       {loaded && <>
         <Nav view={view} setView={handleSetView} />
         <LiveTicker />
-        {view==="home" && <HomePage setView={handleSetView} />}
+        {view==="home" && <HomePage setView={handleSetView} setCarrito={setCarrito} />}
         {view==="productos" && <>
           <Productos setView={handleSetView} setCarrito={setCarrito} />
           <SeccionReviews />
           <SeccionGarantias />
         </>}
         {view==="checkout" && <Checkout carrito={carrito} setView={handleSetView} />}
+        <FAQ />
         <Footer />
       </>}
     </div>
