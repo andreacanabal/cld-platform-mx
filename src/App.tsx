@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const fbq = (event, name, params) => {
+const fbq = (event: string, name: string, params: object = {}) => {
   console.log(`[META PIXEL] ${event}("${name}", ${JSON.stringify(params || {})})`);
 };
 
@@ -70,7 +71,7 @@ const ACTIVIDAD_LIVE = [
 
 const fmt = (n) => "$" + n.toLocaleString("es-MX");
 
-function Estrellas({ n = 5, size = 14 }) {
+function Estrellas({ n = 5, size = 14 }: { n?: number; size?: number }) {
   return (
     <span style={{ display:"inline-flex", gap:2 }}>
       {[1,2,3,4,5].map(i => (
@@ -80,7 +81,7 @@ function Estrellas({ n = 5, size = 14 }) {
   );
 }
 
-function Loader({ onDone }) {
+function Loader({ onDone }: { onDone: () => void }) {
   const [step, setStep] = useState(0);
   const steps = ["INICIALIZANDO SISTEMA…","VALIDANDO ACCESO…","ACCESO AUTORIZADO"];
   useEffect(() => {
@@ -121,7 +122,7 @@ function LiveTicker() {
   );
 }
 
-function Nav({ setView, view }) {
+function Nav({ setView, view }: { setView: (v: string) => void; view: string }) {
   return (
     <nav style={{ background:C.white, borderBottom:"1px solid "+C.border, padding:"0 32px", display:"flex", alignItems:"center", justifyContent:"space-between", height:60, position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}>
       <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }} onClick={()=>setView("home")}>
@@ -156,7 +157,7 @@ function Sellos() {
   );
 }
 
-function Hero({ setView }) {
+function Hero({ setView }: { setView: (v: string) => void }) {
   const [ops, setOps] = useState(7);
   useEffect(() => {
     const t = setInterval(()=>setOps(o=>Math.max(3,o)), 20000);
@@ -263,7 +264,7 @@ function SeccionReviews() {
   );
 }
 
-function Productos({ setView, setCarrito }) {
+function Productos({ setView, setCarrito }: { setView: (v: string) => void; setCarrito: (p: any) => void }) {
   const [filtro, setFiltro] = useState("PAQUETE");
   const tipos = ["PAQUETE","RETIRO","TRANSFERENCIA"];
   const filtrados = PRODUCTOS.filter(p=>p.tipo===filtro);
@@ -366,26 +367,27 @@ function Productos({ setView, setCarrito }) {
 }
 
 // ─── ECART PAY CONFIG ────────────────────────────────────────────────────────
-const ECARTPAY = {
+const ECARTPAY: Record<string, string> = {
   accountId:  "69f2f95200c40f24311dbe64",
   publicId:   "pub69f2f95300c40f24311dbe6b",
   privateKey: "priv69f2f95300c40f24311dbe6c",
   apiBase:    "https://app.ecartpay.com",
 };
 
-async function crearCheckoutEcartPay(producto, cliente) {
+// @ts-ignore
+async function crearCheckoutEcartPay(produto: any, cliente: any) {
   const body = {
     account_id: ECARTPAY.accountId,
     currency: "MXN",
-    amounts: [producto.paga],
-    concept: producto.nombre,
+    amounts: [produto.paga],
+    concept: produto.nombre,
     items: [{
-      name: producto.nombre,
+      name: produto.nombre,
       quantity: 1,
-      price: producto.paga,
+      price: produto.paga,
       discount: 0,
       is_service: true,
-      id: producto.id,
+      id: produto.id,
     }],
     customer: {
       name:  cliente.nombre,
@@ -414,7 +416,7 @@ async function crearCheckoutEcartPay(producto, cliente) {
   return data.link; // URL de pago
 }
 
-function Checkout({ carrito, setView }) {
+function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => void }) {
   const [step, setStep] = useState(0);
   const [error, setError] = useState(null);
   const [nombre, setNombre] = useState("");
@@ -564,7 +566,7 @@ function Checkout({ carrito, setView }) {
   );
 }
 
-function HomePage({ setView }) {
+function HomePage({ setView }: { setView: (v: string) => void }) {
   return (
     <>
       <Hero setView={setView} />
@@ -576,7 +578,7 @@ function HomePage({ setView }) {
   );
 }
 
-function Footer() {
+function Footer({ setView }: { setView?: (v: string) => void }) {
   return (
     <footer style={{ background:C.text, padding:"40px 32px 32px" }}>
       <div style={{ maxWidth:1100, margin:"0 auto" }}>
