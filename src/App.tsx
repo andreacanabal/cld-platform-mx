@@ -642,7 +642,7 @@ return (
 }
 
 function FAQ() {
-const [open, setOpen] = useState<number|null>(null);
+const [open, setOpen] = useState<number | null>(null);
 const preguntas = [
 { q:”¿Cuál es el origen de los recursos?”, a:“Provienen de procesos de optimización y recuperación de activos mediante sistemas de gestión financiera avanzada.” },
 { q:”¿Cómo funciona el modelo de negocio?”, a:“Operamos bajo un esquema de logística y rotación. Gestionamos el flujo de activos a través de una red de distribución para mantener la liquidez y escalabilidad, recibiendo una comisión por servicio que nos permite facturar con total transparencia.” },
