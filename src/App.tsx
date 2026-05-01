@@ -24,27 +24,27 @@ const PRODUCTOS = [
     link:"https://pay.ecart.com/payment_link/69f2fefe20f81ed6ab9a36e3" },
 
   // ── RETIROS ───────────────────────────────────────────────────────────────
-  { id:"P013", tipo:"RETIRO", nombre:"Retiro Confianza", paga:500,  recibe:1500,  disponibles:8, tiempo:"1 – 6 hrs", badge:"NUEVO", badgeType:"blue", envioGratis:false, sinTarjeta:true, popular:false,
+  { id:"P013", tipo:"RETIRO", nombre:"Retiro Confianza", paga:500,  recibe:1500,  disponibles:8, tiempo:"10 – 30 min", badge:"NUEVO", badgeType:"blue", envioGratis:false, sinTarjeta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f3008b28061d954c02e5cf" },
-  { id:"P002", tipo:"RETIRO", nombre:"Retiro Capital",   paga:1000, recibe:3000,  disponibles:6, tiempo:"1 – 6 hrs", badge:"MÁS SOLICITADO", badgeType:"orange", envioGratis:false, sinTarjeta:true, popular:true,
+  { id:"P002", tipo:"RETIRO", nombre:"Retiro Capital",   paga:1000, recibe:3000,  disponibles:6, tiempo:"10 – 30 min", badge:"MÁS SOLICITADO", badgeType:"orange", envioGratis:false, sinTarjeta:true, popular:true,
     link:"https://pay.ecart.com/payment_link/69f2ff2028061d954c02db5e" },
-  { id:"P005", tipo:"RETIRO", nombre:"Retiro Elite",     paga:1500, recibe:5000,  disponibles:5, tiempo:"1 – 6 hrs", badge:"ALTA DEMANDA", badgeType:"orange", envioGratis:false, sinTarjeta:true, popular:false,
+  { id:"P005", tipo:"RETIRO", nombre:"Retiro Elite",     paga:1500, recibe:5000,  disponibles:5, tiempo:"10 – 30 min", badge:"ALTA DEMANDA", badgeType:"orange", envioGratis:false, sinTarjeta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f2ff3828061d954c02dbd8" },
-  { id:"P008", tipo:"RETIRO", nombre:"Retiro VIP",       paga:2000, recibe:9000,  disponibles:4, tiempo:"1 – 6 hrs", badge:"ACCESO LIMITADO", badgeType:"blue", envioGratis:false, sinTarjeta:true, popular:false,
+  { id:"P008", tipo:"RETIRO", nombre:"Retiro VIP",       paga:2000, recibe:9000,  disponibles:4, tiempo:"10 – 30 min", badge:"ACCESO LIMITADO", badgeType:"blue", envioGratis:false, sinTarjeta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f2ff6020f81ed6ab9a3ab4" },
-  { id:"P009", tipo:"RETIRO", nombre:"Retiro GOLD",      paga:2500, recibe:12000, disponibles:2, tiempo:"1 – 6 hrs", badge:"EXCLUSIVO", badgeType:"blue", envioGratis:false, sinTarjeta:true, popular:false,
+  { id:"P009", tipo:"RETIRO", nombre:"Retiro GOLD",      paga:2500, recibe:12000, disponibles:2, tiempo:"10 – 30 min", badge:"EXCLUSIVO", badgeType:"blue", envioGratis:false, sinTarjeta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f2ff7820f81ed6ab9a3b5f" },
 
   // ── TRANSFERENCIAS ────────────────────────────────────────────────────────
-  { id:"P014", tipo:"TRANSFERENCIA", nombre:"Transfer Confianza", paga:500,  recibe:1500,  disponibles:8, tiempo:"1 – 6 hrs", badge:"NUEVO", badgeType:"blue", envioGratis:false, aCuenta:true, popular:false,
+  { id:"P014", tipo:"TRANSFERENCIA", nombre:"Transfer Confianza", paga:500,  recibe:1500,  disponibles:8, tiempo:"10 – 30 min", badge:"NUEVO", badgeType:"blue", envioGratis:false, aCuenta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f300a128061d954c02e6ec" },
-  { id:"P003", tipo:"TRANSFERENCIA", nombre:"Transfer Capital",   paga:1000, recibe:3000,  disponibles:6, tiempo:"1 – 6 hrs", badge:"MÁS SOLICITADO", badgeType:"orange", envioGratis:false, aCuenta:true, popular:true,
+  { id:"P003", tipo:"TRANSFERENCIA", nombre:"Transfer Capital",   paga:1000, recibe:3000,  disponibles:6, tiempo:"10 – 30 min", badge:"MÁS SOLICITADO", badgeType:"orange", envioGratis:false, aCuenta:true, popular:true,
     link:"https://pay.ecart.com/payment_link/69f2ff9128061d954c02deab" },
-  { id:"P006", tipo:"TRANSFERENCIA", nombre:"Transfer Elite",     paga:1500, recibe:5000,  disponibles:5, tiempo:"1 – 6 hrs", badge:"ALTA DEMANDA", badgeType:"orange", envioGratis:false, aCuenta:true, popular:false,
+  { id:"P006", tipo:"TRANSFERENCIA", nombre:"Transfer Elite",     paga:1500, recibe:5000,  disponibles:5, tiempo:"10 – 30 min", badge:"ALTA DEMANDA", badgeType:"orange", envioGratis:false, aCuenta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f2ffa928061d954c02df9b" },
-  { id:"P010", tipo:"TRANSFERENCIA", nombre:"Transfer VIP",       paga:2000, recibe:9000,  disponibles:4, tiempo:"1 – 6 hrs", badge:"ACCESO LIMITADO", badgeType:"blue", envioGratis:false, aCuenta:true, popular:false,
+  { id:"P010", tipo:"TRANSFERENCIA", nombre:"Transfer VIP",       paga:2000, recibe:9000,  disponibles:4, tiempo:"10 – 30 min", badge:"ACCESO LIMITADO", badgeType:"blue", envioGratis:false, aCuenta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f2ffd428061d954c02e14e" },
-  { id:"P011", tipo:"TRANSFERENCIA", nombre:"Transfer GOLD",      paga:2500, recibe:12000, disponibles:2, tiempo:"1 – 6 hrs", badge:"EXCLUSIVO", badgeType:"blue", envioGratis:false, aCuenta:true, popular:false,
+  { id:"P011", tipo:"TRANSFERENCIA", nombre:"Transfer GOLD",      paga:2500, recibe:12000, disponibles:2, tiempo:"10 – 30 min", badge:"EXCLUSIVO", badgeType:"blue", envioGratis:false, aCuenta:true, popular:false,
     link:"https://pay.ecart.com/payment_link/69f2ffe920f81ed6ab9a3e54" },
 ];
 
@@ -125,20 +125,206 @@ function Nav({ setView, view }: { setView: (v: string) => void; view: string }) 
   return (
     <nav style={{ background:C.white, borderBottom:"1px solid "+C.border, padding:"0 32px", display:"flex", alignItems:"center", justifyContent:"space-between", height:60, position:"sticky", top:0, zIndex:100, boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}>
       <div style={{ display:"flex", alignItems:"center", gap:10, cursor:"pointer" }} onClick={()=>setView("home")}>
-        <div style={{ width:36, height:36, background:C.blue, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <span style={{ fontSize:12, fontWeight:800, color:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>CLD</span>
+        <div style={{ width:36, height:36, background:C.blue, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+          <span style={{ fontSize:11, fontWeight:900, color:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>CLD</span>
         </div>
-        <div>
-          <div style={{ fontSize:15, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.1 }}>Cash Laundry</div>
-          <div style={{ fontSize:10, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:1 }}>DEPARTMENT</div>
-        </div>
+        <span style={{ fontSize:14, fontWeight:900, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:0.5, whiteSpace:"nowrap" }}>CA$H LAUNDRY DEPARTMENT</span>
       </div>
       <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-        <button onClick={()=>setView("home")} style={{ background:"none", border:"none", cursor:"pointer", color:view==="home"?C.blue:C.muted, fontSize:14, fontWeight:600, padding:"8px 16px", fontFamily:"'Plus Jakarta Sans',sans-serif", borderBottom:view==="home"?"2px solid "+C.blue:"2px solid transparent" }}>Inicio</button>
-        <button onClick={()=>setView("productos")} style={{ background:"none", border:"none", cursor:"pointer", color:view==="productos"?C.blue:C.muted, fontSize:14, fontWeight:600, padding:"8px 16px", fontFamily:"'Plus Jakarta Sans',sans-serif", borderBottom:view==="productos"?"2px solid "+C.blue:"2px solid transparent" }}>Operaciones</button>
 
       </div>
     </nav>
+  );
+}
+
+
+// ─── SISTEMA ACTIVO (header pulse) ───────────────────────────────────────────
+function SistemaActivo() {
+  return (
+    <div style={{ display:"flex", alignItems:"center", gap:6, background:"#f0fdf4", border:"1px solid #86efac", borderRadius:99, padding:"4px 12px", cursor:"default" }}>
+      <div style={{ width:8, height:8, borderRadius:"50%", background:"#16a34a", animation:"pulse 1.5s infinite", flexShrink:0 }} />
+      <span style={{ fontSize:11, fontWeight:700, color:"#15803d", fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>SISTEMA ACTIVO · Depósitos en 15 min</span>
+    </div>
+  );
+}
+
+// ─── TIMER CORTE ─────────────────────────────────────────────────────────────
+function TimerCorte() {
+  const [secs, setSecs] = useState(525);
+  useEffect(() => {
+    const t = setInterval(() => setSecs(s => s <= 0 ? 525 : s - 1), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const m = String(Math.floor(secs / 60)).padStart(2,"0");
+  const s = String(secs % 60).padStart(2,"0");
+  const now = new Date();
+  now.setMinutes(now.getMinutes() + 20);
+  const hrs = now.getHours();
+  const min = String(now.getMinutes()).padStart(2,"0");
+  const bloque = `${hrs}:${min} hrs`;
+  return (
+    <div style={{ background:"#fffbeb", borderBottom:"1px solid #fde68a", padding:"8px 20px", display:"flex", alignItems:"center", justifyContent:"center", gap:12, flexWrap:"wrap" }}>
+      <span style={{ fontSize:12, color:"#92400e", fontFamily:"'Plus Jakarta Sans',sans-serif", fontWeight:500 }}>⚡ Realiza tu pedido en los próximos</span>
+      <span style={{ fontSize:14, fontWeight:800, color:"#b45309", fontFamily:"'Plus Jakarta Sans',sans-serif", background:"#fef3c7", padding:"2px 10px", borderRadius:6 }}>{m}:{s}</span>
+      <span style={{ fontSize:12, color:"#92400e", fontFamily:"'Plus Jakarta Sans',sans-serif", fontWeight:500 }}>para recibir tu depósito en el bloque de las <strong>{bloque}</strong></span>
+    </div>
+  );
+}
+
+// ─── TOAST SOCIAL PROOF ───────────────────────────────────────────────────────
+const TOASTS = [
+  { nombre:"Juan C.", ciudad:"Monterrey", monto:"$2,000", min:4 },
+  { nombre:"María G.", ciudad:"CDMX", monto:"$1,500", min:7 },
+  { nombre:"Roberto A.", ciudad:"Guadalajara", monto:"$3,000", min:2 },
+  { nombre:"Sofía M.", ciudad:"Puebla", monto:"$500", min:9 },
+  { nombre:"Carlos V.", ciudad:"Tijuana", monto:"$2,500", min:5 },
+  { nombre:"Ana L.", ciudad:"Cancún", monto:"$1,000", min:11 },
+];
+function ToastProof() {
+  const [visible, setVisible] = useState(false);
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const show = () => { setVisible(true); setTimeout(() => setVisible(false), 4000); };
+    const interval = setInterval(() => {
+      setIdx(i => (i + 1) % TOASTS.length);
+      show();
+    }, 9000);
+    setTimeout(show, 3000);
+    return () => clearInterval(interval);
+  }, []);
+  const t = TOASTS[idx];
+  return (
+    <div style={{
+      position:"fixed", bottom:80, left:16, zIndex:999,
+      background:C.white, border:"1px solid "+C.border,
+      borderRadius:12, padding:"12px 16px", boxShadow:"0 4px 20px rgba(0,0,0,0.12)",
+      maxWidth:260, transition:"all 0.4s cubic-bezier(.4,0,.2,1)",
+      opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)",
+      pointerEvents:"none",
+    }}>
+      <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+        <div style={{ width:36, height:36, borderRadius:"50%", background:C.green, color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16, flexShrink:0 }}>💸</div>
+        <div>
+          <div style={{ fontSize:12, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{t.nombre} de {t.ciudad}</div>
+          <div style={{ fontSize:11, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>acaba de recibir <strong style={{ color:C.green }}>{t.monto} MXN</strong> hace {t.min} min</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── STICKY CTA ───────────────────────────────────────────────────────────────
+function StickyCTA({ setView }: { setView: (v:string)=>void }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div style={{
+      position:"fixed", bottom:16, right:16, zIndex:998,
+      opacity: show ? 1 : 0, transform: show ? "scale(1)" : "scale(0.8)",
+      transition:"all 0.3s", pointerEvents: show ? "auto" : "none",
+    }}>
+      <button onClick={() => setView("productos")} style={{
+        background:C.green, color:"#fff", border:"none",
+        padding:"14px 22px", borderRadius:99, fontSize:14, fontWeight:800,
+        cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif",
+        boxShadow:"0 4px 16px rgba(22,163,74,0.4)",
+        display:"flex", alignItems:"center", gap:8,
+      }}>
+        💰 OBTENER MI CASH
+      </button>
+    </div>
+  );
+}
+
+// ─── PASOS ────────────────────────────────────────────────────────────────────
+function SeccionPasos({ setView }: { setView: (v:string)=>void }) {
+  const pasos = [
+    { n:"1", icon:"🎯", titulo:"Elige tu monto", desc:"Selecciona el paquete, retiro o transferencia que más te convenga." },
+    { n:"2", icon:"🔒", titulo:"Realiza el pago seguro", desc:"Pago procesado por Ecart Pay. Tarjeta, SPEI, OXXO o transferencia bancaria." },
+    { n:"3", icon:"💸", titulo:"Recibe tu CASH", desc:"El dinero llega directo a tu cuenta. Paquetes de Cash en 1-3 días, retiros y transferencias en 10-30 min." },
+  ];
+  return (
+    <section style={{ background:C.white, padding:"40px 24px", borderBottom:"1px solid "+C.border }}>
+      <div style={{ maxWidth:900, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:28 }}>
+          <h2 style={{ fontSize:22, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", margin:"0 0 4px", letterSpacing:-0.3 }}>¿Cómo funciona?</h2>
+          <p style={{ fontSize:13, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>3 pasos. Sin complicaciones.</p>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:16 }}>
+          {pasos.map((p,i)=>(
+            <div key={p.n} style={{ background:C.surface, border:"1px solid "+C.border, borderRadius:12, padding:"24px 20px", textAlign:"center", position:"relative" }}>
+              <div style={{ width:40, height:40, borderRadius:"50%", background:C.blue, color:"#fff", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 12px", fontSize:18, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{p.n}</div>
+              <div style={{ fontSize:24, marginBottom:8 }}>{p.icon}</div>
+              <div style={{ fontSize:15, fontWeight:700, color:C.text, marginBottom:6, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{p.titulo}</div>
+              <div style={{ fontSize:13, color:C.muted, lineHeight:1.5, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{p.desc}</div>
+              {i < pasos.length-1 && (
+                <div style={{ position:"absolute", right:-12, top:"50%", transform:"translateY(-50%)", fontSize:20, color:C.border, display:"none" }}>→</div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign:"center", marginTop:24 }}>
+          <button onClick={()=>setView("productos")} style={{ background:C.blue, color:"#fff", border:"none", padding:"13px 32px", borderRadius:10, fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:"0 3px 12px rgba(26,86,219,0.3)" }}>
+            Ver operaciones disponibles →
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── BANNER TRANSPARENCIA ─────────────────────────────────────────────────────
+function BannerTransparencia() {
+  return (
+    <div style={{ background:"#f0fdf4", borderTop:"2px solid #16a34a", borderBottom:"2px solid #16a34a", padding:"14px 24px", display:"flex", alignItems:"center", justifyContent:"center", gap:12 }}>
+      <div style={{ width:32, height:32, borderRadius:"50%", background:"#16a34a", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:16 }}>✅</div>
+      <div>
+        <div style={{ fontSize:14, fontWeight:800, color:"#14532d", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Sin letra chiquita</div>
+        <div style={{ fontSize:12, color:"#15803d", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>El monto que ves es exactamente el monto que recibes en tu cuenta.</div>
+      </div>
+    </div>
+  );
+}
+
+// ─── SELLOS BANCARIOS ─────────────────────────────────────────────────────────
+function SellosBancarios() {
+  const bancos = ["BBVA","Santander","Banamex","Banorte"];
+  const colores = ["#004A97","#EC0000","#006CAE","#E2231A"];
+  return (
+    <div style={{ background:C.surface, borderTop:"1px solid "+C.border, padding:"16px 24px" }}>
+      <div style={{ maxWidth:900, margin:"0 auto" }}>
+        <div style={{ fontSize:11, color:C.muted, textAlign:"center", marginBottom:12, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:1, fontWeight:600 }}>COMPATIBLE CON TU BANCO</div>
+        <div style={{ display:"flex", gap:12, justifyContent:"center", alignItems:"center", flexWrap:"wrap" }}>
+          {bancos.map((b,i)=>(
+            <div key={b} style={{ background:C.white, border:"1px solid "+C.border, borderRadius:8, padding:"8px 16px", display:"flex", alignItems:"center", gap:6 }}>
+              <div style={{ width:10, height:10, borderRadius:"50%", background:colores[i], flexShrink:0 }} />
+              <span style={{ fontSize:12, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{b}</span>
+            </div>
+          ))}
+          <div style={{ background:C.white, border:"1px solid "+C.border, borderRadius:8, padding:"8px 16px", display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:13 }}>🏦</span>
+            <span style={{ fontSize:12, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>SPEI</span>
+          </div>
+          <div style={{ background:C.white, border:"1px solid "+C.border, borderRadius:8, padding:"8px 16px", display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:13 }}>💳</span>
+            <span style={{ fontSize:12, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Visa / MC</span>
+          </div>
+          <div style={{ background:C.white, border:"1px solid "+C.border, borderRadius:8, padding:"8px 16px", display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:13 }}>🏪</span>
+            <span style={{ fontSize:12, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>OXXO Pay</span>
+          </div>
+        </div>
+        <div style={{ marginTop:12, background:C.white, border:"1px solid "+C.border, borderRadius:10, padding:"10px 16px", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
+          <span style={{ fontSize:18 }}>🔒</span>
+          <span style={{ fontSize:12, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Pago procesado de forma segura por</span>
+          <span style={{ fontSize:13, fontWeight:800, color:C.blue, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>ecartPay</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -159,7 +345,7 @@ function Sellos() {
 function Hero({ setView }: { setView: (v: string) => void }) {
   const [ops, setOps] = useState(7);
   useEffect(() => {
-    const t = setInterval(()=>setOps(o=>Math.max(3,o)), 20000);
+    const vals=[7,6,8,5,9,4,7,6,8,5]; let vi=0; const t = setInterval(()=>{ vi=(vi+1)%vals.length; setOps(vals[vi]); }, 45000);
     return ()=>clearInterval(t);
   }, []);
   return (
@@ -171,23 +357,23 @@ function Hero({ setView }: { setView: (v: string) => void }) {
           <span style={{ fontSize:11, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>· +5,200 operaciones</span>
         </div>
         <h1 style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", fontSize:"clamp(28px,5vw,52px)", fontWeight:800, color:C.text, lineHeight:1.1, margin:"0 0 16px", letterSpacing:-1.5 }}>
-          Acceso a liquidez<br /><span style={{ color:C.blue }}>rápido y seguro</span>
+          Tu dinero disponible<br /><span style={{ color:C.blue }}>hoy mismo en tu cuenta</span>
         </h1>
         <p style={{ fontSize:14, color:C.muted, maxWidth:480, lineHeight:1.55, marginBottom:24, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
-          Paquetes, retiros y transferencias de capital para todo México. Proceso verificado, soporte en español, entrega garantizada.
+          Recibe efectivo de forma segura en menos de 15 minutos vía SPEI. Sin trámites, sin burocracia y 100% garantizado.
         </p>
         <div style={{ display:"flex", gap:12, flexWrap:"wrap", alignItems:"center", marginBottom:40 }}>
-          <button onClick={()=>setView("productos")} style={{ background:C.blue, color:"#fff", border:"none", padding:"15px 32px", borderRadius:10, fontSize:16, fontWeight:700, cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:"0 4px 14px rgba(26,86,219,0.35)" }}
+          <button onClick={()=>setView("productos")} style={{ background:C.green, color:"#fff", border:"none", padding:"15px 32px", borderRadius:10, fontSize:16, fontWeight:700, cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:"0 4px 14px rgba(22,163,74,0.35)" }}
             onMouseEnter={e=>{e.currentTarget.style.background=C.blueDark;e.currentTarget.style.transform="translateY(-1px)"}}
             onMouseLeave={e=>{e.currentTarget.style.background=C.blue;e.currentTarget.style.transform="translateY(0)"}}
-          >Ver operaciones disponibles →</button>
+          >OBTENER MI EFECTIVO AHORA</button>
           <div style={{ display:"flex", alignItems:"center", gap:6, background:C.orangeLight, border:"1px solid #fed7aa", borderRadius:8, padding:"10px 16px" }}>
             <span style={{ fontSize:14 }}>🔥</span>
             <span style={{ fontSize:13, fontWeight:600, color:C.orange, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Solo quedan {ops} operaciones disponibles</span>
           </div>
         </div>
         <div style={{ display:"flex", gap:0, flexWrap:"nowrap", overflowX:"auto" }}>
-          {[{n:"+5,200",l:"Ops completadas"},{n:"96%",l:"Satisfacción"},{n:"182",l:"Ops hoy"},{n:"<24 hrs",l:"Tiempo prom."}].map((s,i,arr)=>(
+          {[{n:"+5,200",l:"Ops completadas"},{n:"100%",l:"Depósito Garantizado"},{n:"182",l:"Ops hoy"},{n:"15 min",l:"En 15 Minutos"}].map((s,i,arr)=>(
             <div key={s.l} style={{ paddingRight:20, marginRight:20, borderRight: i<arr.length-1 ? "1px solid "+C.border : "none", flexShrink:0 }}>
               <div style={{ fontSize:22, fontWeight:800, color:C.blue, fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1 }}>{s.n}</div>
               <div style={{ fontSize:11, color:C.muted, marginTop:2, fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap" }}>{s.l}</div>
@@ -263,8 +449,14 @@ function SeccionReviews() {
 
 function Productos({ setView, setCarrito }: { setView: (v: string) => void; setCarrito: (p: any) => void }) {
   const [filtro, setFiltro] = useState("PAQUETE");
+  const [dOff, setDOff] = useState(0);
+  const dOffsets = [0,1,-1,2,-1,1,0,-1,1,-1,2,0,-1,1];
+  useEffect(()=>{
+    const t = setInterval(()=>setDOff(o=>(o+1)%dOffsets.length), 120000);
+    return ()=>clearInterval(t);
+  },[]);
   const tipos = ["PAQUETE","RETIRO","TRANSFERENCIA"];
-  const filtrados = PRODUCTOS.filter(p=>p.tipo===filtro);
+  const filtrados = PRODUCTOS.filter(p=>p.tipo===filtro).map((p,i)=>({...p, disponibles: Math.max(1, p.disponibles + (dOffsets[(dOff+i)%dOffsets.length]||0))}));
 
   const handleComprar = (prod) => {
     fbq("track","AddToCart",{ content_name:prod.nombre, value:prod.paga, currency:"MXN" });
@@ -294,6 +486,12 @@ function Productos({ setView, setCarrito }: { setView: (v: string) => void; setC
       </div>
       <div style={{ borderTop:"2px solid "+C.blue, background:C.surface }}>
         <div style={{ maxWidth:1100, margin:"0 auto", padding:"32px" }}>
+          <div style={{ background:"#fff5f5", border:"1px solid #fca5a5", borderRadius:10, padding:"12px 16px", marginBottom:20, display:"flex", alignItems:"flex-start", gap:10 }}>
+            <span style={{ fontSize:16, flexShrink:0, marginTop:1 }}>ℹ️</span>
+            <p style={{ fontSize:13, color:"#991b1b", fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.6, margin:0, fontWeight:500 }}>
+              {filtro === "PAQUETE" ? "💵 Ca$h calidad espejo. Pasan todas las pruebas de seguridad. Se envían por paquetería a todo México. Llega en 1–3 días hábiles según tu ciudad." : filtro === "RETIRO" ? "🏧 Retiro sin tarjeta en cualquier cajero de la república. Trabajamos con BBVA, Banorte, Santander, Spin by OXXO, Coppel y Banco Azteca. Te enviamos tus códigos por WhatsApp en 10–30 min." : "🏦 Transferencia a cualquier cuenta bancaria. 100% legal y seguro. Te contactamos por WhatsApp para los datos. Recibes en 10–30 min después de tu compra."}
+            </p>
+          </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 }}>
             {filtrados.map(p=>(
               <div key={p.id} style={{ background:C.white, border:p.popular?"2px solid "+C.blue:"1px solid "+C.border, borderRadius:16, overflow:"hidden", boxShadow:p.popular?"0 4px 20px rgba(26,86,219,0.12)":"0 1px 4px rgba(0,0,0,0.06)", position:"relative", transition:"box-shadow 0.2s,transform 0.2s" }}
@@ -591,7 +789,14 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
             onMouseEnter={e=>e.currentTarget.style.background=C.blueDark}
             onMouseLeave={e=>e.currentTarget.style.background=C.blue}
           >Ir a pagar — {fmt(carrito.paga)}</button>
-        </>}
+      <div style={{ background:C.surface, border:"1px solid "+C.border, borderRadius:10, padding:"12px 16px", marginTop:12, display:"flex", alignItems:"center", justifyContent:"center", gap:10 }}>
+        <span style={{ fontSize:18 }}>🔒</span>
+        <div style={{ textAlign:"center" }}>
+          <div style={{ fontSize:12, fontWeight:700, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Pago procesado de forma segura por <span style={{ color:C.blue }}>ecartPay</span></div>
+          <div style={{ fontSize:11, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Encriptación SSL · Datos protegidos</div>
+        </div>
+      </div>
+    </>}
 
         {step===1 && (
           <div style={{ textAlign:"center", padding:"80px 0" }}>
@@ -621,10 +826,14 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
 function HomePage({ setView, setCarrito }: { setView: (v: string) => void; setCarrito: (p: any) => void }) {
   return (
     <>
+      <TimerCorte />
       <Hero setView={setView} />
       <Sellos />
+      <SeccionPasos setView={setView} />
       <SeccionGarantias />
       <Productos setView={setView} setCarrito={setCarrito} />
+      <BannerTransparencia />
+      <SellosBancarios />
       <SeccionReviews />
     </>
   );
@@ -677,7 +886,7 @@ function Footer({ setView }: { setView?: (v: string) => void }) {
               <div style={{ width:36, height:36, background:C.blue, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <span style={{ fontSize:12, fontWeight:800, color:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>CLD</span>
               </div>
-              <span style={{ fontSize:16, fontWeight:700, color:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Cash Laundry Department</span>
+              <span style={{ fontSize:16, fontWeight:700, color:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>CA$H LAUNDRY DEPARTMENT</span>
             </div>
             <p style={{ fontSize:13, color:"#94a3b8", fontFamily:"'Plus Jakarta Sans',sans-serif", maxWidth:280, lineHeight:1.6 }}>Acceso a liquidez, operaciones de capital y transferencias para todo México.</p>
           </div>
@@ -689,7 +898,7 @@ function Footer({ setView }: { setView?: (v: string) => void }) {
           </div>
         </div>
         <div style={{ borderTop:"1px solid #1e293b", paddingTop:20, display:"flex", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
-          <span style={{ fontSize:12, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>© 2026 Cash Laundry Department</span>
+          <span style={{ fontSize:12, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>© 2026 CA$H LAUNDRY DEPARTMENT</span>
           <div style={{ display:"flex", gap:12, alignItems:"center" }}>
             {["🔒 Seguro","🇲🇽 México","✅ +5,200"].map(s=>(<span key={s} style={{ fontSize:11, color:"#475569", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{s}</span>))}
           </div>
@@ -733,9 +942,14 @@ export default function App() {
       {loaded && <>
         <Nav view={view} setView={handleSetView} />
         <LiveTicker />
+        <ToastProof />
+        <StickyCTA setView={handleSetView} />
         {view==="home" && <HomePage setView={handleSetView} setCarrito={setCarrito} />}
         {view==="productos" && <>
+          <TimerCorte />
           <Productos setView={handleSetView} setCarrito={setCarrito} />
+          <BannerTransparencia />
+          <SellosBancarios />
           <SeccionReviews />
           <SeccionGarantias />
         </>}
