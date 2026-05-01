@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from ‘react’;
 
 const fbq = (event: string, name: string, params: object = {}) => {
 console.log(`[META PIXEL] ${event}("${name}", ${JSON.stringify(params || {})})`);
