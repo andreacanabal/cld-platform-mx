@@ -1,5 +1,4 @@
 import { useState, useEffect } from “react”;
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const fbq = (event: string, name: string, params: object = {}) => {
 console.log(`[META PIXEL] ${event}("${name}", ${JSON.stringify(params || {})})`);
@@ -379,7 +378,6 @@ privateKey: “priv69f2f95300c40f24311dbe6c”,
 apiBase:    “https://app.ecartpay.com”,
 };
 
-// @ts-ignore
 async function crearCheckoutEcartPay(produto: any, cliente: any) {
 const body = {
 account_id: ECARTPAY.accountId,
