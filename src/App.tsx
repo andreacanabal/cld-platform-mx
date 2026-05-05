@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 
+// ─── META PIXEL 1904192260257741 ─────────────────────────────────────────────
+declare global { interface Window { fbq: any; _fbq: any; } }
 const fbq = (event: string, name: string, params: object = {}) => {
-  console.log(`[META PIXEL] ${event}("${name}", ${JSON.stringify(params || {})})`);
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq(event, name, params);
+  }
 };
 
 const C = {
