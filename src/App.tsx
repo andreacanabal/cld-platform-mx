@@ -700,7 +700,7 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
       link: carrito.link,
       timestamp: new Date().toISOString(),
     };
-    fetch("https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx", {
+    fetch("https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(makePayload),
