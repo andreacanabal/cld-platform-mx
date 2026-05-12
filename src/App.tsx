@@ -691,6 +691,21 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
       return;
     }
     setError(null);
+
+    // Send to Make.com for abandoned cart follow-up
+    const makePayload = {
+      telefono: telefono.trim(),
+      producto: carrito.nombre,
+      monto: carrito.paga,
+      link: carrito.link,
+      timestamp: new Date().toISOString(),
+    };
+    fetch("https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(makePayload),
+    }).catch(() => {}); // silent fail - don't block the payment
+
     fbq("track", "InitiateCheckout", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
     fbq("track", "Purchase", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
     window.location.href = carrito.link;
