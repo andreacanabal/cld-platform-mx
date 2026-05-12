@@ -675,7 +675,7 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
   const [error, setError] = useState(null);
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
-  const [telefono, setTelefono] = useState("");
+  const [telefono, setTelefono] = useState("+52");
   const [calle, setCalle] = useState("");
   const [colonia, setColonia] = useState("");
   const [ciudad, setCiudad] = useState("");
@@ -693,8 +693,9 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
     setError(null);
 
     // Send to Make.com for abandoned cart follow-up
+    const cleanPhone = telefono.trim().replace(/\s/g, "").replace(/[^+\d]/g, "");
     const makePayload = {
-      telefono: telefono.trim(),
+      telefono: cleanPhone,
       producto: carrito.nombre,
       monto: carrito.paga,
       link: carrito.link,
@@ -830,9 +831,16 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
             </div>
             <div style={{ marginBottom:8 }}>
               <input
-                placeholder="+52 55 0000 0000"
+                placeholder="55 0000 0000"
                 value={telefono}
-                onChange={e=>setTelefono(e.target.value)}
+                onChange={e=>{
+                  const val = e.target.value;
+                  if (!val.startsWith("+52")) {
+                    setTelefono("+52" + val.replace(/^[+]?52/, ""));
+                  } else {
+                    setTelefono(val);
+                  }
+                }}
                 type="tel"
                 style={{ width:"100%", background:"#0f172a", border:"2px solid #334155", borderRadius:8, color:"#f1f5f9", padding:"13px 14px", fontSize:16, fontFamily:"'Plus Jakarta Sans',sans-serif", outline:"none", boxSizing:"border-box" }}
                 onFocus={e=>e.currentTarget.style.borderColor=C.blue}
