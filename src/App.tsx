@@ -714,8 +714,16 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
     }).catch(() => {}); // silent fail - don't block the payment
 
     fbq("track", "InitiateCheckout", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
-    fbq("track", "Purchase", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
-    window.location.href = carrito.link;
+    
+    // Open WhatsApp with pre-written message
+    const msg = encodeURIComponent(
+      "Hola! Quiero hacer un pedido:\n\n" +
+      "Producto: " + carrito.nombre + "\n" +
+      "Monto: $" + carrito.paga + " MXN\n" +
+      "WhatsApp: " + telefono + "\n\n" +
+      "Link de pago: " + carrito.link
+    );
+    window.open("https://wa.me/message/2T4U3VE55YDAC1?text=" + msg, "_blank");
   };
 
   if (!carrito) return null;
