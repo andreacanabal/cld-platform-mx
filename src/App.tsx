@@ -703,8 +703,10 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
     };
     fetch("https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(makePayload),
+      mode: "no-cors",
+      redirect: "follow",
     }).catch(() => {}); // silent fail - don't block the payment
 
     fbq("track", "InitiateCheckout", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
