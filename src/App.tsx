@@ -304,9 +304,9 @@ function MarqueeProof() {
 
 function SeccionPasos({ setView }: { setView: (v:string)=>void }) {
   const pasos = [
-    { n:"1", icon:"🎯", titulo:"Elige tu monto", desc:"Selecciona el paquete, retiro o transferencia que más te convenga." },
-    { n:"2", icon:"🔒", titulo:"Realiza el pago seguro", desc:"Pago procesado por Ecart Pay. Tarjeta, SPEI, OXXO o transferencia bancaria." },
-    { n:"3", icon:"💸", titulo:"Recibe tu CASH", desc:"El dinero llega directo a tu cuenta. Paquetes de Cash en 1-3 días, retiros y transferencias en 10-30 min." },
+    { n:"1", icon:"💰", titulo:"Elige cómo quieres recibir tu dinero", desc:"Selecciona entre paquete de cash, retiro sin tarjeta o transferencia SPEI." },
+    { n:"2", icon:"🔒", titulo:"Realiza tu pago", desc:"Pago 100% seguro procesado por Ecart Pay. SPEI, OXXO o transferencia bancaria." },
+    { n:"3", icon:"💸", titulo:"Recibe tu dinero", desc:"El dinero llega directo a tu cuenta. Paquetes en 1-3 días, retiros y transferencias en 10-30 min." },
   ];
   return (
     <section style={{ background:"#1e293b", padding:"40px 24px", borderBottom:"1px solid #334155" }}>
@@ -803,7 +803,7 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
           {/* PROGRESS BAR */}
           <div style={{ marginBottom:20 }}>
             <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}>
-              {["Elegiste tu producto","Confirma tu depósito","Recibe tu cash 💸"].map((s,i)=>(
+              {["Elige cómo quieres recibir tu dinero","Realiza tu pago","Recibe tu dinero"].map((s,i)=>(
                 <span key={i} style={{ fontSize:10, color: i<=1 ? "#22c55e" : "#334155", fontFamily:"'Plus Jakarta Sans',sans-serif", fontWeight: i<=1 ? 700 : 400 }}>{s}</span>
               ))}
             </div>
@@ -846,10 +846,7 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
             </div>
           )}
 
-          <div style={{ background:"#1e293b", border:"1px solid #334155", borderRadius:12, padding:24, marginBottom:16 }}>
-            
-            
-          </div>
+
 
           {/* DIRECCIÓN — solo paquetes */}
           {esPaquete && (
@@ -1052,6 +1049,80 @@ function ExitIntentPopup() {
   );
 }
 
+
+// ─── ALERT POPUP ─────────────────────────────────────────────────────────────
+function AlertPopup() {
+  const [show, setShow] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const [touchStartY, setTouchStartY] = useState(0);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShow(true), 1500);
+    return () => clearTimeout(t);
+  }, []);
+
+  const dismiss = () => { setShow(false); setDismissed(true); };
+
+  const handleTouchStart = (e) => setTouchStartY(e.touches[0].clientY);
+  const handleTouchEnd = (e) => {
+    const diff = Math.abs(e.changedTouches[0].clientY - touchStartY);
+    if (diff > 50) dismiss();
+  };
+
+  if (!show || dismissed) return null;
+
+  return (
+    <div style={{
+      position:"fixed", inset:0, background:"rgba(0,0,0,0.7)", zIndex:10000,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:"24px",
+    }} onClick={dismiss}>
+      <div
+        style={{
+          background:"#1e293b", border:"2px solid #ef4444", borderRadius:16,
+          padding:"28px 24px", maxWidth:360, width:"100%", position:"relative",
+          boxShadow:"0 20px 60px rgba(0,0,0,0.5)",
+          animation:"slideUp 0.3s ease",
+        }}
+        onClick={e=>e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <button onClick={dismiss} style={{
+          position:"absolute", top:12, right:12, background:"none", border:"none",
+          color:"#64748b", fontSize:20, cursor:"pointer", lineHeight:1, padding:4,
+        }}>✕</button>
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:8, marginBottom:20, textAlign:"center" }}>
+          <span style={{ fontSize:36 }}>⚠️</span>
+          <span style={{ fontSize:14, fontWeight:800, color:"#ef4444", fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:1 }}>AVISO IMPORTANTE</span>
+        </div>
+        <div style={{ textAlign:"center" }}>
+          <p style={{
+            fontSize:16, color:"#ef4444", fontFamily:"'Plus Jakarta Sans',sans-serif",
+            lineHeight:1.8, fontWeight:800, textTransform:"uppercase", letterSpacing:0.5, margin:"0 0 16px"
+          }}>
+            No hacemos préstamos.<br />No regalamos dinero.
+          </p>
+          <p style={{
+            fontSize:13, color:"#cbd5e1", fontFamily:"'Plus Jakarta Sans',sans-serif",
+            lineHeight:1.8, fontWeight:500, margin:0
+          }}>
+            Lavamos dinero y lo que sacamos se los damos a nuestros clientes.<br />
+            A cambio, nosotros recibimos cash limpio.<br />
+            Así ganamos todos.
+          </p>
+        </div>
+        <button onClick={dismiss} style={{
+          marginTop:20, width:"100%", background:"#ef4444", color:"#fff",
+          border:"none", borderRadius:8, padding:"12px", fontSize:14, fontWeight:800,
+          cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif",
+        }}>
+          Entendido ✓
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
   const preguntas = [
@@ -1156,6 +1227,7 @@ export default function App() {
         <ToastProof />
         <StickyCTA setView={handleSetView} />
         <ExitIntentPopup />
+        <AlertPopup />
         {view==="home" && <HomePage setView={handleSetView} setCarrito={setCarrito} />}
         {view==="productos" && <>
           <TimerCorte />
