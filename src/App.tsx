@@ -701,12 +701,16 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
       link: carrito.link,
       timestamp: new Date().toISOString(),
     };
-    fetch("https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec", {
-      method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify(makePayload),
+    const scriptURL = "https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec";
+    const params = new URLSearchParams({
+      telefono: makePayload.telefono,
+      producto: makePayload.producto,
+      monto: String(makePayload.monto),
+      link: makePayload.link,
+    });
+    fetch(scriptURL + "?" + params.toString(), {
+      method: "GET",
       mode: "no-cors",
-      redirect: "follow",
     }).catch(() => {}); // silent fail - don't block the payment
 
     fbq("track", "InitiateCheckout", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
