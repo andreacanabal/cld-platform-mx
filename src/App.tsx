@@ -132,9 +132,29 @@ function SistemaActivo() {
 
 // ─── TIMER CORTE ─────────────────────────────────────────────────────────────
 function TimerCorte() {
-  const [secs, setSecs] = useState(525);
+  const getInitialSecs = () => {
+    try {
+      const saved = sessionStorage.getItem("cld_timer_end");
+      if (saved) {
+        const remaining = Math.floor((parseInt(saved) - Date.now()) / 1000);
+        if (remaining > 0) return remaining;
+      }
+      const end = Date.now() + 525000;
+      sessionStorage.setItem("cld_timer_end", String(end));
+      return 525;
+    } catch(e) { return 525; }
+  };
+  const [secs, setSecs] = useState(getInitialSecs);
   useEffect(() => {
-    const t = setInterval(() => setSecs(s => s <= 0 ? 525 : s - 1), 1000);
+    const t = setInterval(() => {
+      setSecs(s => {
+        if (s <= 1) {
+          try { sessionStorage.removeItem("cld_timer_end"); } catch(e) {}
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
     return () => clearInterval(t);
   }, []);
   const m = String(Math.floor(secs / 60)).padStart(2,"0");
@@ -196,7 +216,7 @@ function ToastProof() {
 }
 
 // ─── STICKY CTA ───────────────────────────────────────────────────────────────
-const WA_LINK = "https://wa.me/521XXXXXXXXXX?text=Hola%2C+tengo+dudas+sobre+mi+dep%C3%B3sito+en+CLD";
+const WA_LINK = "https://wa.me/message/2T4U3VE55YDAC1";
 
 function StickyCTA({ setView }: { setView: (v:string)=>void }) {
   const [show, setShow] = useState(false);
@@ -221,7 +241,7 @@ function StickyCTA({ setView }: { setView: (v:string)=>void }) {
       }}>
         💰 OBTENER MI CASH YA
       </button>
-      <a href={WA_LINK} target="_blank" rel="noreferrer" style={{
+      <a href="https://wa.me/message/5BWV67JKL6KNP1" target="_blank" rel="noreferrer" style={{
         flex:"0 0 30%", background:"#0f172a", color:"#94a3b8", border:"none",
         borderLeft:"1px solid #334155",
         padding:"16px 8px", fontSize:13, fontWeight:700,
@@ -443,7 +463,7 @@ function SeccionGarantias() {
     { icon:"🛡️", titulo:"Garantía de operación", desc:"Si tu operación no se completa correctamente, recibirás soporte prioritario y resolución total. Sin letras chiquitas.", bg:C.blueLight, border:"#bfdbfe" },
     { icon:"⚡", titulo:"Entrega en tiempo", desc:"182 operaciones procesadas hoy. Tu operación entra al sistema en minutos y se procesa dentro del tiempo estimado.", bg:C.greenLight, border:"#bbf7d0" },
     { icon:"🔒", titulo:"Datos protegidos", desc:"Tu información es confidencial. Operamos con cifrado y nunca compartimos datos con terceros.", bg:C.orangeLight, border:"#fed7aa" },
-    { icon:"💬", titulo:"Soporte en español", desc:"Equipo de soporte disponible para resolver cualquier duda antes, durante y después de tu operación.", bg:"#fdf4ff", border:"#e9d5ff" },
+    { icon:"💬", titulo:"Soporte en español", desc:"Equipo de soporte disponible para resolver cualquier duda antes, durante y después de tu operación.", bg:"#1e293b", border:"#334155" },
   ];
   return (
     <section style={{ background:"#0f172a", padding:"36px 32px", borderBottom:"1px solid #1e293b" }}>
@@ -589,7 +609,7 @@ function Productos({ setView, setCarrito }: { setView: (v: string) => void; setC
                   <button onClick={()=>handleComprar(p)} style={{ width:"100%", background:C.blue, color:"#fff", border:"none", padding:"14px", borderRadius:10, fontSize:15, fontWeight:700, cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:"0 3px 10px rgba(26,86,219,0.25)", transition:"all 0.15s" }}
                     onMouseEnter={e=>{e.currentTarget.style.background=C.blueDark;e.currentTarget.style.transform="translateY(-1px)"}}
                     onMouseLeave={e=>{e.currentTarget.style.background=C.blue;e.currentTarget.style.transform="translateY(0)"}}
-                  >Comprar ahora</button>
+                  >Verificar disponibilidad</button>
                   <div style={{ textAlign:"center", marginTop:10, fontSize:12, color:C.muted, fontFamily:"'Plus Jakarta Sans',sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:4 }}>
                     <span>🔒</span> Proceso seguro · Soporte incluido
                   </div>
@@ -680,47 +700,26 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
   const [colonia, setColonia] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [cp, setCp] = useState("");
+  const [showWaiting, setShowWaiting] = useState(false);
 
   const esPaquete = carrito && carrito.tipo === "PAQUETE";
 
   const confirmar = () => {
-    const camposBase = !telefono.trim();
     const camposDireccion = esPaquete && (!calle.trim() || !colonia.trim() || !ciudad.trim() || !cp.trim());
-    if (camposBase || camposDireccion) {
-      setError("Por favor completa todos los campos.");
+    if (camposDireccion) {
+      setError("Por favor completa tu dirección de entrega.");
       return;
     }
     setError(null);
-
-    // Send to Make.com for abandoned cart follow-up
-    const cleanPhone = telefono.trim().replace(/\s/g, "").replace(/[^+\d]/g, "");
-    const makePayload = {
-      telefono: cleanPhone,
-      producto: carrito.nombre,
-      monto: carrito.paga,
-      link: carrito.link,
-      timestamp: new Date().toISOString(),
-    };
-    const scriptURL = "https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec";
-    const params = new URLSearchParams({
-      telefono: makePayload.telefono,
-      producto: makePayload.producto,
-      monto: String(makePayload.monto),
-      link: makePayload.link,
-    });
-    fetch(scriptURL + "?" + params.toString(), {
-      method: "GET",
-      mode: "no-cors",
-    }).catch(() => {}); // silent fail - don't block the payment
-
     fbq("track", "InitiateCheckout", { value: carrito.paga, currency: "MXN", content_name: carrito.nombre });
-    
-    // Open WhatsApp with pre-written message
+    setShowWaiting(true);
+  };
+
+  const goToWhatsApp = () => {
     const msg = encodeURIComponent(
       "Hola! Quiero hacer un pedido:\n\n" +
       "Producto: " + carrito.nombre + "\n" +
-      "Monto: $" + carrito.paga + " MXN\n" +
-      "WhatsApp: " + telefono + "\n\n" +
+      "Monto: $" + carrito.paga + " MXN\n\n" +
       "Link de pago: " + carrito.link
     );
     window.open("https://wa.me/message/2T4U3VE55YDAC1?text=" + msg, "_blank");
@@ -730,6 +729,7 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
 
   return (
     <div style={{ background:"#0f172a", minHeight:"70vh", padding:"40px 32px" }}>
+      {showWaiting && <WaitingRoom onDone={goToWhatsApp} />}
       <div style={{ maxWidth:560, margin:"0 auto" }}>
         {step===0 && <>
           {/* BANNER GARANTÍA */}
@@ -793,6 +793,13 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
             <button onClick={()=>setView("productos")} style={{ background:"none", border:"none", color:C.muted, cursor:"pointer", fontSize:14, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>← Volver</button>
             <h2 style={{ fontSize:24, fontWeight:800, color:"#f1f5f9", fontFamily:"'Plus Jakarta Sans',sans-serif", margin:0 }}>Confirmar operación</h2>
           </div>
+          {/* URGENCY BANNER */}
+          <div style={{ background:"#450a0a", border:"1px solid #dc2626", borderRadius:10, padding:"10px 16px", marginBottom:16, display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
+            <span style={{ fontSize:16 }}>⚠️</span>
+            <span style={{ fontSize:13, fontWeight:700, color:"#fca5a5", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+              Solo queda <strong style={{ color:"#ef4444" }}>1 lugar disponible</strong> para {carrito.nombre}
+            </span>
+          </div>
           {/* PROGRESS BAR */}
           <div style={{ marginBottom:20 }}>
             <div style={{ display:"flex", justifyContent:"space-between", marginBottom:6 }}>
@@ -840,30 +847,8 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
           )}
 
           <div style={{ background:"#1e293b", border:"1px solid #334155", borderRadius:12, padding:24, marginBottom:16 }}>
-            <div style={{ fontSize:13, fontWeight:700, color:"#f1f5f9", marginBottom:14, fontFamily:"'Plus Jakarta Sans',sans-serif", display:"flex", alignItems:"center", gap:6 }}>
-              📱 ¿A qué WhatsApp te contactamos?
-            </div>
-            <div style={{ marginBottom:8 }}>
-              <input
-                placeholder="55 0000 0000"
-                value={telefono}
-                onChange={e=>{
-                  const val = e.target.value;
-                  if (!val.startsWith("+52")) {
-                    setTelefono("+52" + val.replace(/^[+]?52/, ""));
-                  } else {
-                    setTelefono(val);
-                  }
-                }}
-                type="tel"
-                style={{ width:"100%", background:"#0f172a", border:"2px solid #334155", borderRadius:8, color:"#f1f5f9", padding:"13px 14px", fontSize:16, fontFamily:"'Plus Jakarta Sans',sans-serif", outline:"none", boxSizing:"border-box" }}
-                onFocus={e=>e.currentTarget.style.borderColor=C.blue}
-                onBlur={e=>e.currentTarget.style.borderColor=C.border}
-              />
-              <div style={{ fontSize:11, color:"#64748b", marginTop:5, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
-                Te confirmamos tu operación por aquí
-              </div>
-            </div>
+            
+            
           </div>
 
           {/* DIRECCIÓN — solo paquetes */}
@@ -902,7 +887,7 @@ function Checkout({ carrito, setView }: { carrito: any; setView: (v: string) => 
           <button onClick={confirmar} style={{ width:"100%", background:C.blue, color:"#fff", border:"none", padding:"16px", borderRadius:10, fontSize:16, fontWeight:700, cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:"0 4px 14px rgba(26,86,219,0.35)" }}
             onMouseEnter={e=>e.currentTarget.style.background=C.blueDark}
             onMouseLeave={e=>e.currentTarget.style.background=C.blue}
-          >SÍ, ENVIAR MI CASH ({fmt(carrito.paga)})</button>
+          >PEDIR MI CA$H — {fmt(carrito.paga)}</button>
       <div style={{ display:"flex", gap:8, marginTop:12 }}>
         <div style={{ flex:1, background:"#1e293b", border:"1px solid #334155", borderRadius:10, padding:"10px", display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
           <span style={{ fontSize:14 }}>🔒</span>
@@ -959,11 +944,43 @@ function HomePage({ setView, setCarrito }: { setView: (v: string) => void; setCa
 
 
 
+
+// ─── WAITING ROOM ─────────────────────────────────────────────────────────────
+function WaitingRoom({ onDone }: { onDone: () => void }) {
+  const [step, setStep] = useState(0);
+  const steps = [
+    "Verificando disponibilidad de fondos en tu zona...",
+    "Conectando con el sistema CLD...",
+    "¡Lugar disponible! Redirigiendo a WhatsApp..."
+  ];
+  useEffect(() => {
+    const t1 = setTimeout(() => setStep(1), 800);
+    const t2 = setTimeout(() => setStep(2), 1600);
+    const t3 = setTimeout(() => onDone(), 2400);
+    return () => [t1,t2,t3].forEach(clearTimeout);
+  }, []);
+  return (
+    <div style={{
+      position:"fixed", inset:0, background:"#0f172a", zIndex:9999,
+      display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
+      fontFamily:"'Plus Jakarta Sans',sans-serif"
+    }}>
+      <div style={{ width:60, height:60, borderRadius:"50%", border:"3px solid #22c55e", borderTopColor:"transparent", animation:"spin 0.8s linear infinite", marginBottom:32 }} />
+      <div style={{ fontSize:16, fontWeight:600, color:"#f1f5f9", marginBottom:12, textAlign:"center", maxWidth:280, lineHeight:1.5 }}>
+        {steps[step]}
+      </div>
+      <div style={{ width:200, height:3, background:"#1e293b", borderRadius:99, overflow:"hidden", marginTop:16 }}>
+        <div style={{ height:"100%", background:"#22c55e", borderRadius:99, width: step===0?"30%": step===1?"70%":"100%", transition:"width 0.7s ease" }} />
+      </div>
+    </div>
+  );
+}
+
 // ─── EXIT INTENT POPUP ────────────────────────────────────────────────────────
 function ExitIntentPopup() {
   const [show, setShow] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const WA_NUMBER = "521XXXXXXXXXX"; // replace with real number
+  const WA_NUMBER = "13362284640";
 
   useEffect(() => {
     if (dismissed) return;
@@ -1012,7 +1029,7 @@ function ExitIntentPopup() {
             No te vayas sin tu cash. Habla con un asesor ahora por WhatsApp y recibe un bono extra.
           </p>
         </div>
-        <a href={"https://wa.me/"+WA_NUMBER+"?text=Hola%2C+tengo+dudas+sobre+mi+dep%C3%B3sito+en+CLD"}
+        <a href="https://wa.me/message/3O55FGBLPRV7F1"
           target="_blank" rel="noreferrer"
           style={{
             display:"block", width:"100%", background:"#25D366", color:"#fff",
