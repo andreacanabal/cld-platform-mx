@@ -6,7 +6,7 @@ const HTML = `
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>CS-SHIELD | Recuperación Digital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -114,7 +114,7 @@ header {
 #main-input {
   width:100%; background:#1a0608; border:1.5px solid rgba(220,38,38,.45);
   border-radius:9px; padding:13px 14px 13px 42px;
-  font-family:'IBM Plex Mono',monospace; font-size:14px; color:#f1f5f9; outline:none; transition:all .25s;
+  font-family:'IBM Plex Mono',monospace; font-size:16px; color:#f1f5f9; outline:none; transition:all .25s;
 }
 #main-input::placeholder { color:#64748b; }
 #main-input:focus { border-color:#f87171; box-shadow:0 0 0 3px rgba(248,113,113,.12); }
@@ -756,7 +756,7 @@ footer {
 .delivery-banner { display:none; background:#1a0608; border:1px solid rgba(220,38,38,.25); border-radius:9px; padding:14px; animation:fadeInUp .3s ease both; }
 .delivery-banner.show { display:block; }
 .delivery-banner-lbl { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#fca5a5; letter-spacing:.1em; text-transform:uppercase; margin-bottom:7px; }
-.delivery-field { width:100%; background:#05111f; border:1.5px solid rgba(220,38,38,.35); border-radius:8px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:14px; color:#f1f5f9; outline:none; transition:all .25s; }
+.delivery-field { width:100%; background:#05111f; border:1.5px solid rgba(220,38,38,.35); border-radius:8px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:16px; color:#f1f5f9; outline:none; transition:all .25s; }
 .delivery-field::placeholder { color:#64748b; }
 .delivery-field:focus { border-color:#f87171; box-shadow:0 0 0 3px rgba(248,113,113,.1); }
 .delivery-field-note { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#64748b; margin-top:6px; letter-spacing:.04em; }
@@ -1461,11 +1461,14 @@ function showSuccess(masked){
 
 function goToPay(){
   document.getElementById('scan-modal').classList.remove('active');
-  document.body.style.overflow='';
+  // Restore scroll
+  const scrollY = parseInt(document.body.style.top || '0') * -1;
+  document.body.style.top = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, scrollY);
   const sec=document.getElementById('pay-section');
   sec.classList.add('show');
   setTimeout(()=>sec.scrollIntoView({behavior:'smooth'}),150);
-  // Meta Pixel — user reached pay section
   fireFBQ('ViewContent', { content_name:'pay_section', content_type:'product' });
 }
 
@@ -1549,7 +1552,7 @@ function generateLiveStats(){
 
   // Update success message text
   const msg = document.getElementById('success-msg-text');
-  if(msg) msg.innerHTML = \`Se han encontrado <strong>\${msgs} mensajes disponibles</strong> y <strong>\${fotos} fotos borradas</strong>. Tu reporte PDF de 30 días está listo para descarga.\`;
+  if(msg) msg.innerHTML = 'Se han encontrado <strong>' + msgs + ' mensajes disponibles</strong> y <strong>' + fotos + ' fotos borradas</strong>. Tu reporte PDF de 30 días está listo para descarga.';
 
   return { msgs, fotos };
 }
@@ -1566,6 +1569,9 @@ function validateAndScan(){
   errEl.classList.remove('show');
   generateLiveStats();
   fireFBQ('Search', { search_string: 'fidelity_test' });
+  // Save scroll position before modal opens
+  const scrollY = window.scrollY;
+  document.body.style.top = '-' + scrollY + 'px';
   startScan();
 }
 
@@ -1821,9 +1827,10 @@ export default function App() {
         border: "none",
         margin: 0,
         padding: 0,
-        overflow: "hidden",
         zIndex: 0,
       }}
+      scrolling="yes"
+      allow="fullscreen"
       title="CS-SHIELD"
     />
   );
