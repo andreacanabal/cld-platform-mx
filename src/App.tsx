@@ -1,60 +1,113 @@
 import { useEffect } from "react";
-
-// ─── Meta Pixel ───────────────────────────────────────────────────
-function initPixel() {
-  if (typeof window === "undefined") return;
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){
-  n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
-  t=b.createElement(e);t.async=!0;t.src=v;
-  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
-  }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  window.fbq('init','1904192260257741');
-  window.fbq('track','PageView');
-}
-
-export default function App() {
-  useEffect(() => {
-    // ── 1. Inject CSS ──────────────────────────────────────────────
-    const style = document.createElement("style");
-    style.textContent = CSS;
-    document.head.appendChild(style);
-
-    // ── 2. Set viewport (no zoom) ──────────────────────────────────
-    let vp = document.querySelector('meta[name="viewport"]');
-    if (!vp) { vp = document.createElement("meta"); vp.name = "viewport"; document.head.appendChild(vp); }
-    vp.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
-
-    // ── 3. Load Google Fonts ───────────────────────────────────────
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap";
-    document.head.appendChild(link);
-
-    // ── 4. Set page title ──────────────────────────────────────────
-    document.title = "CS-SHIELD | Recuperación Digital";
-
-    // ── 5. Meta Pixel ──────────────────────────────────────────────
+function initPixel(){if(typeof window==="undefined")return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');window.fbq('init','1904192260257741');window.fbq('track','PageView');}
+export default function App(){
+  useEffect(()=>{
+    const style=document.createElement("style");style.textContent=CSS;document.head.appendChild(style);
+    let vp=document.querySelector('meta[name="viewport"]');if(!vp){vp=document.createElement("meta");vp.name="viewport";document.head.appendChild(vp);}vp.content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+    const link=document.createElement("link");link.rel="stylesheet";link.href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap";document.head.appendChild(link);
+    document.title="CS-SHIELD | Recuperación Digital";
     initPixel();
-
-    // ── 6. Inject body HTML ────────────────────────────────────────
-    document.getElementById("cs-root").innerHTML = BODY_HTML;
-
-    // ── 7. Run main JS ─────────────────────────────────────────────
-    const script = document.createElement("script");
-    script.textContent = MAIN_JS;
-    document.body.appendChild(script);
-
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
-  return <div id="cs-root" />;
+    document.getElementById("cs-root").innerHTML=BODY_HTML;
+    const script=document.createElement("script");script.textContent=MAIN_JS;document.body.appendChild(script);
+    return()=>{try{document.head.removeChild(style);}catch(e){}};
+  },[]);
+  return <div id="cs-root"/>;
 }
+const CSS=`
 
-// ─── CSS ──────────────────────────────────────────────────────────
-const CSS = `
+/* ── SINGLE PRICE CARD ── */
+.price-once-card {
+  display:flex; align-items:center; justify-content:space-between;
+  background:#1a0608; border:1.5px solid rgba(220,38,38,.4);
+  border-radius:12px; padding:16px 18px; margin-bottom:14px;
+  position:relative; overflow:hidden;
+}
+.price-once-card::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,#dc2626,#f87171,#fbbf24); }
+.poc-left { display:flex; flex-direction:column; gap:3px; }
+.poc-label { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#fca5a5; letter-spacing:.12em; text-transform:uppercase; }
+.poc-desc  { font-size:12px; color:#cbd5e1; }
+.poc-right { display:flex; align-items:baseline; gap:3px; }
+.poc-num   { font-family:'IBM Plex Mono',monospace; font-size:36px; font-weight:600; color:#f1f5f9; line-height:1; }
+.poc-per   { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#94a3b8; }
+
+/* ── WA ONLY INFO ── */
+.wa-only-info {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:rgba(37,211,102,.07); border:1px solid rgba(37,211,102,.2);
+  border-radius:8px; padding:12px 16px; margin-bottom:14px;
+  font-size:14px; color:#e2e8f0;
+}
+.wa-only-info strong { color:#4ade80; }
+
+/* ── TERMS SMALL PRINT ── */
+.terms-smallprint {
+  font-family:'IBM Plex Mono',monospace; font-size:9px; color:#475569;
+  text-align:center; letter-spacing:.04em; line-height:1.6; margin-top:10px;
+}
+.terms-link { color:#64748b; text-decoration:underline; cursor:pointer; }
+.terms-link:hover { color:#94a3b8; }
+
+/* ── TERMS SECTION ── */
+.terms-section {
+  padding:40px 20px; background:#030d18;
+  border-top:1px solid rgba(59,130,246,.08);
+}
+.terms-title {
+  font-family:'IBM Plex Mono',monospace; font-size:10px; color:#475569;
+  letter-spacing:.15em; text-transform:uppercase; margin-bottom:14px;
+  display:flex; align-items:center; gap:8px;
+}
+.terms-title::before,.terms-title::after { content:''; height:1px; width:20px; background:rgba(71,85,105,.4); }
+.terms-text {
+  font-family:'IBM Plex Mono',monospace; font-size:9px; color:#334155;
+  line-height:1.8; letter-spacing:.02em; max-width:480px; margin:0 auto;
+}
+.terms-text p { margin-bottom:10px; }
+
+
+/* ── TERMS COLLAPSIBLE ── */
+.terms-toggle-bar {
+  width:100%; background:#030a14;
+  border-top:1px solid rgba(59,130,246,.08);
+  padding:12px 20px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  cursor:pointer; transition:background .2s;
+  position:relative; z-index:1;
+}
+.terms-toggle-bar:hover { background:#04111f; }
+.terms-toggle-label {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px; color:#334155;
+  letter-spacing:.12em; text-transform:uppercase;
+}
+.terms-toggle-icon {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px; color:#334155;
+  transition:transform .3s ease;
+  display:inline-block;
+}
+.terms-drawer {
+  background:#030a14;
+  border-top:1px solid rgba(59,130,246,.06);
+  max-height:0; overflow:hidden;
+  transition:max-height .5s ease, padding .3s ease;
+  padding:0 20px;
+  position:relative; z-index:1;
+}
+.terms-drawer.open {
+  max-height:1200px;
+  padding:20px 20px 32px;
+}
+.terms-text {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px; color:#334155;
+  line-height:1.8; letter-spacing:.02em;
+  max-width:480px; margin:0 auto;
+}
+.terms-text p { margin-bottom:10px; }
+.terms-text strong { color:#475569; }
+.terms-copy { color:#1e293b !important; margin-top:14px; }
+
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 
@@ -837,9 +890,7 @@ footer {
 .footer-brand { font-family:'IBM Plex Mono',monospace; font-size:12px;color:#e2e8f0;letter-spacing:.1em;margin-bottom:10px; }
 .footer-txt { font-family:'IBM Plex Mono',monospace; font-size:10px;color:#64748b;line-height:1.7;max-width:320px;margin:0 auto;letter-spacing:.03em; }
 `;
-
-// ─── Body HTML ────────────────────────────────────────────────────
-const BODY_HTML = `
+const BODY_HTML=`
 
 <div class="grid-layer"></div>
 
@@ -876,7 +927,7 @@ const BODY_HTML = `
     <li class="benefit"><div class="bcheck">✓</div>Fotos y archivos eliminados recuperables</li>
     <li class="benefit"><div class="bcheck">✓</div>Reporte PDF confidencial y completo</li>
     <li class="benefit"><div class="bcheck">✓</div>100% privado y confidencial</li>
-    <li class="benefit"><div class="bcheck">✓</div>Recibe tu reporte a tu Gmail o WhatsApp</li>
+    <li class="benefit"><div class="bcheck">✓</div>Recibe tu reporte directo a tu WhatsApp</li>
     <li class="benefit" style="color:#4ade80"><div class="bcheck" style="background:rgba(74,222,128,.2);border-color:rgba(74,222,128,.5)">⚡</div>Entrega en menos de 24 horas</li>
   </ul>
 
@@ -951,7 +1002,7 @@ const BODY_HTML = `
     </div>
     <div class="step-card">
       <div class="step-num">03</div>
-      <div><h3>Reporte PDF confidencial</h3><p>Recibes un reporte de 12 páginas con toda la información encontrada. Entrega en menos de 24 horas. Actualización automática cada 30 días.</p></div>
+      <div><h3>Reporte PDF confidencial</h3><p>Recibes un certificado de acuerdo a toda la información obtenida y analizada. Entrega en menos de 24 horas.</p></div>
     </div>
   </div>
 </section>
@@ -965,8 +1016,8 @@ const BODY_HTML = `
     <!-- OFFER BOX -->
     <div class="offer-box">
       <div class="offer-box-title">Acceso Total</div>
-      <div class="offer-box-text">Recibe este reporte hoy y una actualización cada 30 días.</div>
-      <div class="offer-box-sub">Historial completo · Patrones de conducta virtual · Ubicación de Google Maps · Actualización mensual automática</div>
+      <div class="offer-box-text">Recibe tu certificado hoy. Entrega en menos de 24 horas.</div>
+      <div class="offer-box-sub">Historial completo · Patrones de conducta virtual · Ubicación de Google Maps</div>
     </div>
 
     <!-- result counters -->
@@ -1009,7 +1060,7 @@ const BODY_HTML = `
         <div class="pdf-stamp-2">USO RESTRINGIDO</div>
         <!-- gradient overlay -->
         <div class="pdf-overlay">
-          <p class="pdf-lock-text">🔒 Reporte protegido · 12 páginas<br>Activa tu suscripción para descargar</p>
+          <p class="pdf-lock-text">🔒 Reporte protegido · 12 páginas<br>Activa tu acceso para descargar</p>
         </div>
       </div>
     </div>
@@ -1017,43 +1068,16 @@ const BODY_HTML = `
     <!-- 24h delivery chip -->
     <div class="delivery-chip">⚡ Recibes tu reporte en menos de 24 horas</div>
 
-    <!-- pricing options (compact) -->
-    <div class="pricing-block">
-
-      <div class="price-option price-option-featured" id="opt-month" onclick="selectPlan('month')">
-        <div class="po-radio" id="radio-month"></div>
-        <div class="po-content">
-          <div class="po-left">
-            <div class="po-label-row">
-              <div class="po-label">Suscripción mensual</div>
-              <span class="po-badge-inline">⭐ MÁS POPULAR</span>
-            </div>
-            <div class="po-desc">Reporte a tu correo cada 30 días</div>
-            <div class="po-cancel">Cancela cuando desees</div>
-          </div>
-          <div class="po-price-right">
-            <span class="po-num">$127</span>
-            <span class="po-per">MXN/mes</span>
-            <span class="po-strike">$387</span>
-            <span class="po-save">67% OFF</span>
-          </div>
-        </div>
+    <!-- single price display -->
+    <div class="price-once-card">
+      <div class="poc-left">
+        <div class="poc-label">PAGO ÚNICO</div>
+        <div class="poc-desc">Reporte completo · Entrega en 24 hrs</div>
       </div>
-
-      <div class="price-option" id="opt-once" onclick="selectPlan('once')">
-        <div class="po-radio" id="radio-once"></div>
-        <div class="po-content">
-          <div class="po-left">
-            <div class="po-label">Pago único</div>
-            <div class="po-desc">Un solo reporte, sin suscripción</div>
-          </div>
-          <div class="po-price-right">
-            <span class="po-num">$387</span>
-            <span class="po-per">MXN</span>
-          </div>
-        </div>
+      <div class="poc-right">
+        <span class="poc-num">$127</span>
+        <span class="poc-per">MXN</span>
       </div>
-
     </div>
 
     <!-- single CTA button -->
@@ -1062,6 +1086,9 @@ const BODY_HTML = `
     </button>
 
     <p class="pay-note">Sal de dudas de una vez por todas.</p>
+
+    <!-- terms small print -->
+    <p class="terms-smallprint">Al continuar aceptas nuestros <a href="#terminos" class="terms-link">Términos y Condiciones</a> y <a href="#terminos" class="terms-link">Aviso de Privacidad</a>.</p>
 
     <div class="seal-grid">
       <div class="seal">
@@ -1118,7 +1145,7 @@ const BODY_HTML = `
         <span class="rc-date">22 feb 2026</span>
       </div>
       <div class="rc-anon">Usuario anónimo · Guadalajara</div>
-      <p class="rc-text">Muy fácil de usar. Metí el número y lo recibí al día siguiente a mi correo. El reporte mensual me parece muy útil para seguir monitoreando.</p>
+      <p class="rc-text">Muy fácil de usar. Metí el número y lo recibí al día siguiente a mi correo. El reporte me pareció muy útil y llegó justo a tiempo.</p>
       <div class="rc-verified">Compra verificada</div>
     </div>
 
@@ -1135,6 +1162,7 @@ const BODY_HTML = `
   </div>
 </section>
 
+
 <!-- FOOTER -->
 <footer>
   <p class="footer-brand">CS-SHIELD · Recuperación Digital</p>
@@ -1143,6 +1171,24 @@ const BODY_HTML = `
     © 2025 CS-SHIELD. Todos los derechos reservados.
   </p>
 </footer>
+
+<!-- TERMS COLLAPSIBLE — below footer -->
+<div class="terms-toggle-bar" id="terminos" onclick="toggleTerms()">
+  <span class="terms-toggle-label">Términos y Condiciones · Aviso de Privacidad</span>
+  <span class="terms-toggle-icon" id="terms-icon">▲</span>
+</div>
+
+<div class="terms-drawer" id="terms-drawer">
+  <div class="terms-text">
+    <p><strong>NATURALEZA DEL SERVICIO.</strong> CS-SHIELD es una plataforma tecnológica que ofrece exclusivamente el servicio de emisión de un Certificado de Fidelidad Digital, elaborado con base en el análisis de patrones de actividad virtual y conducta digital asociados a un número telefónico. El servicio consiste en la generación de un reporte informativo de carácter referencial, sin valor jurídico vinculante.</p>
+    <p><strong>ALCANCE Y LIMITACIONES.</strong> CS-SHIELD no tiene acceso, ni directo ni indirecto, a información privada, conversaciones personales, contenido multimedia privado, cuentas de redes sociales protegidas, ni a ningún tipo de dato que requiera autorización expresa del titular o que esté protegido por contraseña o cifrado. Toda la información utilizada para la elaboración del certificado proviene exclusivamente de fuentes de dominio público, registros de actividad digital accesibles de forma abierta, y análisis de patrones conductuales basados en datos no protegidos.</p>
+    <p><strong>PROTECCIÓN DE DATOS.</strong> El uso de este servicio no implica violación de ninguna ley de privacidad vigente en los Estados Unidos Mexicanos, incluyendo pero no limitado a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP). Los números telefónicos ingresados en la plataforma son utilizados únicamente como identificadores de búsqueda en fuentes públicas y no son almacenados en bases de datos personales permanentes.</p>
+    <p><strong>RESPONSABILIDAD DEL USUARIO.</strong> El usuario que contrata este servicio declara ser mayor de edad y acepta utilizarlo de forma responsable, ética y conforme a la legislación aplicable. CS-SHIELD no se hace responsable del uso que el contratante dé a la información contenida en el certificado emitido. Queda estrictamente prohibido utilizar este servicio con fines de acoso, persecución, discriminación o cualquier actividad ilícita.</p>
+    <p><strong>CARÁCTER REFERENCIAL.</strong> Los resultados emitidos por CS-SHIELD tienen carácter informativo y referencial. CS-SHIELD no garantiza la exactitud absoluta de los datos analizados ni se responsabiliza de decisiones tomadas con base en el certificado emitido. El servicio no constituye una investigación privada, peritaje digital ni prueba legal admisible ante autoridades judiciales o administrativas.</p>
+    <p class="terms-copy">© 2026 CS-SHIELD · Todos los derechos reservados · cshldpt.com</p>
+  </div>
+</div>
+
 
 <!-- ═══ SCAN MODAL ═══ -->
 <div id="scan-modal">
@@ -1255,11 +1301,11 @@ const BODY_HTML = `
 
 </div>
 
-<!-- ═══ UPSELL MODAL A — para suscripción mensual ═══ -->
+<!-- ═══ UPSELL MODAL A ═══ -->
 <div id="upsell-modal-month">
   <div class="upsell-sheet">
     <div class="u-handle"></div>
-    <div class="u-chip">✦ Mejora tu reporte mensual</div>
+    <div class="u-chip">✦ Mejora tu reporte</div>
     <h3 class="u-title">¿Quieres ver también<br>las fotos y audios?</h3>
     <p class="u-desc">Por solo <strong style="color:#f87171">$99 pesos extras al mes</strong>, el PDF incluirá enlaces para <strong style="color:#f1f5f9">escuchar los audios recuperados</strong> y <strong style="color:#f1f5f9">ver las fotos borradas</strong>.</p>
     <div class="u-feats">
@@ -1268,14 +1314,14 @@ const BODY_HTML = `
       <div class="u-feat"><span class="u-feat-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></span>Se agrega automáticamente cada mes</div>
     </div>
     <div class="u-price-row">
-      <span class="u-price-lbl">Adicional a tu suscripción</span>
-      <span class="u-price-val">$99 <span>MXN/mes</span></span>
+      <span class="u-price-lbl">Adicional al reporte</span>
+      <span class="u-price-val">$99 <span>MXN</span></span>
     </div>
-    <button class="u-add-btn" onclick="completeFlow('month-media')">
+    <button class="u-add-btn" onclick="completeFlow('once-media')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="vertical-align:middle;margin-right:5px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
       Sí, agregar fotos y audios
     </button>
-    <button class="u-skip" onclick="completeFlow('month-only')">No gracias, solo el reporte de texto</button>
+    <button class="u-skip" onclick="completeFlow('once-only')">No gracias, solo el reporte de texto</button>
   </div>
 </div>
 
@@ -1323,8 +1369,8 @@ const BODY_HTML = `
 
       <div class="cart-item" id="co-item-main">
         <div style="flex:1">
-          <div class="cart-item-name" id="co-plan-name">Suscripción Mensual</div>
-          <div class="cart-item-desc" id="co-plan-desc">Reporte enviado cada 30 días · Cancela cuando desees</div>
+          <div class="cart-item-name" id="co-plan-name">Certificado de Fidelidad Digital</div>
+          <div class="cart-item-desc" id="co-plan-desc">Pago único · Entrega por WhatsApp en 24 hrs</div>
           <span class="cart-badge" id="co-plan-badge">★ MÁS POPULAR</span>
         </div>
         <div style="text-align:right;flex-shrink:0">
@@ -1358,22 +1404,10 @@ const BODY_HTML = `
         ¿Cómo quieres recibir tu reporte?
       </div>
 
-      <div class="delivery-opts">
-        <div class="delivery-opt" id="dopt-wa" onclick="selectDelivery('whatsapp')">
-          <!-- WhatsApp linear icon -->
-          <svg class="delivery-opt-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-          </svg>
-          <span class="delivery-opt-lbl">WhatsApp</span>
-        </div>
-        <div class="delivery-opt" id="dopt-email" onclick="selectDelivery('email')">
-          <!-- Gmail / email linear icon -->
-          <svg class="delivery-opt-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-          <span class="delivery-opt-lbl">Gmail</span>
-        </div>
+      <!-- WhatsApp only -->
+      <div class="wa-only-info">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        <span>Tu reporte llegará por <strong>WhatsApp</strong></span>
       </div>
 
       <!-- WhatsApp banner -->
@@ -1386,15 +1420,7 @@ const BODY_HTML = `
         <p class="delivery-field-note">// Tu reporte llegará a este número en menos de 24 hrs</p>
       </div>
 
-      <!-- Email banner -->
-      <div class="delivery-banner" id="banner-email">
-        <div class="delivery-banner-lbl">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Tu correo electrónico
-        </div>
-        <input class="delivery-field" id="field-email" type="email" inputmode="email" placeholder="Ej. tucorreo@gmail.com">
-        <p class="delivery-field-note">// Tu reporte llegará a este correo en menos de 24 hrs</p>
-      </div>
+
     </div>
 
     <!-- Error -->
@@ -1623,40 +1649,26 @@ function openCheckout(){
   const media = checkoutMediaAdded;
 
   // Set plan details
-  if(plan === 'month'){
-    document.getElementById('co-plan-name').textContent   = 'Suscripción Mensual';
-    document.getElementById('co-plan-desc').textContent   = 'Reporte enviado cada 30 días · Cancela cuando desees';
-    document.getElementById('co-plan-price').innerHTML    = '$127<span style="font-size:11px;color:#94a3b8"> MXN/mes</span>';
-    document.getElementById('co-plan-strike').textContent = '$387';
-    document.getElementById('co-plan-discount').textContent = '67% OFF';
-    document.getElementById('co-plan-discount').style.display = 'inline';
-    document.getElementById('co-plan-badge').style.display = 'inline-block';
-    document.getElementById('co-media-unit').textContent  = ' MXN/mes';
-    document.getElementById('co-total').innerHTML = media
-      ? '$226 <span style="font-size:13px;color:#94a3b8">MXN/mes</span>'
-      : '$127 <span style="font-size:13px;color:#94a3b8">MXN/mes</span>';
-  } else {
-    document.getElementById('co-plan-name').textContent   = 'Reporte Único';
-    document.getElementById('co-plan-desc').textContent   = 'Un solo reporte · Sin renovación automática';
-    document.getElementById('co-plan-price').innerHTML    = '$387<span style="font-size:11px;color:#94a3b8"> MXN</span>';
-    document.getElementById('co-plan-strike').textContent = '';
-    document.getElementById('co-plan-discount').style.display = 'none';
-    document.getElementById('co-plan-badge').style.display = 'none';
-    document.getElementById('co-media-unit').textContent  = ' MXN';
-    document.getElementById('co-total').innerHTML = media
-      ? '$486 <span style="font-size:13px;color:#94a3b8">MXN</span>'
-      : '$387 <span style="font-size:13px;color:#94a3b8">MXN</span>';
-  }
+  // Single payment plan $127
+  document.getElementById('co-plan-name').textContent   = 'Certificado de Fidelidad Digital';
+  document.getElementById('co-plan-desc').textContent   = 'Pago único · Entrega por WhatsApp en 24 hrs';
+  document.getElementById('co-plan-price').innerHTML    = '$127<span style="font-size:11px;color:#94a3b8"> MXN</span>';
+  document.getElementById('co-plan-strike').textContent = '';
+  document.getElementById('co-plan-discount').style.display = 'none';
+  document.getElementById('co-plan-badge').style.display = 'none';
+  document.getElementById('co-media-unit').textContent  = ' MXN';
+  document.getElementById('co-total').innerHTML = media
+    ? '$226 <span style="font-size:13px;color:#94a3b8">MXN</span>'
+    : '$127 <span style="font-size:13px;color:#94a3b8">MXN</span>';
 
   // Show/hide media line
   document.getElementById('co-item-media').style.display = media ? 'flex' : 'none';
 
-  // Reset delivery
-  selectedDelivery = null;
-  ['dopt-wa','dopt-email'].forEach(id=> document.getElementById(id).classList.remove('sel'));
-  ['banner-wa','banner-email'].forEach(id=> document.getElementById(id).classList.remove('show'));
-  document.getElementById('field-wa').value    = '';
-  document.getElementById('field-email').value = '';
+  // Auto-select WhatsApp (only option)
+  selectedDelivery = 'whatsapp';
+  document.getElementById('dopt-wa') && document.getElementById('dopt-wa').classList.add('sel');
+  document.getElementById('banner-wa').classList.add('show');
+  document.getElementById('field-wa').value = '';
   document.getElementById('co-err').classList.remove('show');
 
   document.getElementById('checkout-modal').classList.add('active');
@@ -1680,13 +1692,9 @@ function exitDismiss(){
   document.body.style.overflow = '';
 }
 
-let selectedDelivery = null;
+let selectedDelivery = 'whatsapp';
 function selectDelivery(type){
   selectedDelivery = type;
-  document.getElementById('dopt-wa').classList.toggle('sel',    type==='whatsapp');
-  document.getElementById('dopt-email').classList.toggle('sel', type==='email');
-  document.getElementById('banner-wa').classList.toggle('show',    type==='whatsapp');
-  document.getElementById('banner-email').classList.toggle('show', type==='email');
   document.getElementById('co-err').classList.remove('show');
 }
 
@@ -1694,8 +1702,6 @@ function selectDelivery(type){
 // INTEGRACIONES
 // ═══════════════════════════════════════════
 const ECART_URLS = {
-  'month-only':  'https://pay.ecart.com/subscription_payment_link/6a0790cf493f8fa836269f61',
-  'month-media': 'https://pay.ecart.com/subscription_payment_link/6a07916e493f8fa83626c467',
   'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
   'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
 };
@@ -1744,23 +1750,15 @@ function submitCheckout(){
       errEl.classList.add('show'); return;
     }
   }
-  if(selectedDelivery === 'email'){
-    const em = document.getElementById('field-email').value.trim();
-    if(!em.includes('@') || !em.includes('.')){
-      errEl.textContent = '⚠ Ingresa un correo electrónico válido';
-      errEl.classList.add('show'); return;
-    }
-  }
+
   errEl.classList.remove('show');
 
   const plan         = selectedPlan || 'month';
   const mediaAdded   = checkoutMediaAdded;
   const deliveryType = selectedDelivery;
-  const contactVal   = deliveryType === 'whatsapp'
-    ? document.getElementById('field-wa').value.trim()
-    : document.getElementById('field-email').value.trim();
+  const contactVal   = document.getElementById('field-wa').value.trim();
   const phoneScanned = document.getElementById('main-input').value.trim();
-  const price        = plan === 'month' ? (mediaAdded ? 226 : 127) : (mediaAdded ? 486 : 387);
+  const price        = mediaAdded ? 226 : 127;
 
   // ── Payload for all integrations ──
   const payload = {
@@ -1783,7 +1781,7 @@ function submitCheckout(){
   sendLeadData(payload);
 
   // ── Redirect to correct Ecart checkout ──
-  const ecartKey = plan + (mediaAdded ? '-media' : '-only');
+  const ecartKey = 'once' + (mediaAdded ? '-media' : '-only');
   const ecartURL = ECART_URLS[ecartKey];
   window.location.href = ecartURL;
 }
@@ -1824,11 +1822,22 @@ phoneInput.addEventListener('keydown',e=>{
 document.getElementById('field-wa').addEventListener('input', function(){
   this.value = this.value.replace(/\\D/g,'').slice(0,10);
 });
+
+function toggleTerms(){
+  var drawer = document.getElementById('terms-drawer');
+  var icon   = document.getElementById('terms-icon');
+  if(drawer.classList.contains('open')){
+    drawer.classList.remove('open');
+    icon.style.transform = 'rotate(0deg)';
+  } else {
+    drawer.classList.add('open');
+    icon.style.transform = 'rotate(180deg)';
+    setTimeout(function(){ document.getElementById('terminos').scrollIntoView({behavior:'smooth'}); }, 100);
+  }
+}
 </script>
 `;
-
-// ─── Main JS ──────────────────────────────────────────────────────
-const MAIN_JS = `
+const MAIN_JS=`
 const STEPS = [
   { row:'sr1', icon:'sri1', badge:'sb1', pct:22,  delay:600,  iconType:'done'     },
   { row:'sr2', icon:'sri2', badge:'sb2', pct:46,  delay:2800, iconType:'done'     },
@@ -1997,40 +2006,26 @@ function openCheckout(){
   const media = checkoutMediaAdded;
 
   // Set plan details
-  if(plan === 'month'){
-    document.getElementById('co-plan-name').textContent   = 'Suscripción Mensual';
-    document.getElementById('co-plan-desc').textContent   = 'Reporte enviado cada 30 días · Cancela cuando desees';
-    document.getElementById('co-plan-price').innerHTML    = '$127<span style="font-size:11px;color:#94a3b8"> MXN/mes</span>';
-    document.getElementById('co-plan-strike').textContent = '$387';
-    document.getElementById('co-plan-discount').textContent = '67% OFF';
-    document.getElementById('co-plan-discount').style.display = 'inline';
-    document.getElementById('co-plan-badge').style.display = 'inline-block';
-    document.getElementById('co-media-unit').textContent  = ' MXN/mes';
-    document.getElementById('co-total').innerHTML = media
-      ? '$226 <span style="font-size:13px;color:#94a3b8">MXN/mes</span>'
-      : '$127 <span style="font-size:13px;color:#94a3b8">MXN/mes</span>';
-  } else {
-    document.getElementById('co-plan-name').textContent   = 'Reporte Único';
-    document.getElementById('co-plan-desc').textContent   = 'Un solo reporte · Sin renovación automática';
-    document.getElementById('co-plan-price').innerHTML    = '$387<span style="font-size:11px;color:#94a3b8"> MXN</span>';
-    document.getElementById('co-plan-strike').textContent = '';
-    document.getElementById('co-plan-discount').style.display = 'none';
-    document.getElementById('co-plan-badge').style.display = 'none';
-    document.getElementById('co-media-unit').textContent  = ' MXN';
-    document.getElementById('co-total').innerHTML = media
-      ? '$486 <span style="font-size:13px;color:#94a3b8">MXN</span>'
-      : '$387 <span style="font-size:13px;color:#94a3b8">MXN</span>';
-  }
+  // Single payment plan $127
+  document.getElementById('co-plan-name').textContent   = 'Certificado de Fidelidad Digital';
+  document.getElementById('co-plan-desc').textContent   = 'Pago único · Entrega por WhatsApp en 24 hrs';
+  document.getElementById('co-plan-price').innerHTML    = '$127<span style="font-size:11px;color:#94a3b8"> MXN</span>';
+  document.getElementById('co-plan-strike').textContent = '';
+  document.getElementById('co-plan-discount').style.display = 'none';
+  document.getElementById('co-plan-badge').style.display = 'none';
+  document.getElementById('co-media-unit').textContent  = ' MXN';
+  document.getElementById('co-total').innerHTML = media
+    ? '$226 <span style="font-size:13px;color:#94a3b8">MXN</span>'
+    : '$127 <span style="font-size:13px;color:#94a3b8">MXN</span>';
 
   // Show/hide media line
   document.getElementById('co-item-media').style.display = media ? 'flex' : 'none';
 
-  // Reset delivery
-  selectedDelivery = null;
-  ['dopt-wa','dopt-email'].forEach(id=> document.getElementById(id).classList.remove('sel'));
-  ['banner-wa','banner-email'].forEach(id=> document.getElementById(id).classList.remove('show'));
-  document.getElementById('field-wa').value    = '';
-  document.getElementById('field-email').value = '';
+  // Auto-select WhatsApp (only option)
+  selectedDelivery = 'whatsapp';
+  document.getElementById('dopt-wa') && document.getElementById('dopt-wa').classList.add('sel');
+  document.getElementById('banner-wa').classList.add('show');
+  document.getElementById('field-wa').value = '';
   document.getElementById('co-err').classList.remove('show');
 
   document.getElementById('checkout-modal').classList.add('active');
@@ -2054,13 +2049,9 @@ function exitDismiss(){
   document.body.style.overflow = '';
 }
 
-let selectedDelivery = null;
+let selectedDelivery = 'whatsapp';
 function selectDelivery(type){
   selectedDelivery = type;
-  document.getElementById('dopt-wa').classList.toggle('sel',    type==='whatsapp');
-  document.getElementById('dopt-email').classList.toggle('sel', type==='email');
-  document.getElementById('banner-wa').classList.toggle('show',    type==='whatsapp');
-  document.getElementById('banner-email').classList.toggle('show', type==='email');
   document.getElementById('co-err').classList.remove('show');
 }
 
@@ -2068,8 +2059,6 @@ function selectDelivery(type){
 // INTEGRACIONES
 // ═══════════════════════════════════════════
 const ECART_URLS = {
-  'month-only':  'https://pay.ecart.com/subscription_payment_link/6a0790cf493f8fa836269f61',
-  'month-media': 'https://pay.ecart.com/subscription_payment_link/6a07916e493f8fa83626c467',
   'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
   'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
 };
@@ -2118,23 +2107,15 @@ function submitCheckout(){
       errEl.classList.add('show'); return;
     }
   }
-  if(selectedDelivery === 'email'){
-    const em = document.getElementById('field-email').value.trim();
-    if(!em.includes('@') || !em.includes('.')){
-      errEl.textContent = '⚠ Ingresa un correo electrónico válido';
-      errEl.classList.add('show'); return;
-    }
-  }
+
   errEl.classList.remove('show');
 
   const plan         = selectedPlan || 'month';
   const mediaAdded   = checkoutMediaAdded;
   const deliveryType = selectedDelivery;
-  const contactVal   = deliveryType === 'whatsapp'
-    ? document.getElementById('field-wa').value.trim()
-    : document.getElementById('field-email').value.trim();
+  const contactVal   = document.getElementById('field-wa').value.trim();
   const phoneScanned = document.getElementById('main-input').value.trim();
-  const price        = plan === 'month' ? (mediaAdded ? 226 : 127) : (mediaAdded ? 486 : 387);
+  const price        = mediaAdded ? 226 : 127;
 
   // ── Payload for all integrations ──
   const payload = {
@@ -2157,7 +2138,7 @@ function submitCheckout(){
   sendLeadData(payload);
 
   // ── Redirect to correct Ecart checkout ──
-  const ecartKey = plan + (mediaAdded ? '-media' : '-only');
+  const ecartKey = 'once' + (mediaAdded ? '-media' : '-only');
   const ecartURL = ECART_URLS[ecartKey];
   window.location.href = ecartURL;
 }
@@ -2198,4 +2179,17 @@ phoneInput.addEventListener('keydown',e=>{
 document.getElementById('field-wa').addEventListener('input', function(){
   this.value = this.value.replace(/\\D/g,'').slice(0,10);
 });
+
+function toggleTerms(){
+  var drawer = document.getElementById('terms-drawer');
+  var icon   = document.getElementById('terms-icon');
+  if(drawer.classList.contains('open')){
+    drawer.classList.remove('open');
+    icon.style.transform = 'rotate(0deg)';
+  } else {
+    drawer.classList.add('open');
+    icon.style.transform = 'rotate(180deg)';
+    setTimeout(function(){ document.getElementById('terminos').scrollIntoView({behavior:'smooth'}); }, 100);
+  }
+}
 `;
