@@ -1705,7 +1705,7 @@ const ECART_URLS = {
   'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
   'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
 };
-const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec';
+const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycbzOQfUlDiQlbzv898tHj-3_NY2GToP1P6Y-JunLLTtb-tUGVuNF9AEIhPkf7L-JVg7M/exec';
 const MAKE_WEBHOOK  = 'https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx';
 const PIPEDREAM     = 'https://eou5ie9w8yy98sm.m.pipedream.net';
 
@@ -2062,7 +2062,7 @@ const ECART_URLS = {
   'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
   'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
 };
-const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec';
+const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycbzOQfUlDiQlbzv898tHj-3_NY2GToP1P6Y-JunLLTtb-tUGVuNF9AEIhPkf7L-JVg7M/exec';
 const MAKE_WEBHOOK  = 'https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx';
 const PIPEDREAM     = 'https://eou5ie9w8yy98sm.m.pipedream.net';
 
