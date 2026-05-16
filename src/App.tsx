@@ -1,29 +1,60 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-// ── CS-SHIELD full HTML (self-contained) ──────────────────────────────────
-const HTML = `
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CS-SHIELD | Recuperación Digital</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+// ─── Meta Pixel ───────────────────────────────────────────────────
+function initPixel() {
+  if (typeof window === "undefined") return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){
+  n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+  t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)
+  }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  window.fbq('init','1904192260257741');
+  window.fbq('track','PageView');
+}
 
-<!-- ═══ META PIXEL 1904192260257741 ═══ -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1904192260257741');
-fbq('track','PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1904192260257741&ev=PageView&noscript=1"/></noscript>
-<style>
+export default function App() {
+  useEffect(() => {
+    // ── 1. Inject CSS ──────────────────────────────────────────────
+    const style = document.createElement("style");
+    style.textContent = CSS;
+    document.head.appendChild(style);
+
+    // ── 2. Set viewport (no zoom) ──────────────────────────────────
+    let vp = document.querySelector('meta[name="viewport"]');
+    if (!vp) { vp = document.createElement("meta"); vp.name = "viewport"; document.head.appendChild(vp); }
+    vp.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+
+    // ── 3. Load Google Fonts ───────────────────────────────────────
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap";
+    document.head.appendChild(link);
+
+    // ── 4. Set page title ──────────────────────────────────────────
+    document.title = "CS-SHIELD | Recuperación Digital";
+
+    // ── 5. Meta Pixel ──────────────────────────────────────────────
+    initPixel();
+
+    // ── 6. Inject body HTML ────────────────────────────────────────
+    document.getElementById("cs-root").innerHTML = BODY_HTML;
+
+    // ── 7. Run main JS ─────────────────────────────────────────────
+    const script = document.createElement("script");
+    script.textContent = MAIN_JS;
+    document.body.appendChild(script);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  return <div id="cs-root" />;
+}
+
+// ─── CSS ──────────────────────────────────────────────────────────
+const CSS = `
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 
@@ -114,7 +145,7 @@ header {
 #main-input {
   width:100%; background:#1a0608; border:1.5px solid rgba(220,38,38,.45);
   border-radius:9px; padding:13px 14px 13px 42px;
-  font-family:'IBM Plex Mono',monospace; font-size:16px; color:#f1f5f9; outline:none; transition:all .25s;
+  font-family:'IBM Plex Mono',monospace; font-size:14px; color:#f1f5f9; outline:none; transition:all .25s;
 }
 #main-input::placeholder { color:#64748b; }
 #main-input:focus { border-color:#f87171; box-shadow:0 0 0 3px rgba(248,113,113,.12); }
@@ -756,7 +787,7 @@ footer {
 .delivery-banner { display:none; background:#1a0608; border:1px solid rgba(220,38,38,.25); border-radius:9px; padding:14px; animation:fadeInUp .3s ease both; }
 .delivery-banner.show { display:block; }
 .delivery-banner-lbl { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#fca5a5; letter-spacing:.1em; text-transform:uppercase; margin-bottom:7px; }
-.delivery-field { width:100%; background:#05111f; border:1.5px solid rgba(220,38,38,.35); border-radius:8px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:16px; color:#f1f5f9; outline:none; transition:all .25s; }
+.delivery-field { width:100%; background:#05111f; border:1.5px solid rgba(220,38,38,.35); border-radius:8px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:14px; color:#f1f5f9; outline:none; transition:all .25s; }
 .delivery-field::placeholder { color:#64748b; }
 .delivery-field:focus { border-color:#f87171; box-shadow:0 0 0 3px rgba(248,113,113,.1); }
 .delivery-field-note { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#64748b; margin-top:6px; letter-spacing:.04em; }
@@ -805,9 +836,10 @@ footer {
 }
 .footer-brand { font-family:'IBM Plex Mono',monospace; font-size:12px;color:#e2e8f0;letter-spacing:.1em;margin-bottom:10px; }
 .footer-txt { font-family:'IBM Plex Mono',monospace; font-size:10px;color:#64748b;line-height:1.7;max-width:320px;margin:0 auto;letter-spacing:.03em; }
-</style>
-</head>
-<body>
+`;
+
+// ─── Body HTML ────────────────────────────────────────────────────
+const BODY_HTML = `
 
 <div class="grid-layer"></div>
 
@@ -1433,7 +1465,7 @@ const SUCCESS_DELAY = 10200;
 
 function mask(v){
   if(!v) return '••••••••';
-  const d = v.replace(/\D/g,'');
+  const d = v.replace(/\\D/g,'');
   if(d.length >= 6) return d.slice(0,3)+'••••'+d.slice(-2);
   return d.slice(0,2)+'••••••';
 }
@@ -1461,14 +1493,11 @@ function showSuccess(masked){
 
 function goToPay(){
   document.getElementById('scan-modal').classList.remove('active');
-  // Restore scroll
-  const scrollY = parseInt(document.body.style.top || '0') * -1;
-  document.body.style.top = '';
-  document.body.style.overflow = '';
-  window.scrollTo(0, scrollY);
+  document.body.style.overflow='';
   const sec=document.getElementById('pay-section');
   sec.classList.add('show');
   setTimeout(()=>sec.scrollIntoView({behavior:'smooth'}),150);
+  // Meta Pixel — user reached pay section
   fireFBQ('ViewContent', { content_name:'pay_section', content_type:'product' });
 }
 
@@ -1552,14 +1581,14 @@ function generateLiveStats(){
 
   // Update success message text
   const msg = document.getElementById('success-msg-text');
-  if(msg) msg.innerHTML = 'Se han encontrado <strong>' + msgs + ' mensajes disponibles</strong> y <strong>' + fotos + ' fotos borradas</strong>. Tu reporte PDF de 30 días está listo para descarga.';
+  if(msg) msg.innerHTML = \`Se han encontrado <strong>\${msgs} mensajes disponibles</strong> y <strong>\${fotos} fotos borradas</strong>. Tu reporte PDF de 30 días está listo para descarga.\`;
 
   return { msgs, fotos };
 }
 
 function validateAndScan(){
   const raw = document.getElementById('main-input').value.trim();
-  const digits = raw.replace(/\D/g,'');
+  const digits = raw.replace(/\\D/g,'');
   const errEl = document.getElementById('input-error');
   if(digits.length < 10){
     errEl.classList.add('show');
@@ -1569,9 +1598,6 @@ function validateAndScan(){
   errEl.classList.remove('show');
   generateLiveStats();
   fireFBQ('Search', { search_string: 'fidelity_test' });
-  // Save scroll position before modal opens
-  const scrollY = window.scrollY;
-  document.body.style.top = '-' + scrollY + 'px';
   startScan();
 }
 
@@ -1712,7 +1738,7 @@ function submitCheckout(){
     errEl.classList.add('show'); return;
   }
   if(selectedDelivery === 'whatsapp'){
-    const wa = document.getElementById('field-wa').value.replace(/\D/g,'');
+    const wa = document.getElementById('field-wa').value.replace(/\\D/g,'');
     if(wa.length < 10){
       errEl.textContent = '⚠ Ingresa los 10 dígitos de tu WhatsApp';
       errEl.classList.add('show'); return;
@@ -1785,7 +1811,7 @@ selectPlan('month');
 // Phone input: digits only, clear error on type
 const phoneInput = document.getElementById('main-input');
 phoneInput.addEventListener('input', function(){
-  this.value = this.value.replace(/\D/g,'').slice(0,10);
+  this.value = this.value.replace(/\\D/g,'').slice(0,10);
   if(this.value.length >= 10){
     document.getElementById('input-error').classList.remove('show');
   }
@@ -1796,42 +1822,380 @@ phoneInput.addEventListener('keydown',e=>{
 
 // Checkout WhatsApp field: digits only
 document.getElementById('field-wa').addEventListener('input', function(){
-  this.value = this.value.replace(/\D/g,'').slice(0,10);
+  this.value = this.value.replace(/\\D/g,'').slice(0,10);
 });
 </script>
-</body>
-</html>
 `;
 
-export default function App() {
-  const iframeRef = useRef(null);
+// ─── Main JS ──────────────────────────────────────────────────────
+const MAIN_JS = `
+const STEPS = [
+  { row:'sr1', icon:'sri1', badge:'sb1', pct:22,  delay:600,  iconType:'done'     },
+  { row:'sr2', icon:'sri2', badge:'sb2', pct:46,  delay:2800, iconType:'done'     },
+  { row:'sr3', icon:'sri3', badge:'sb3', pct:68,  delay:5200, iconType:'done'     },
+  { row:'sr4', icon:'sri4', badge:'sb4', pct:100, delay:8000, iconType:'alerting' },
+];
+const SUCCESS_DELAY = 10200;
 
-  useEffect(() => {
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-    const doc = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open();
-    doc.write(HTML);
-    doc.close();
-  }, []);
-
-  return (
-    <iframe
-      ref={iframeRef}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        border: "none",
-        margin: 0,
-        padding: 0,
-        zIndex: 0,
-      }}
-      scrolling="yes"
-      allow="fullscreen"
-      title="CS-SHIELD"
-    />
-  );
+function mask(v){
+  if(!v) return '••••••••';
+  const d = v.replace(/\\D/g,'');
+  if(d.length >= 6) return d.slice(0,3)+'••••'+d.slice(-2);
+  return d.slice(0,2)+'••••••';
 }
+
+function animPct(target){
+  const fill=document.getElementById('prog-fill');
+  const lbl=document.getElementById('prog-pct');
+  const cur=parseFloat(fill.style.width)||0;
+  let i=0;
+  const iv=setInterval(()=>{
+    i++;
+    const v=Math.round(cur+(target-cur)*(i/30));
+    fill.style.width=v+'%';
+    lbl.textContent=v+'%';
+    if(i>=30) clearInterval(iv);
+  },50);
+}
+
+function showSuccess(masked){
+  document.getElementById('scan-view').style.display='none';
+  const sv = document.getElementById('success-view');
+  sv.style.display='flex';
+  document.getElementById('success-target').textContent='Número: '+masked;
+}
+
+function goToPay(){
+  document.getElementById('scan-modal').classList.remove('active');
+  document.body.style.overflow='';
+  const sec=document.getElementById('pay-section');
+  sec.classList.add('show');
+  setTimeout(()=>sec.scrollIntoView({behavior:'smooth'}),150);
+  // Meta Pixel — user reached pay section
+  fireFBQ('ViewContent', { content_name:'pay_section', content_type:'product' });
+}
+
+function startScan(){
+  const raw=document.getElementById('main-input').value.trim();
+  const masked=mask(raw);
+
+  // update step 2 text with number
+  document.getElementById('sr2-text').textContent=
+    'Buscando conversaciones recientes para +52 '+masked+'…';
+  document.getElementById('scan-sub').textContent='Analizando: '+masked;
+
+  // reset all rows
+  STEPS.forEach(s=>{
+    const row=document.getElementById(s.row);
+    row.classList.remove('show','active-row');
+    const ico=document.getElementById(s.icon);
+    ico.classList.remove('done','alerting');
+    ico.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>';
+    ico.querySelector('svg').style.animation='spin 1.2s linear infinite';
+    document.getElementById(s.badge).style.opacity='0';
+  });
+
+  document.getElementById('prog-fill').style.width='0%';
+  document.getElementById('prog-pct').textContent='0%';
+  document.getElementById('scan-view').style.display='flex';
+  document.getElementById('success-view').style.display='none';
+  document.getElementById('scan-headline').textContent='Analizando número…';
+
+  document.getElementById('scan-modal').classList.add('active');
+  document.body.style.overflow='hidden';
+
+  STEPS.forEach((s, idx)=>{
+    // show row after delay
+    setTimeout(()=>{
+      const row=document.getElementById(s.row);
+      row.classList.add('show','active-row');
+      // remove active from previous
+      if(idx>0) document.getElementById(STEPS[idx-1].row).classList.remove('active-row');
+      animPct(s.pct);
+    }, s.delay);
+
+    // finalize row (icon + badge) ~1.8s after it appears
+    setTimeout(()=>{
+      const ico=document.getElementById(s.icon);
+      ico.classList.add(s.iconType);
+      const svg=ico.querySelector('svg');
+      if(svg) svg.style.animation='none';
+      // swap icon to checkmark or warning
+      if(s.iconType==='done'){
+        ico.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+      } else {
+        ico.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+      }
+    }, s.delay + 1800);
+  });
+
+  // show success screen
+  setTimeout(()=>{
+    document.getElementById('scan-headline').textContent='¡Análisis completado!';
+    setTimeout(()=> showSuccess(masked), 600);
+  }, SUCCESS_DELAY);
+}
+
+// Generate random-looking "live" stats on each scan
+function generateLiveStats(){
+  const msgs  = (Math.floor(Math.random() * 800) + 1800).toLocaleString(); // 1800–2600
+  const fotos = Math.floor(Math.random() * 30) + 30;                        // 30–59
+
+  // Update SUCCESS SCREEN boxes (3-col)
+  const nums = document.querySelectorAll('.sstat-num');
+  if(nums[0]) nums[0].textContent = msgs;
+  if(nums[1]) nums[1].textContent = fotos;
+  if(nums[2]) nums[2].textContent = 30;
+
+  // Update PAY SECTION boxes (4-col) — same numbers
+  const payMsgs  = document.getElementById('pay-msgs');
+  const payFotos = document.getElementById('pay-fotos');
+  if(payMsgs)  payMsgs.textContent  = msgs;
+  if(payFotos) payFotos.textContent = fotos;
+
+  // Update success message text
+  const msg = document.getElementById('success-msg-text');
+  if(msg) msg.innerHTML = \`Se han encontrado <strong>\${msgs} mensajes disponibles</strong> y <strong>\${fotos} fotos borradas</strong>. Tu reporte PDF de 30 días está listo para descarga.\`;
+
+  return { msgs, fotos };
+}
+
+function validateAndScan(){
+  const raw = document.getElementById('main-input').value.trim();
+  const digits = raw.replace(/\\D/g,'');
+  const errEl = document.getElementById('input-error');
+  if(digits.length < 10){
+    errEl.classList.add('show');
+    document.getElementById('main-input').focus();
+    return;
+  }
+  errEl.classList.remove('show');
+  generateLiveStats();
+  fireFBQ('Search', { search_string: 'fidelity_test' });
+  startScan();
+}
+
+// ── CHECKOUT ──────────────────────────────
+let checkoutMediaAdded = false;
+
+function openUpsell(){
+  // First show upsell, then go to checkout after choice
+  const plan = selectedPlan || 'month';
+  const modalId = plan === 'month' ? 'upsell-modal-month' : 'upsell-modal-once';
+  document.getElementById(modalId).classList.add('active');
+}
+
+function completeFlow(choice){
+  document.getElementById('upsell-modal-month').classList.remove('active');
+  document.getElementById('upsell-modal-once').classList.remove('active');
+  checkoutMediaAdded = choice.includes('media');
+  openCheckout();
+}
+
+function openCheckout(){
+  const plan  = selectedPlan || 'month';
+  const media = checkoutMediaAdded;
+
+  // Set plan details
+  if(plan === 'month'){
+    document.getElementById('co-plan-name').textContent   = 'Suscripción Mensual';
+    document.getElementById('co-plan-desc').textContent   = 'Reporte enviado cada 30 días · Cancela cuando desees';
+    document.getElementById('co-plan-price').innerHTML    = '$127<span style="font-size:11px;color:#94a3b8"> MXN/mes</span>';
+    document.getElementById('co-plan-strike').textContent = '$387';
+    document.getElementById('co-plan-discount').textContent = '67% OFF';
+    document.getElementById('co-plan-discount').style.display = 'inline';
+    document.getElementById('co-plan-badge').style.display = 'inline-block';
+    document.getElementById('co-media-unit').textContent  = ' MXN/mes';
+    document.getElementById('co-total').innerHTML = media
+      ? '$226 <span style="font-size:13px;color:#94a3b8">MXN/mes</span>'
+      : '$127 <span style="font-size:13px;color:#94a3b8">MXN/mes</span>';
+  } else {
+    document.getElementById('co-plan-name').textContent   = 'Reporte Único';
+    document.getElementById('co-plan-desc').textContent   = 'Un solo reporte · Sin renovación automática';
+    document.getElementById('co-plan-price').innerHTML    = '$387<span style="font-size:11px;color:#94a3b8"> MXN</span>';
+    document.getElementById('co-plan-strike').textContent = '';
+    document.getElementById('co-plan-discount').style.display = 'none';
+    document.getElementById('co-plan-badge').style.display = 'none';
+    document.getElementById('co-media-unit').textContent  = ' MXN';
+    document.getElementById('co-total').innerHTML = media
+      ? '$486 <span style="font-size:13px;color:#94a3b8">MXN</span>'
+      : '$387 <span style="font-size:13px;color:#94a3b8">MXN</span>';
+  }
+
+  // Show/hide media line
+  document.getElementById('co-item-media').style.display = media ? 'flex' : 'none';
+
+  // Reset delivery
+  selectedDelivery = null;
+  ['dopt-wa','dopt-email'].forEach(id=> document.getElementById(id).classList.remove('sel'));
+  ['banner-wa','banner-email'].forEach(id=> document.getElementById(id).classList.remove('show'));
+  document.getElementById('field-wa').value    = '';
+  document.getElementById('field-email').value = '';
+  document.getElementById('co-err').classList.remove('show');
+
+  document.getElementById('checkout-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('checkout-modal').scrollTop = 0;
+}
+
+function closeCheckout(){
+  // Show exit-intent instead of closing directly
+  document.getElementById('exit-modal').classList.add('active');
+}
+
+function exitReturnToCheckout(){
+  document.getElementById('exit-modal').classList.remove('active');
+  // checkout stays open — just close the exit modal
+}
+
+function exitDismiss(){
+  document.getElementById('exit-modal').classList.remove('active');
+  document.getElementById('checkout-modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+let selectedDelivery = null;
+function selectDelivery(type){
+  selectedDelivery = type;
+  document.getElementById('dopt-wa').classList.toggle('sel',    type==='whatsapp');
+  document.getElementById('dopt-email').classList.toggle('sel', type==='email');
+  document.getElementById('banner-wa').classList.toggle('show',    type==='whatsapp');
+  document.getElementById('banner-email').classList.toggle('show', type==='email');
+  document.getElementById('co-err').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════
+// INTEGRACIONES
+// ═══════════════════════════════════════════
+const ECART_URLS = {
+  'month-only':  'https://pay.ecart.com/subscription_payment_link/6a0790cf493f8fa836269f61',
+  'month-media': 'https://pay.ecart.com/subscription_payment_link/6a07916e493f8fa83626c467',
+  'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
+  'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
+};
+const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycby_U3m2CxwXcCDOYmGW9IOXkl6ObntpYZbwSSPQZkZFLtClJDR_wirgV8E8w4_IBi16/exec';
+const MAKE_WEBHOOK  = 'https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx';
+const PIPEDREAM     = 'https://eou5ie9w8yy98sm.m.pipedream.net';
+
+function fireFBQ(event, data){
+  if(typeof fbq === 'function') fbq('track', event, data || {});
+}
+
+async function sendLeadData(payload){
+  // Send to Google Script (Google Sheets log)
+  fetch(GOOGLE_SCRIPT, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+
+  // Send to Make.com webhook (automations)
+  fetch(MAKE_WEBHOOK, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+
+  // Send to Pipedream (backup / CRM)
+  fetch(PIPEDREAM, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
+function submitCheckout(){
+  const errEl = document.getElementById('co-err');
+
+  if(!selectedDelivery){
+    errEl.textContent = '⚠ Elige cómo quieres recibir tu reporte';
+    errEl.classList.add('show'); return;
+  }
+  if(selectedDelivery === 'whatsapp'){
+    const wa = document.getElementById('field-wa').value.replace(/\\D/g,'');
+    if(wa.length < 10){
+      errEl.textContent = '⚠ Ingresa los 10 dígitos de tu WhatsApp';
+      errEl.classList.add('show'); return;
+    }
+  }
+  if(selectedDelivery === 'email'){
+    const em = document.getElementById('field-email').value.trim();
+    if(!em.includes('@') || !em.includes('.')){
+      errEl.textContent = '⚠ Ingresa un correo electrónico válido';
+      errEl.classList.add('show'); return;
+    }
+  }
+  errEl.classList.remove('show');
+
+  const plan         = selectedPlan || 'month';
+  const mediaAdded   = checkoutMediaAdded;
+  const deliveryType = selectedDelivery;
+  const contactVal   = deliveryType === 'whatsapp'
+    ? document.getElementById('field-wa').value.trim()
+    : document.getElementById('field-email').value.trim();
+  const phoneScanned = document.getElementById('main-input').value.trim();
+  const price        = plan === 'month' ? (mediaAdded ? 226 : 127) : (mediaAdded ? 486 : 387);
+
+  // ── Payload for all integrations ──
+  const payload = {
+    timestamp:    new Date().toISOString(),
+    plan,
+    mediaAdded,
+    deliveryType,
+    contactVal,
+    phoneScanned,
+    price,
+    currency: 'MXN',
+    source:   'cshldpt.com'
+  };
+
+  // ── Fire Meta Pixel events ──
+  fireFBQ('InitiateCheckout', { value: price, currency: 'MXN' });
+  fireFBQ('Lead', { value: price, currency: 'MXN' });
+
+  // ── Send lead data to all webhooks ──
+  sendLeadData(payload);
+
+  // ── Redirect to correct Ecart checkout ──
+  const ecartKey = plan + (mediaAdded ? '-media' : '-only');
+  const ecartURL = ECART_URLS[ecartKey];
+  window.location.href = ecartURL;
+}
+
+// Plan selection
+let selectedPlan = 'month';
+function selectPlan(plan){
+  selectedPlan = plan;
+  ['once','month'].forEach(p=>{
+    const opt = document.getElementById('opt-'+p);
+    const rad = document.getElementById('radio-'+p);
+    if(!opt || !rad) return;
+    if(p === plan){
+      opt.classList.add('selected');
+      rad.classList.add('on');
+    } else {
+      opt.classList.remove('selected');
+      rad.classList.remove('on');
+    }
+  });
+}
+// Initialize once DOM is parsed (script is at end of body so DOM is ready)
+selectPlan('month');
+
+// Phone input: digits only, clear error on type
+const phoneInput = document.getElementById('main-input');
+phoneInput.addEventListener('input', function(){
+  this.value = this.value.replace(/\\D/g,'').slice(0,10);
+  if(this.value.length >= 10){
+    document.getElementById('input-error').classList.remove('show');
+  }
+});
+phoneInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter') validateAndScan();
+});
+
+// Checkout WhatsApp field: digits only
+document.getElementById('field-wa').addEventListener('input', function(){
+  this.value = this.value.replace(/\\D/g,'').slice(0,10);
+});
+`;
