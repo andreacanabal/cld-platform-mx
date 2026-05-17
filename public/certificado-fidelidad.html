@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificado de Fidelidad Digital | CS-SHIELD</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#f4f1ec; font-family:'Sora',sans-serif; color:#1a1a2e; }
+  .page { width:794px; min-height:1123px; background:#fff; margin:0 auto; position:relative; overflow:hidden; }
+  .corner { position:absolute; width:70px; height:70px; }
+  .tl { top:0; left:0; } .tr { top:0; right:0; transform:scaleX(-1); }
+  .bl { bottom:0; left:0; transform:scaleY(-1); } .br { bottom:0; right:0; transform:scale(-1); }
+  .border-outer { position:absolute; inset:10px; border:1.5px solid #1a1a2e; pointer-events:none; }
+  .border-inner { position:absolute; inset:16px; border:0.5px solid rgba(45,58,74,.3); pointer-events:none; }
+  .cert-header { background:linear-gradient(135deg,#1a1a2e,#2d3a4a); padding:30px 50px 24px; text-align:center; position:relative; }
+  .cert-header::after { content:''; position:absolute; bottom:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#c9a84c,#e8d5a3,#c9a84c); }
+  .shield-row { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:8px; }
+  .brand { font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:600; color:#c9a84c; letter-spacing:.2em; }
+  .brand-sub { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#8899aa; letter-spacing:.3em; text-transform:uppercase; }
+  .cert-title-section { padding:28px 50px 20px; text-align:center; }
+  .cert-type-label { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#888; letter-spacing:.4em; text-transform:uppercase; margin-bottom:10px; }
+  .cert-main-title { font-family:'Playfair Display',serif; font-size:28px; color:#1a1a2e; line-height:1.3; margin-bottom:6px; }
+  .cert-main-title span { background:linear-gradient(120deg,#15803d,#22c55e); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .gold-line { width:180px; height:2px; background:linear-gradient(90deg,transparent,#c9a84c,transparent); margin:14px auto; }
+  .badge-wrap { display:flex; justify-content:center; margin:0 0 24px; }
+  .badge { width:110px; height:110px; border-radius:50%; background:linear-gradient(135deg,#0a2e1a,#1a5c2e); border:3px solid #22c55e; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 0 0 8px rgba(34,197,94,.1), 0 4px 24px rgba(0,0,0,.2); }
+  .badge-check { font-size:42px; line-height:1; color:#4ade80; }
+  .badge-text { font-family:'IBM Plex Mono',monospace; font-size:7px; color:#4ade80; letter-spacing:.15em; margin-top:5px; }
+  .cert-body { padding:0 56px 24px; }
+  .certifica-lbl { font-size:11px; color:#888; text-align:center; letter-spacing:.2em; text-transform:uppercase; margin-bottom:16px; }
+  .statement { background:#f0fdf4; border-left:4px solid #22c55e; border-radius:0 8px 8px 0; padding:18px 20px; margin-bottom:20px; font-size:13px; color:#1a1a2e; line-height:1.85; }
+  .statement .number { font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:700; color:#15803d; }
+  .statement strong { color:#1a1a2e; }
+  .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:22px; }
+  .stat-box { background:#f0fdf4; border:1px solid rgba(34,197,94,.2); border-radius:8px; padding:14px 10px; text-align:center; }
+  .stat-val { font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; color:#15803d; display:block; }
+  .stat-lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#666; letter-spacing:.08em; text-transform:uppercase; margin-top:4px; display:block; }
+  .conclusion { text-align:center; font-size:13px; color:#374151; line-height:1.8; margin-bottom:22px; font-style:italic; background:#f8fffe; border:1px solid rgba(34,197,94,.15); border-radius:8px; padding:14px 20px; }
+  .divider { height:1px; background:rgba(34,197,94,.15); margin:4px 0 18px; }
+  .cert-legal { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#888; line-height:1.7; letter-spacing:.03em; margin-bottom:20px; }
+  .footer-data { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; border-top:1px solid rgba(34,197,94,.15); padding-top:16px; margin-bottom:20px; }
+  .fd-lbl { font-family:'IBM Plex Mono',monospace; font-size:8px; color:#aaa; letter-spacing:.15em; text-transform:uppercase; }
+  .fd-val { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#1a1a2e; font-weight:600; margin-top:2px; }
+  .seal-row { display:flex; align-items:flex-end; justify-content:space-between; padding:0 0 30px; }
+  .seal-circle { width:76px; height:76px; border-radius:50%; border:2px dashed #c9a84c; background:rgba(201,168,76,.05); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .seal-txt { font-family:'IBM Plex Mono',monospace; font-size:7px; color:#c9a84c; letter-spacing:.08em; text-align:center; }
+  .sig-line { width:130px; height:1px; background:#333; margin-bottom:5px; }
+  .sig-name { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#555; letter-spacing:.08em; }
+  .sig-title { font-family:'IBM Plex Mono',monospace; font-size:8px; color:#aaa; margin-top:2px; }
+  .cert-footer { background:linear-gradient(135deg,#1a1a2e,#2d3a4a); padding:12px 50px; display:flex; align-items:center; justify-content:space-between; }
+  .cert-footer-folio { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#c9a84c; letter-spacing:.1em; }
+  .cert-footer-url { font-family:'IBM Plex Mono',monospace; font-size:9px; color:#8899aa; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="corner tl"><svg viewBox="0 0 70 70" fill="none"><path d="M0 0L70 0L70 8L8 8L8 70L0 70Z" fill="#2d3a4a" opacity=".3"/><path d="M0 0L45 0L45 4L4 4L4 45L0 45Z" fill="#c9a84c" opacity=".6"/></svg></div>
+  <div class="corner tr"><svg viewBox="0 0 70 70" fill="none"><path d="M0 0L70 0L70 70L62 70L62 8L0 8Z" fill="#2d3a4a" opacity=".3"/><path d="M25 0L70 0L70 45L66 45L66 4L25 4Z" fill="#c9a84c" opacity=".6"/></svg></div>
+  <div class="corner bl"><svg viewBox="0 0 70 70" fill="none"><path d="M0 0L8 0L8 62L70 62L70 70L0 70Z" fill="#2d3a4a" opacity=".3"/><path d="M0 25L4 25L4 66L45 66L45 70L0 70Z" fill="#c9a84c" opacity=".6"/></svg></div>
+  <div class="corner br"><svg viewBox="0 0 70 70" fill="none"><path d="M70 70L0 70L0 62L62 62L62 0L70 0Z" fill="#2d3a4a" opacity=".3"/><path d="M70 70L25 70L25 66L66 66L66 25L70 25Z" fill="#c9a84c" opacity=".6"/></svg></div>
+  <div class="border-outer"></div>
+  <div class="border-inner"></div>
+
+  <div class="cert-header">
+    <div class="shield-row">
+      <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+        <path d="M18 2L4 8v10c0 8.5 6 16.5 14 19 8-2.5 14-10.5 14-19V8L18 2z" fill="rgba(34,197,94,0.2)" stroke="#22c55e" stroke-width="1.5"/>
+        <circle cx="20" cy="17" r="6.5" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+        <line x1="24.6" y1="21.6" x2="28.5" y2="25.5" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="brand">CS-SHIELD</div>
+        <div class="brand-sub">Recuperacion Digital · cshldpt.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cert-title-section">
+    <div class="cert-type-label">Documento Oficial · Emision Verificada</div>
+    <div class="cert-main-title">Certificado de <span>Fidelidad Digital</span></div>
+    <div style="font-size:13px;color:#666;font-style:italic;margin-top:4px">Analisis de actividad digital — Resultado sin incidencias</div>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="badge-wrap">
+    <div class="badge">
+      <div class="badge-check">&#10003;</div>
+      <div class="badge-text">VERIFICADO</div>
+    </div>
+  </div>
+
+  <div class="cert-body">
+    <div class="certifica-lbl">CS-SHIELD certifica que</div>
+    <div class="statement">
+      El analisis de actividad digital realizado sobre el numero
+      <span class="number" id="cert-number">+52 xxxxxxxxxx</span>
+      <strong> no presenta actividad sospechosa detectada</strong> durante el periodo de analisis de <strong>30 dias</strong>. No se encontraron patrones de conducta irregular, conversaciones comprometedoras ni registros de riesgo vinculados a este numero.
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-val">0</span><span class="stat-lbl">Incidencias</span></div>
+      <div class="stat-box"><span class="stat-val">30d</span><span class="stat-lbl">Periodo analizado</span></div>
+      <div class="stat-box"><span class="stat-val">100%</span><span class="stat-lbl">Sin riesgo</span></div>
+    </div>
+
+    <div class="conclusion">
+      "Este certificado constituye evidencia digital oficial de que el numero analizado no presenta indicadores de infidelidad digital en el periodo evaluado."
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="cert-legal">
+      Este documento es emitido por CS-SHIELD bajo solicitud expresa del contratante del servicio de Test de Fidelidad. Los hallazgos aqui descritos son de caracter informativo y referencial, basados en analisis de patrones de actividad digital de dominio publico. CS-SHIELD no tiene acceso a informacion privada protegida por contrasena ni a comunicaciones personales. Este certificado no constituye prueba legal admisible ante autoridades judiciales.
+    </div>
+
+    <div class="footer-data">
+      <div><div class="fd-lbl">Folio del certificado</div><div class="fd-val" id="cert-folio">CSH-2026-######</div></div>
+      <div><div class="fd-lbl">Fecha de emision</div><div class="fd-val" id="cert-fecha">-- --- 2026</div></div>
+      <div><div class="fd-lbl">Numero analizado</div><div class="fd-val">+52 xxxxxxxxxx</div></div>
+      <div><div class="fd-lbl">Resultado</div><div class="fd-val" style="color:#15803d">FIDELIDAD CONFIRMADA</div></div>
+    </div>
+
+    <div class="seal-row">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div class="seal-circle">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10" stroke="#22c55e" stroke-width="2"/></svg>
+          <div class="seal-txt">SELLO<br>OFICIAL</div>
+        </div>
+      </div>
+      <div style="text-align:center;max-width:200px">
+        <div style="font-size:11px;color:#888;font-style:italic;line-height:1.6">Este certificado es generado automaticamente por los sistemas de CS-SHIELD y tiene validez digital.</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:'Playfair Display',serif;font-size:18px;color:#1a1a2e;font-style:italic;margin-bottom:4px">CS-Shield</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">Sistema Verificador CS-SHIELD</div>
+        <div class="sig-title">Analisis Digital Automatizado</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cert-footer">
+    <div class="cert-footer-folio" id="footer-folio">FOLIO: CSH-2026-###### · VERIFICADO</div>
+    <div class="cert-footer-url">cshldpt.com</div>
+  </div>
+
+</div>
+
+<script>
+var params = new URLSearchParams(window.location.search);
+var numero = params.get('numero') || 'xxxxxxxxxx';
+var folio  = params.get('folio')  || ('CSH-2026-' + Math.floor(100000 + Math.random()*900000));
+var fecha  = params.get('fecha')  || new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+document.getElementById('cert-number').textContent = '+52 ' + numero;
+document.getElementById('cert-folio').textContent  = folio;
+document.getElementById('cert-fecha').textContent  = fecha;
+document.getElementById('footer-folio').textContent = 'FOLIO: ' + folio + ' · VERIFICADO';
+</script>
+</body>
+</html>
