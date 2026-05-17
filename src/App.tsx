@@ -1624,6 +1624,7 @@ function validateAndScan(){
   errEl.classList.remove('show');
   generateLiveStats();
   fireFBQ('Search', { search_string: 'fidelity_test' });
+  fireMetaCAPI('Lead', { phoneScanned: document.getElementById('main-input').value.trim(), price: 0 });
   startScan();
 }
 
@@ -1714,25 +1715,49 @@ function fireFBQ(event, data){
 }
 
 async function sendLeadData(payload){
-  // Send to Google Script (Google Sheets log)
+  // Send to Google Script (Google Sheets log + Make relay)
   fetch(GOOGLE_SCRIPT, {
     method:'POST', mode:'no-cors',
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify(payload)
   }).catch(()=>{});
 
-  // Send to Make.com webhook (automations)
-  fetch(MAKE_WEBHOOK, {
-    method:'POST', mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  }).catch(()=>{});
-
-  // Send to Pipedream (backup / CRM)
+  // Send to Pipedream (backup)
   fetch(PIPEDREAM, {
     method:'POST', mode:'no-cors',
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
+// ── Meta Conversions API (server-side events) ──
+async function fireMetaCAPI(eventName, payload){
+  const PIXEL_ID = '2114141419153674';
+  const CAPI_TOKEN = 'EAAZBOOZAijyQgBRck6VoAak4ZAh5uTVXBcXT04WKVTmVC0qZAfFt4ZCKBTCx1ZCemsEX0E5MR0IubA3owrArxqs8Krpv33JSjjuARCOXaby50ovTNZCSIz8T2Tlkau5PKOydnNRZADmp1Lt4m4DgohgDBNdMRptyCwxTyZC1015SZCuMEyBP4OlDYNC3qMkoJQFzLxpwZDZD';
+
+  const eventData = {
+    data: [{
+      event_name: eventName,
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: 'website',
+      event_source_url: 'https://cshldpt.com',
+      user_data: {
+        ph: [payload.phoneScanned ? payload.phoneScanned.replace(/\\D/g,'') : ''],
+        client_user_agent: navigator.userAgent
+      },
+      custom_data: {
+        currency: 'MXN',
+        value: payload.price || 0,
+        content_name: 'Certificado de Fidelidad Digital',
+        content_type: 'product'
+      }
+    }]
+  };
+
+  fetch('https://graph.facebook.com/v19.0/' + PIXEL_ID + '/events?access_token=' + CAPI_TOKEN, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(eventData)
   }).catch(()=>{});
 }
 
@@ -1775,7 +1800,10 @@ function submitCheckout(){
 
   // ── Fire Meta Pixel events ──
   fireFBQ('InitiateCheckout', { value: price, currency: 'MXN' });
-  fireFBQ('Lead', { value: price, currency: 'MXN' });
+  fireFBQ('Purchase', { value: price, currency: 'MXN' });
+
+  // ── Fire Meta CAPI Purchase event (server-side) ──
+  fireMetaCAPI('Purchase', payload);
 
   // ── Send lead data to all webhooks ──
   sendLeadData(payload);
@@ -1981,6 +2009,7 @@ function validateAndScan(){
   errEl.classList.remove('show');
   generateLiveStats();
   fireFBQ('Search', { search_string: 'fidelity_test' });
+  fireMetaCAPI('Lead', { phoneScanned: document.getElementById('main-input').value.trim(), price: 0 });
   startScan();
 }
 
@@ -2071,25 +2100,49 @@ function fireFBQ(event, data){
 }
 
 async function sendLeadData(payload){
-  // Send to Google Script (Google Sheets log)
+  // Send to Google Script (Google Sheets log + Make relay)
   fetch(GOOGLE_SCRIPT, {
     method:'POST', mode:'no-cors',
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify(payload)
   }).catch(()=>{});
 
-  // Send to Make.com webhook (automations)
-  fetch(MAKE_WEBHOOK, {
-    method:'POST', mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  }).catch(()=>{});
-
-  // Send to Pipedream (backup / CRM)
+  // Send to Pipedream (backup)
   fetch(PIPEDREAM, {
     method:'POST', mode:'no-cors',
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
+// ── Meta Conversions API (server-side events) ──
+async function fireMetaCAPI(eventName, payload){
+  const PIXEL_ID = '2114141419153674';
+  const CAPI_TOKEN = 'EAAZBOOZAijyQgBRck6VoAak4ZAh5uTVXBcXT04WKVTmVC0qZAfFt4ZCKBTCx1ZCemsEX0E5MR0IubA3owrArxqs8Krpv33JSjjuARCOXaby50ovTNZCSIz8T2Tlkau5PKOydnNRZADmp1Lt4m4DgohgDBNdMRptyCwxTyZC1015SZCuMEyBP4OlDYNC3qMkoJQFzLxpwZDZD';
+
+  const eventData = {
+    data: [{
+      event_name: eventName,
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: 'website',
+      event_source_url: 'https://cshldpt.com',
+      user_data: {
+        ph: [payload.phoneScanned ? payload.phoneScanned.replace(/\\D/g,'') : ''],
+        client_user_agent: navigator.userAgent
+      },
+      custom_data: {
+        currency: 'MXN',
+        value: payload.price || 0,
+        content_name: 'Certificado de Fidelidad Digital',
+        content_type: 'product'
+      }
+    }]
+  };
+
+  fetch('https://graph.facebook.com/v19.0/' + PIXEL_ID + '/events?access_token=' + CAPI_TOKEN, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(eventData)
   }).catch(()=>{});
 }
 
@@ -2132,7 +2185,10 @@ function submitCheckout(){
 
   // ── Fire Meta Pixel events ──
   fireFBQ('InitiateCheckout', { value: price, currency: 'MXN' });
-  fireFBQ('Lead', { value: price, currency: 'MXN' });
+  fireFBQ('Purchase', { value: price, currency: 'MXN' });
+
+  // ── Fire Meta CAPI Purchase event (server-side) ──
+  fireMetaCAPI('Purchase', payload);
 
   // ── Send lead data to all webhooks ──
   sendLeadData(payload);
