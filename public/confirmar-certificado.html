@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procesando... | CS-SHIELD</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#05111f;color:#f1f5f9;font-family:'Sora',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;-webkit-font-smoothing:antialiased}
+.card{width:100%;max-width:400px;background:#0f0505;border:1px solid rgba(74,222,128,.25);border-radius:16px;padding:32px 24px;text-align:center;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#15803d,#4ade80)}
+.spinner{width:56px;height:56px;border:3px solid rgba(74,222,128,.2);border-top:3px solid #22c55e;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.title{font-size:18px;font-weight:700;color:#f1f5f9;margin-bottom:8px}
+.subtitle{font-size:13px;color:#94a3b8;line-height:1.6}
+.brand{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4ade80;letter-spacing:.15em;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="spinner"></div>
+  <div class="title">Procesando tu solicitud...</div>
+  <div class="subtitle">Estamos registrando tu certificado de privacidad. Seras redirigido al pago en un momento.</div>
+  <div class="brand">CS-SHIELD · cshldpt.com</div>
+</div>
+
+<script>
+var GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycbzOQfUlDiQlbzv898tHj-3_NY2GToP1P6Y-JunLLTtb-tUGVuNF9AEIhPkf7L-JVg7M/exec';
+var ECART_URL     = 'https://checkout.ecartpay.com/?id=6a07c30a493f8fa836350c29';
+
+var params       = new URLSearchParams(window.location.search);
+var phoneScanned = params.get('tel') || '';
+
+// Notificar al Google Script que la pareja va a pagar el certificado
+var payload = {
+  timestamp:    new Date().toISOString(),
+  phoneScanned: phoneScanned,
+  price:        399,
+  type:         'certificado',
+  source:       'aviso.html'
+};
+
+fetch(GOOGLE_SCRIPT, {
+  method: 'POST',
+  mode: 'no-cors',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(payload)
+}).catch(function(){});
+
+// Redirigir a Ecart después de 1.5 segundos
+setTimeout(function(){
+  window.location.href = ECART_URL;
+}, 1500);
+</script>
+</body>
+</html>
