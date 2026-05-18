@@ -1703,8 +1703,8 @@ function selectDelivery(type){
 // INTEGRACIONES
 // ═══════════════════════════════════════════
 const ECART_URLS = {
-  'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
-  'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
+  'once-only':   'https://pay.ecart.com/payment_link/6a07924a493f8fa83626fe95',
+  'once-media':  'https://pay.ecart.com/payment_link/6a0792c7493f8fa8362720f9'
 };
 const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycbzOQfUlDiQlbzv898tHj-3_NY2GToP1P6Y-JunLLTtb-tUGVuNF9AEIhPkf7L-JVg7M/exec';
 const MAKE_WEBHOOK  = 'https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx';
@@ -2088,8 +2088,8 @@ function selectDelivery(type){
 // INTEGRACIONES
 // ═══════════════════════════════════════════
 const ECART_URLS = {
-  'once-only':   'https://checkout.ecartpay.com/?id=6a07926e493f8fa8362709a2',
-  'once-media':  'https://checkout.ecartpay.com/?id=6a0792cf493f8fa836272326'
+  'once-only':   'https://pay.ecart.com/payment_link/6a07924a493f8fa83626fe95',
+  'once-media':  'https://pay.ecart.com/payment_link/6a0792c7493f8fa8362720f9'
 };
 const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycbzOQfUlDiQlbzv898tHj-3_NY2GToP1P6Y-JunLLTtb-tUGVuNF9AEIhPkf7L-JVg7M/exec';
 const MAKE_WEBHOOK  = 'https://hook.us2.make.com/1e3tu4bns3fr7yrf51k975mdj2b6ukxx';
