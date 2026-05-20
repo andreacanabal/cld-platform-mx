@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>STOP DEUDAS | Detén el Acoso de Cobranza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,"script","https://connect.facebook.net/en_US/fbevents.js");
+fbq("init","2114141419153674");
+fbq("track","PageView");
+</script>
+
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:#030d18; color:#f1f5f9;
+  font-family:"Sora",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* grid bg */
+body::before {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+  background-size:44px 44px;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position:sticky; top:0; z-index:100;
+  background:rgba(3,13,24,.92); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(59,130,246,.15);
+  padding:12px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-brand { display:flex; align-items:center; gap:10px; }
+.nav-logo-text { display:flex; flex-direction:column; }
+.nav-name { font-family:"IBM Plex Mono",monospace; font-size:14px; font-weight:600; color:#f1f5f9; letter-spacing:.08em; }
+.nav-sub  { font-family:"IBM Plex Mono",monospace; font-size:8px; color:#60a5fa; letter-spacing:.15em; text-transform:uppercase; }
+.nav-badge {
+  font-family:"IBM Plex Mono",monospace; font-size:10px; color:#4ade80;
+  background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.3);
+  padding:4px 10px; border-radius:4px; letter-spacing:.08em;
+  display:flex; align-items:center; gap:5px;
+}
+.nav-badge::before { content:"●"; font-size:7px; animation:blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  padding:50px 20px 40px;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; gap:16px;
+  max-width:480px; margin:0 auto;
+}
+.hero-chip {
+  font-family:"IBM Plex Mono",monospace; font-size:9px;
+  color:#60a5fa; background:rgba(59,130,246,.1);
+  border:1px solid rgba(59,130,246,.3);
+  padding:5px 12px; border-radius:4px; letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.hero-title {
+  font-size:28px; font-weight:800; line-height:1.2;
+  letter-spacing:-.02em; color:#f1f5f9;
+}
+.hero-title span {
+  background:linear-gradient(120deg,#60a5fa,#34d399);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero-sub {
+  font-size:13px; color:#cbd5e1; line-height:1.7;
+  margin-bottom:6px; font-weight:400; text-align:center;
+  max-width:360px;
+}
+.benefits { list-style:none; width:100%; display:flex; flex-direction:column; gap:8px; margin-bottom:6px; }
+.benefit { display:flex; align-items:center; gap:10px; font-size:13px; color:#e2e8f0; text-align:left; }
+.bcheck {
+  width:22px; height:22px; flex-shrink:0;
+  background:rgba(59,130,246,.15); border:1px solid rgba(59,130,246,.4);
+  border-radius:5px; display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:#60a5fa;
+}
+
+/* input */
+.input-label { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#64748b; letter-spacing:.1em; text-transform:uppercase; align-self:flex-start; }
+.phone-wrap { position:relative; width:100%; }
+.phone-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:#60a5fa; }
+#main-input {
+  width:100%; background:#0a1929; border:1.5px solid rgba(59,130,246,.45);
+  border-radius:9px; padding:13px 14px 13px 42px;
+  font-family:"IBM Plex Mono",monospace; font-size:16px; color:#f1f5f9; outline:none; transition:all .25s;
+}
+#main-input::placeholder { color:#334155; }
+#main-input:focus { border-color:#60a5fa; box-shadow:0 0 0 3px rgba(96,165,250,.12); }
+.input-error {
+  display:none; font-family:"IBM Plex Mono",monospace;
+  font-size:10px; color:#f87171;
+  background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3);
+  border-radius:6px; padding:6px 12px; text-align:center; letter-spacing:.06em;
+  width:100%;
+}
+.input-error.show { display:block; }
+
+/* CTA */
+.cta-btn {
+  width:100%; background:linear-gradient(135deg,#1d4ed8,#3b82f6);
+  border:none; border-radius:10px; padding:17px;
+  font-family:"Sora",sans-serif; font-size:16px; font-weight:700;
+  color:#fff; letter-spacing:.04em; cursor:pointer;
+  box-shadow:0 4px 24px rgba(59,130,246,.45);
+  transition:all .25s;
+}
+.cta-btn:hover { transform:translateY(-1px); }
+.cta-sub { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#475569; letter-spacing:.06em; }
+.trust-row { display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
+.trust-item { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#475569; letter-spacing:.06em; display:flex; align-items:center; gap:4px; }
+
+/* ── PAIN SECTION ── */
+.pain-section {
+  position:relative; z-index:1;
+  background:rgba(10,25,41,.8); border-top:1px solid rgba(59,130,246,.1); border-bottom:1px solid rgba(59,130,246,.1);
+  padding:40px 20px;
+}
+.pain-inner { max-width:480px; margin:0 auto; }
+.section-chip { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#60a5fa; letter-spacing:.15em; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.section-chip::before, .section-chip::after { content:""; height:1px; width:20px; background:rgba(96,165,250,.4); }
+.section-title { font-size:20px; font-weight:800; color:#f1f5f9; margin-bottom:8px; line-height:1.3; }
+.section-title span { color:#60a5fa; }
+.pain-question { font-size:14px; color:#94a3b8; margin-bottom:20px; line-height:1.6; }
+.pain-list { display:flex; flex-direction:column; gap:10px; }
+.pain-item {
+  display:flex; align-items:flex-start; gap:12px;
+  background:rgba(10,25,41,.9); border:1px solid rgba(59,130,246,.15);
+  border-radius:10px; padding:14px;
+}
+.pain-icon { font-size:20px; flex-shrink:0; }
+.pain-text { font-size:13px; color:#cbd5e1; line-height:1.6; }
+.pain-text strong { color:#f1f5f9; display:block; margin-bottom:2px; }
+
+/* ── HOW IT WORKS ── */
+.how-section { position:relative; z-index:1; padding:40px 20px; max-width:480px; margin:0 auto; }
+.steps-grid { display:flex; flex-direction:column; gap:14px; margin-top:16px; }
+.step-card {
+  background:rgba(10,25,41,.8); border:1px solid rgba(59,130,246,.15);
+  border-radius:12px; padding:18px; display:flex; align-items:flex-start; gap:14px;
+}
+.step-num {
+  font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:600;
+  color:#3b82f6; flex-shrink:0; line-height:1;
+}
+.step-card h3 { font-size:14px; font-weight:700; color:#f1f5f9; margin-bottom:4px; }
+.step-card p  { font-size:12px; color:#94a3b8; line-height:1.6; }
+
+/* ── STATS ── */
+.stats-section {
+  position:relative; z-index:1;
+  background:rgba(10,25,41,.8); border-top:1px solid rgba(59,130,246,.1); border-bottom:1px solid rgba(59,130,246,.1);
+  padding:30px 20px;
+}
+.stats-inner { max-width:480px; margin:0 auto; }
+.stats-label { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#60a5fa; letter-spacing:.2em; text-transform:uppercase; text-align:center; margin-bottom:16px; }
+.stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.stat-card { background:#0a1929; border:1px solid rgba(59,130,246,.2); border-radius:9px; padding:14px 10px; text-align:center; }
+.stat-num { font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:600; display:block; }
+.stat-lbl { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#94a3b8; letter-spacing:0; line-height:1; text-transform:uppercase; white-space:nowrap; margin-top:4px; }
+.c-blue { color:#60a5fa; }
+.c-green { color:#4ade80; }
+.c-cyan { color:#22d3ee; }
+
+/* ── PAY SECTION ── */
+.pay-section {
+  position:relative; z-index:1;
+  padding:40px 20px; max-width:480px; margin:0 auto;
+  display:none;
+}
+.pay-section.show { display:block; }
+
+.offer-box {
+  background:#0a1929; border:1px solid rgba(59,130,246,.3);
+  border-radius:14px; padding:20px; margin-bottom:18px;
+  position:relative; overflow:hidden;
+}
+.offer-box::before { content:""; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1d4ed8,#60a5fa,#34d399); }
+.offer-box-label { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#60a5fa; letter-spacing:.15em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.offer-box-label::before { content:"●"; font-size:7px; color:#4ade80; animation:blink 1.5s infinite; }
+.offer-box-title { font-size:16px; font-weight:700; color:#f1f5f9; margin-bottom:4px; }
+.offer-box-sub { font-size:11px; color:#64748b; margin-bottom:14px; }
+
+/* result stats */
+.result-stats-row { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:20px; }
+.rs-card { background:#0a1929; border:1px solid rgba(59,130,246,.2); border-radius:9px; padding:16px 12px; text-align:center; }
+.rs-card.alert { border-color:rgba(239,68,68,.5); background:rgba(239,68,68,.1); }
+.rs-num { font-family:"IBM Plex Mono",monospace; font-size:28px; font-weight:600; display:block; margin-bottom:4px; letter-spacing:0; }
+.rs-lbl { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#e2e8f0; letter-spacing:0; line-height:1; text-transform:uppercase; white-space:nowrap; margin-top:2px; }
+
+/* pdf preview */
+.pdf-wrap { background:#0a1929; border:1px solid rgba(59,130,246,.25); border-radius:10px; overflow:hidden; margin-bottom:22px; position:relative; }
+.pdf-bar { background:#0d2137; border-bottom:1px solid rgba(59,130,246,.3); padding:10px 14px; display:flex; align-items:center; justify-content:space-between; }
+.pdf-bar-title { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#e2e8f0; display:flex; align-items:center; gap:6px; letter-spacing:.06em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:55%; }
+.pdf-conf { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#f87171; background:rgba(239,68,68,.15); border:1px solid rgba(239,68,68,.5); padding:3px 8px; border-radius:3px; letter-spacing:.1em; text-transform:uppercase; animation:conf-pulse 1.5s infinite; white-space:nowrap; }
+@keyframes conf-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+.pdf-preview { position:relative; padding:20px; text-align:center; }
+.pdf-preview-stamp { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-20deg); font-family:"IBM Plex Mono",monospace; font-size:28px; font-weight:700; color:rgba(59,130,246,.08); letter-spacing:.15em; white-space:nowrap; pointer-events:none; }
+.pdf-lock-text { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#64748b; letter-spacing:.06em; line-height:1.6; }
+
+/* price card */
+.price-once-card { display:flex; align-items:center; justify-content:space-between; background:#0a1929; border:1.5px solid rgba(59,130,246,.4); border-radius:12px; padding:16px 18px; margin-bottom:14px; position:relative; overflow:hidden; }
+.price-once-card::before { content:""; position:absolute; top:0;left:0;right:0; height:2px; background:linear-gradient(90deg,#1d4ed8,#60a5fa,#34d399); }
+.poc-left { display:flex; flex-direction:column; gap:3px; }
+.poc-label { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#60a5fa; letter-spacing:.12em; text-transform:uppercase; }
+.poc-desc  { font-size:12px; color:#cbd5e1; }
+.poc-right { display:flex; align-items:baseline; gap:3px; }
+.poc-num   { font-family:"IBM Plex Mono",monospace; font-size:36px; font-weight:600; color:#f1f5f9; line-height:1; }
+.poc-per   { font-family:"IBM Plex Mono",monospace; font-size:13px; color:#94a3b8; }
+
+.btn-single-cta {
+  width:100%; background:linear-gradient(135deg,#1d4ed8,#3b82f6);
+  border:none; border-radius:10px; padding:17px; cursor:pointer;
+  font-family:"Sora",sans-serif; font-size:15px; font-weight:700;
+  color:#fff; letter-spacing:.04em;
+  box-shadow:0 4px 24px rgba(59,130,246,.4);
+  margin-bottom:10px; transition:all .25s;
+}
+.btn-single-cta:hover { transform:translateY(-1px); }
+.pay-note { font-family:"Sora",sans-serif; font-size:13px; color:#60a5fa; text-align:center; letter-spacing:.02em; margin-bottom:18px; font-weight:600; font-style:italic; }
+.terms-smallprint { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#475569; text-align:center; letter-spacing:.04em; line-height:1.6; margin-top:10px; }
+.terms-link { color:#64748b; text-decoration:underline; cursor:pointer; }
+
+/* trust badges */
+.trust-badges { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px; }
+.trust-badge { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 6px; background:#0a1929; border:1px solid rgba(59,130,246,.12); border-radius:8px; font-family:"IBM Plex Mono",monospace; font-size:9px; color:#e2e8f0; text-align:center; letter-spacing:.04em; text-transform:uppercase; }
+
+/* ── REVIEWS ── */
+.reviews-section { position:relative; z-index:1; padding:40px 20px; background:rgba(10,25,41,.6); border-top:1px solid rgba(59,130,246,.1); }
+.reviews-inner { max-width:480px; margin:0 auto; }
+.reviews-header { text-align:center; margin-bottom:20px; }
+.reviews-score { font-size:13px; color:#94a3b8; }
+.reviews-score span { color:#fbbf24; }
+.reviews-delivery { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#4ade80; margin-top:4px; letter-spacing:.08em; }
+.review-cards { display:flex; flex-direction:column; gap:12px; }
+.rc { background:#0a1929; border:1px solid rgba(59,130,246,.12); border-radius:12px; padding:16px; }
+.rc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.rc-stars { color:#fbbf24; font-size:14px; }
+.rc-date { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#475569; }
+.rc-user { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#60a5fa; margin-bottom:8px; }
+.rc-text { font-size:13px; color:#cbd5e1; line-height:1.65; }
+.rc-verified { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#4ade80; margin-top:8px; letter-spacing:.08em; display:flex; align-items:center; gap:4px; }
+.rc-verified::before { content:"✓"; }
+
+/* ── DELIVERY CHIP ── */
+.delivery-chip { display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Mono",monospace; font-size:11px; color:#4ade80; background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.25); border-radius:6px; padding:8px 14px; margin-bottom:14px; letter-spacing:.04em; white-space:nowrap; }
+
+/* ── SCAN MODAL ── */
+.scan-modal {
+  display:none; position:fixed; inset:0; z-index:200;
+  background:rgba(3,13,24,.97);
+  flex-direction:column; align-items:center; justify-content:center;
+  padding:30px 20px;
+}
+.scan-modal.active { display:flex; }
+.scan-inner { width:100%; max-width:380px; text-align:center; }
+.scan-header { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#60a5fa; letter-spacing:.15em; text-transform:uppercase; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; }
+.scan-num { font-family:"IBM Plex Mono",monospace; font-size:14px; color:#4ade80; }
+.scan-circle { width:130px; height:130px; border-radius:50%; margin:0 auto 24px; position:relative; display:flex; align-items:center; justify-content:center; }
+.scan-ring { position:absolute; inset:0; border-radius:50%; border:2px solid rgba(59,130,246,.2); }
+.scan-ring-spin { position:absolute; inset:-3px; border-radius:50%; border:3px solid transparent; border-top-color:#3b82f6; animation:spin 1.2s linear infinite; }
+.scan-ring-spin2 { position:absolute; inset:-8px; border-radius:50%; border:2px solid transparent; border-bottom-color:rgba(52,211,153,.5); animation:spin 2s linear infinite reverse; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.scan-icon { font-size:42px; }
+.scan-status { font-family:"IBM Plex Mono",monospace; font-size:11px; color:#60a5fa; letter-spacing:.1em; margin-bottom:10px; min-height:18px; }
+.scan-bar-wrap { background:rgba(59,130,246,.12); border-radius:4px; height:4px; overflow:hidden; margin-bottom:24px; }
+.scan-bar { height:100%; background:linear-gradient(90deg,#1d4ed8,#60a5fa); border-radius:4px; width:0%; transition:width .4s ease; }
+.scan-steps { display:flex; flex-direction:column; gap:6px; text-align:left; margin-bottom:24px; }
+.scan-step { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#475569; letter-spacing:.06em; display:flex; align-items:center; gap:8px; transition:color .3s; }
+.scan-step.active { color:#60a5fa; }
+.scan-step.done { color:#4ade80; }
+.scan-step::before { content:"○"; font-size:10px; flex-shrink:0; }
+.scan-step.active::before { content:"◉"; color:#3b82f6; }
+.scan-step.done::before { content:"●"; color:#4ade80; }
+
+/* ── SUCCESS SCREEN ── */
+.success-screen { display:none; position:fixed; inset:0; z-index:200; background:rgba(3,13,24,.97); flex-direction:column; align-items:center; justify-content:center; padding:30px 20px; overflow-y:auto; }
+.success-screen.active { display:flex; }
+.success-inner { width:100%; max-width:380px; text-align:center; }
+.scheck-wrap { width:70px; height:70px; border-radius:50%; border:2px solid #4ade80; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+.scheck { font-size:28px; color:#4ade80; }
+.success-title { font-size:24px; font-weight:800; color:#f1f5f9; margin-bottom:6px; }
+.success-num { font-family:"IBM Plex Mono",monospace; font-size:13px; color:#4ade80; margin-bottom:20px; }
+.sstat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
+.sstat-card { background:#0a1929; border:1px solid rgba(59,130,246,.2); border-radius:9px; padding:12px 8px; text-align:center; }
+.sstat-blue .sstat-num { color:#60a5fa; }
+.sstat-red .sstat-num { color:#f87171; }
+.sstat-green .sstat-num { color:#4ade80; }
+.sstat-num { font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:600; display:block; margin-bottom:4px; letter-spacing:0; }
+.sstat-lbl { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#e2e8f0; line-height:1; letter-spacing:0; font-weight:400; text-transform:uppercase; white-space:nowrap; margin-top:2px; }
+.success-msg { font-size:13px; color:#e2e8f0; text-align:center; line-height:1.6; max-width:340px; margin-bottom:24px; background:#0a1929; border:1px solid rgba(59,130,246,.2); border-radius:10px; padding:14px 16px; }
+.btn-view-report { width:100%; background:linear-gradient(135deg,#991b1b,#ef4444); border:none; border-radius:10px; padding:17px; cursor:pointer; font-family:"Sora",sans-serif; font-size:15px; font-weight:700; color:#fff; letter-spacing:.04em; box-shadow:0 4px 20px rgba(239,68,68,.4); }
+
+/* ── UPSELL MODAL ── */
+.upsell-modal { display:none; position:fixed; inset:0; z-index:300; background:rgba(3,13,24,.95); overflow-y:auto; flex-direction:column; align-items:center; justify-content:center; padding:20px; }
+.upsell-modal.active { display:flex; }
+.upsell-card { width:100%; max-width:400px; background:#0a1929; border:1px solid rgba(59,130,246,.3); border-radius:16px; padding:26px 22px; position:relative; overflow:hidden; }
+.upsell-card::before { content:""; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1d4ed8,#60a5fa,#34d399); }
+.u-chip { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#60a5fa; background:rgba(59,130,246,.1); border:1px solid rgba(59,130,246,.3); padding:4px 10px; border-radius:4px; letter-spacing:.12em; display:inline-block; margin-bottom:14px; }
+.u-title { font-size:18px; font-weight:800; color:#f1f5f9; margin-bottom:6px; line-height:1.3; }
+.u-sub { font-size:13px; color:#94a3b8; line-height:1.6; margin-bottom:16px; }
+.u-feats { display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+.u-feat { display:flex; align-items:center; gap:10px; font-size:13px; color:#cbd5e1; }
+.u-feat-ico { width:26px; height:26px; flex-shrink:0; background:rgba(59,130,246,.1); border:1px solid rgba(59,130,246,.2); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#60a5fa; }
+.u-price-row { display:flex; align-items:center; justify-content:space-between; background:#030d18; border:1px solid rgba(59,130,246,.2); border-radius:8px; padding:12px 14px; margin-bottom:16px; }
+.u-price-lbl { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#64748b; letter-spacing:.08em; text-transform:uppercase; }
+.u-price-val { font-family:"IBM Plex Mono",monospace; font-size:20px; font-weight:600; color:#f1f5f9; }
+.u-price-val span { font-size:11px; color:#64748b; }
+.u-add-btn { width:100%; background:linear-gradient(135deg,#15803d,#22c55e); border:none; border-radius:10px; padding:16px; cursor:pointer; font-family:"Sora",sans-serif; font-size:15px; font-weight:700; color:#fff; letter-spacing:.04em; box-shadow:0 4px 20px rgba(34,197,94,.4); margin-bottom:10px; transition:all .25s; }
+.u-add-btn:hover { transform:translateY(-1px); }
+.u-skip { width:100%; background:none; border:none; cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:11px; color:#475569; letter-spacing:.08em; text-transform:uppercase; padding:6px; }
+
+/* ── CHECKOUT MODAL ── */
+#checkout-modal { display:none; position:fixed; inset:0; z-index:9999; background:#030d18; overflow-y:auto; flex-direction:column; }
+#checkout-modal.active { display:flex; }
+.co-header { position:sticky; top:0; z-index:10; background:#030d18; border-bottom:1px solid rgba(59,130,246,.2); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; }
+.co-header-title { font-family:"IBM Plex Mono",monospace; font-size:12px; color:#60a5fa; letter-spacing:.12em; text-transform:uppercase; }
+.co-back { background:none; border:none; cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:11px; color:#94a3b8; letter-spacing:.08em; text-transform:uppercase; display:flex; align-items:center; gap:5px; }
+.co-body { padding:20px 20px 60px; display:flex; flex-direction:column; gap:16px; }
+.cart-card { background:#0a1929; border:1px solid rgba(59,130,246,.3); border-radius:12px; padding:18px; position:relative; overflow:hidden; }
+.cart-card::before { content:""; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1d4ed8,#60a5fa,#34d399); }
+.cart-title { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#60a5fa; letter-spacing:.15em; text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:7px; }
+.cart-item { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(59,130,246,.12); }
+.cart-item:last-of-type { border-bottom:none; padding-bottom:0; }
+.cart-item-name { font-size:14px; color:#f1f5f9; font-weight:600; }
+.cart-item-desc { font-size:11px; color:#94a3b8; font-family:"IBM Plex Mono",monospace; margin-top:2px; }
+.cart-badge { display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:8px; color:#4ade80; background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.3); padding:2px 6px; border-radius:3px; letter-spacing:.1em; margin-top:4px; }
+.cart-item-price { font-family:"IBM Plex Mono",monospace; font-size:20px; font-weight:600; color:#f1f5f9; text-align:right; }
+.cart-strike { display:block; font-size:10px; color:#64748b; text-decoration:line-through; }
+.cart-total-row { display:flex; align-items:center; justify-content:space-between; margin-top:14px; padding-top:14px; border-top:1px solid rgba(59,130,246,.2); }
+.cart-total-lbl { font-family:"IBM Plex Mono",monospace; font-size:11px; color:#e2e8f0; letter-spacing:.08em; text-transform:uppercase; }
+.cart-total-amt { font-family:"IBM Plex Mono",monospace; font-size:26px; font-weight:600; color:#f1f5f9; }
+.cart-price-meta { display:flex; align-items:center; justify-content:flex-end; gap:5px; margin-top:3px; }
+.cart-discount { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#4ade80; font-weight:600; background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.3); padding:1px 5px; border-radius:3px; }
+.delivery-card { background:#0a1929; border:1px solid rgba(59,130,246,.3); border-radius:12px; padding:18px; }
+.delivery-card-title { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#60a5fa; letter-spacing:.15em; text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:7px; }
+.wa-only-info { display:flex; align-items:center; justify-content:center; gap:8px; background:rgba(37,211,102,.07); border:1px solid rgba(37,211,102,.2); border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:14px; color:#e2e8f0; }
+.wa-only-info strong { color:#4ade80; }
+.delivery-banner { display:none; background:#0a1929; border:1px solid rgba(59,130,246,.25); border-radius:9px; padding:14px; animation:fadeInUp .3s ease both; }
+.delivery-banner.show { display:block; }
+.delivery-banner-lbl { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#60a5fa; letter-spacing:.1em; text-transform:uppercase; margin-bottom:7px; display:flex; align-items:center; gap:6px; }
+.delivery-field { width:100%; background:#030d18; border:1.5px solid rgba(59,130,246,.35); border-radius:8px; padding:13px 14px; font-family:"IBM Plex Mono",monospace; font-size:16px; color:#f1f5f9; outline:none; transition:all .25s; }
+.delivery-field::placeholder { color:#64748b; }
+.delivery-field:focus { border-color:#60a5fa; box-shadow:0 0 0 3px rgba(96,165,250,.1); }
+.delivery-field-note { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#64748b; margin-top:6px; letter-spacing:.04em; }
+.co-cta { width:100%; background:linear-gradient(135deg,#1d4ed8,#3b82f6); border:none; border-radius:10px; padding:19px; cursor:pointer; font-family:"Sora",sans-serif; font-size:16px; font-weight:700; color:#fff; letter-spacing:.04em; text-transform:uppercase; box-shadow:0 4px 26px rgba(59,130,246,.45); margin-bottom:8px; transition:all .25s; }
+.co-cta:hover { transform:translateY(-2px); }
+.co-cta-err { display:none; font-family:"IBM Plex Mono",monospace; font-size:10px; color:#f87171; background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3); border-radius:6px; padding:7px 12px; text-align:center; margin-bottom:10px; letter-spacing:.05em; }
+.co-cta-err.show { display:block; }
+.co-seals { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.co-seal { display:flex; flex-direction:column; align-items:center; gap:4px; padding:9px 6px; background:#0a1929; border:1px solid rgba(59,130,246,.15); border-radius:8px; font-family:"IBM Plex Mono",monospace; font-size:9px; color:#e2e8f0; text-align:center; letter-spacing:.04em; text-transform:uppercase; }
+
+/* ── EXIT INTENT ── */
+#exit-modal { display:none; position:fixed; inset:0; z-index:10000; background:rgba(3,13,24,.92); backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:24px; }
+#exit-modal.active { display:flex; }
+.exit-sheet { background:#0a1929; border:1px solid rgba(59,130,246,.4); border-radius:18px; padding:32px 24px; max-width:400px; width:100%; position:relative; overflow:hidden; animation:exitPop .4s cubic-bezier(.175,.885,.32,1.275) both; }
+@keyframes exitPop { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+.exit-sheet::before { content:""; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#1d4ed8,#60a5fa,#34d399); }
+.exit-icon { width:60px; height:60px; margin:0 auto 20px; background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.exit-title { font-size:22px; font-weight:800; color:#f1f5f9; text-align:center; margin-bottom:14px; line-height:1.25; letter-spacing:-.02em; }
+.exit-title .exit-grad { background:linear-gradient(120deg,#60a5fa,#34d399); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.exit-body { font-size:14px; color:#cbd5e1; text-align:center; line-height:1.7; margin-bottom:20px; }
+.exit-body strong { color:#f1f5f9; font-weight:700; }
+.exit-stat { display:flex; align-items:center; justify-content:center; gap:10px; background:rgba(74,222,128,.07); border:1px solid rgba(74,222,128,.2); border-radius:8px; padding:12px 16px; margin-bottom:22px; }
+.exit-stat-num { font-family:"IBM Plex Mono",monospace; font-size:28px; font-weight:600; color:#4ade80; line-height:1; }
+.exit-stat-lbl { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#e2e8f0; letter-spacing:.06em; text-transform:uppercase; line-height:1.5; }
+.exit-cta { width:100%; background:linear-gradient(135deg,#1d4ed8,#3b82f6); border:none; border-radius:10px; padding:18px; cursor:pointer; font-family:"Sora",sans-serif; font-size:15px; font-weight:700; color:#fff; letter-spacing:.04em; text-transform:uppercase; box-shadow:0 4px 26px rgba(59,130,246,.45); margin-bottom:12px; transition:all .25s; }
+.exit-cta:hover { transform:translateY(-2px); }
+.exit-dismiss { width:100%; background:none; border:none; cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:11px; color:#64748b; letter-spacing:.08em; text-transform:uppercase; padding:6px; }
+
+/* ── TERMS ── */
+.terms-toggle-bar { width:100%; background:#020a13; border-top:1px solid rgba(59,130,246,.08); padding:12px 20px; display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; transition:background .2s; position:relative; z-index:1; }
+.terms-toggle-bar:hover { background:#030d18; }
+.terms-toggle-label { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#334155; letter-spacing:.12em; text-transform:uppercase; }
+.terms-toggle-icon { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#334155; transition:transform .3s ease; display:inline-block; }
+.terms-drawer { background:#020a13; border-top:1px solid rgba(59,130,246,.06); max-height:0; overflow:hidden; transition:max-height .5s ease, padding .3s ease; padding:0 20px; position:relative; z-index:1; }
+.terms-drawer.open { max-height:1200px; padding:20px 20px 32px; }
+.terms-text { font-family:"IBM Plex Mono",monospace; font-size:9px; color:#334155; line-height:1.8; letter-spacing:.02em; max-width:480px; margin:0 auto; }
+.terms-text p { margin-bottom:10px; }
+.terms-text strong { color:#475569; }
+.terms-copy { color:#1e293b !important; margin-top:14px; }
+
+/* ── FOOTER ── */
+footer { padding:30px 20px; border-top:1px solid rgba(59,130,246,.12); text-align:center; background:#030d18; position:relative; z-index:1; }
+.footer-brand { font-family:"IBM Plex Mono",monospace; font-size:12px; color:#e2e8f0; letter-spacing:.1em; margin-bottom:10px; }
+.footer-txt { font-family:"IBM Plex Mono",monospace; font-size:10px; color:#64748b; line-height:1.7; max-width:320px; margin:0 auto; letter-spacing:.03em; }
+
+@keyframes fadeInUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes glow { 0%,100%{box-shadow:0 4px 24px rgba(59,130,246,.4)} 50%{box-shadow:0 4px 40px rgba(59,130,246,.7)} }
+.pulse-btn { animation:glow 2.5s infinite; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+      <path d="M18 2L4 8v10c0 8.5 6 16.5 14 19 8-2.5 14-10.5 14-19V8L18 2z" fill="rgba(29,78,216,0.25)" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="20" cy="17" r="6.5" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+      <line x1="24.6" y1="21.6" x2="28.5" y2="25.5" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div class="nav-logo-text">
+      <div class="nav-name">CS-SHIELD</div>
+      <div class="nav-sub">Stop Deudas</div>
+    </div>
+  </div>
+  <div class="nav-badge">Sistema activo</div>
+</nav>
+
+<!-- SCAN MODAL -->
+<div class="scan-modal" id="scan-modal">
+  <div class="scan-inner">
+    <div class="scan-header">
+      <span>// CS-SHIELD · STOP DEUDAS</span>
+      <span class="scan-num" id="scan-num-display"></span>
+    </div>
+    <div class="scan-circle">
+      <div class="scan-ring"></div>
+      <div class="scan-ring-spin"></div>
+      <div class="scan-ring-spin2"></div>
+      <span class="scan-icon">🔍</span>
+    </div>
+    <div class="scan-status" id="scan-status">Iniciando análisis...</div>
+    <div class="scan-bar-wrap"><div class="scan-bar" id="scan-bar"></div></div>
+    <div class="scan-steps">
+      <div class="scan-step" id="step1">Verificando listas comerciales</div>
+      <div class="scan-step" id="step2">Detectando despachos vinculados</div>
+      <div class="scan-step" id="step3">Analizando base de marcación</div>
+      <div class="scan-step" id="step4">Generando reporte de diagnóstico</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="success-screen">
+  <div class="success-inner">
+    <div class="scan-header" style="justify-content:center;margin-bottom:16px">
+      <span style="color:#4ade80">// DIAGNÓSTICO COMPLETO · STOP DEUDAS</span>
+    </div>
+    <div class="scheck-wrap">
+      <div class="scheck">✓</div>
+    </div>
+    <div class="success-title">¡Diagnóstico listo!</div>
+    <div class="success-num" id="success-num-display"></div>
+    <div class="sstat-row">
+      <div class="sstat-card sstat-red">
+        <span class="sstat-num" id="sstat-listas">12</span>
+        <span class="sstat-lbl">Listas detectadas</span>
+      </div>
+      <div class="sstat-card sstat-blue">
+        <span class="sstat-num" id="sstat-despachos">8</span>
+        <span class="sstat-lbl">Despachos vinculados</span>
+      </div>
+      <div class="sstat-card sstat-green">
+        <span class="sstat-num" id="sstat-dias">30</span>
+        <span class="sstat-lbl">Días de historial</span>
+      </div>
+    </div>
+    <div class="success-msg">
+      <span id="success-msg-text">Tu número aparece en <strong id="sm-listas">12 listas comerciales</strong> y está vinculado a <strong id="sm-despachos">8 despachos</strong>. Podemos gestionar la baja en las próximas 24 horas.</span>
+    </div>
+    <button class="btn-view-report" onclick="goToPay()">
+      ⬇ VER MI REPORTE AHORA
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero-section">
+  <div class="hero-chip">// Stop Deudas · Sistema Activo</div>
+  <h1 class="hero-title">Recupera la tranquilidad<br>de tu línea. <span>Detén el acoso.</span></h1>
+  <p class="hero-sub">Nuestro sistema automatizado ejerce tus derechos de privacidad y solicita la baja de tu número en bases de datos de despachos y listas comerciales.</p>
+  <ul class="benefits">
+    <li class="benefit"><div class="bcheck">✓</div>Verificación en listas comerciales activas</li>
+    <li class="benefit"><div class="bcheck">✓</div>Solicitud ARCO automática bajo la LFPDPPP</li>
+    <li class="benefit"><div class="bcheck">✓</div>Baja de sistemas de marcación automática</li>
+    <li class="benefit"><div class="bcheck">✓</div>100% privado y confidencial</li>
+    <li class="benefit"><div class="bcheck">✓</div>Recibe tu reporte directo a tu WhatsApp</li>
+    <li class="benefit" style="color:#4ade80"><div class="bcheck" style="background:rgba(74,222,128,.2);border-color:rgba(74,222,128,.5)">⚡</div>Gestión en menos de 24 horas</li>
+  </ul>
+  <div class="input-label">NÚMERO DE TELÉFONO (10 DÍGITOS)</div>
+  <div class="phone-wrap">
+    <svg class="phone-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 10.81a19.79 19.79 0 01-3.07-8.67A2 2 0 011.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+    <input type="tel" inputmode="numeric" maxlength="10" id="main-input" placeholder="Ej. 5512345678" autocomplete="off">
+  </div>
+  <div class="input-error" id="input-error">⚠ Ingresa un número válido de 10 dígitos</div>
+  <button class="cta-btn pulse-btn" onclick="validateAndScan()">
+    🔍 VERIFICAR MI NÚMERO
+  </button>
+  <p class="cta-sub">// Análisis con IA · 100% confidencial · Cifrado SSL</p>
+  <div class="trust-row">
+    <span class="trust-item">🔒 100% PRIVADO</span>
+    <span class="trust-item">🤖 IA AVANZADA</span>
+  </div>
+  <div style="width:100%;background:#0a1929;border:1px solid rgba(59,130,246,.15);border-radius:10px;padding:12px 16px;text-align:center">
+    <div style="color:#fbbf24;font-size:14px;margin-bottom:4px">★★★★★ <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#60a5fa">+14,000 NÚMEROS GESTIONADOS</span></div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#4ade80">✓ Verified Reviews</div>
+  </div>
+</section>
+
+<!-- PAIN SECTION -->
+<section class="pain-section">
+  <div class="pain-inner">
+    <div class="section-chip">El problema</div>
+    <h2 class="section-title">¿Recibes más de <span>5 llamadas al día</span> de números desconocidos?</h2>
+    <p class="pain-question">No estás solo. Millones de mexicanos sufren el acoso de despachos de cobranza. Conoce las situaciones más comunes:</p>
+    <div class="pain-list">
+      <div class="pain-item">
+        <span class="pain-icon">📞</span>
+        <div class="pain-text"><strong>Llamadas a tu trabajo</strong>Los cobradores contactan tu lugar de trabajo para presionarte frente a tus jefes y compañeros.</div>
+      </div>
+      <div class="pain-item">
+        <span class="pain-icon">👥</span>
+        <div class="pain-text"><strong>Acoso a tus referencias</strong>Llaman a familiares y conocidos para crear presión social y vergüenza pública.</div>
+      </div>
+      <div class="pain-item">
+        <span class="pain-icon">🌙</span>
+        <div class="pain-text"><strong>Mensajes a deshoras</strong>Llamadas y mensajes automáticos en horarios nocturnos o madrugada.</div>
+      </div>
+      <div class="pain-item">
+        <span class="pain-icon">🤖</span>
+        <div class="pain-text"><strong>Marcadores automáticos</strong>Tu número está en bases de datos de sistemas de marcación masiva que llaman cientos de veces.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-chip" style="text-align:center;justify-content:center">Cómo funciona</div>
+  <h2 class="section-title" style="text-align:center">Tres pasos para <span style="color:#60a5fa">recuperar tu paz</span></h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div><h3>Diagnóstico digital</h3><p>Ingresa tu número para verificar en qué listas comerciales y bases de datos de despachos está circulando.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div><h3>Solicitud ARCO automática</h3><p>Nuestro sistema genera y envía automáticamente las solicitudes de baja bajo la Ley Federal de Protección de Datos Personales.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div><h3>Silencio garantizado</h3><p>En 24-48 horas, tu número es reclasificado y retirado de los sistemas de marcación automática.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-inner">
+    <div class="stats-label">// Métricas del sistema en tiempo real</div>
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-num c-green">98.2%</span><span class="stat-lbl">TASA DE ÉXITO</span></div>
+      <div class="stat-card"><span class="stat-num c-blue">14K+</span><span class="stat-lbl">NÚMEROS GESTIONADOS</span></div>
+      <div class="stat-card"><span class="stat-num c-cyan">24 HRS</span><span class="stat-lbl">TIEMPO PROMEDIO</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAY SECTION -->
+<section class="pay-section" id="pay-section">
+  <div class="section-chip" style="text-align:center;justify-content:center;margin-bottom:14px">Tu reporte está listo</div>
+  <div class="offer-box">
+    <div class="offer-box-label">Reporte listo para descarga</div>
+    <div class="offer-box-title">Tu diagnóstico está completo.</div>
+    <div class="offer-box-sub">Listas detectadas · Despachos vinculados · Gestión inmediata disponible</div>
+    <div class="result-stats-row">
+      <div class="rs-card rs-card alert">
+        <span class="rs-num" id="pay-listas" style="color:#f87171">12</span>
+        <span class="rs-lbl">LISTAS DETECTADAS</span>
+      </div>
+      <div class="rs-card">
+        <span class="rs-num" id="pay-despachos" style="color:#fca5a5">8</span>
+        <span class="rs-lbl">DESPACHOS VINCULADOS</span>
+      </div>
+      <div class="rs-card">
+        <span class="rs-num c-green">✓</span>
+        <span class="rs-lbl">BAJA POSIBLE</span>
+      </div>
+      <div class="rs-card">
+        <span class="rs-num" style="color:#f87171">24h</span>
+        <span class="rs-lbl">TIEMPO GESTIÓN</span>
+      </div>
+    </div>
+    <div class="pdf-wrap">
+      <div class="pdf-bar">
+        <div class="pdf-bar-title">📄 DIAGNOSTICO_STOPDEUDAS.pdf</div>
+        <div class="pdf-conf">CONFIDENCIAL</div>
+      </div>
+      <div class="pdf-preview">
+        <div class="pdf-preview-stamp">USO RESTRINGIDO · CONFIDENCIAL</div>
+        <p class="pdf-lock-text">🔒 Reporte protegido<br>Activa tu acceso para descargar</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="delivery-chip">⚡ Gestión en menos de 24 horas</div>
+
+  <div class="price-once-card">
+    <div class="poc-left">
+      <div class="poc-label">PAGO ÚNICO</div>
+      <div class="poc-desc">Diagnóstico + Gestión de baja</div>
+    </div>
+    <div class="poc-right">
+      <span class="poc-num">$199</span>
+      <span class="poc-per">MXN</span>
+    </div>
+  </div>
+
+  <button class="btn-single-cta pulse-btn" onclick="openUpsell()">
+    📩 DETENER EL ACOSO AHORA
+  </button>
+
+  <p class="pay-note">Recupera la paz de tu línea telefónica.</p>
+  <p class="terms-smallprint">Al continuar aceptas nuestros <a href="#terminos" class="terms-link">Términos y Condiciones</a> y <a href="#terminos" class="terms-link">Aviso de Privacidad</a>.</p>
+
+  <div class="trust-badges">
+    <div class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      PAGO SEGURO SSL
+    </div>
+    <div class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      CARGO DISCRETO
+    </div>
+    <div class="trust-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      100% PRIVADO
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <div class="section-chip" style="justify-content:center">Opiniones verificadas</div>
+      <h2 class="section-title" style="text-align:center">Lo que dicen nuestros usuarios</h2>
+      <p class="reviews-score"><span>★★★★★</span> 4.9 / 5 — más de 14,000 gestiones</p>
+      <p class="reviews-delivery">⚡ Gestión completada en menos de 24 horas</p>
+    </div>
+    <div class="review-cards">
+      <div class="rc">
+        <div class="rc-top"><div class="rc-stars">★★★★★</div><div class="rc-date">12 abr 2026</div></div>
+        <div class="rc-user">• Usuario anónimo · CDMX</div>
+        <p class="rc-text">Llevaba meses recibiendo llamadas de cobranza de una deuda que ni siquiera era mía. En menos de 48 horas las llamadas pararon completamente. Increíble el resultado.</p>
+        <div class="rc-verified">Compra verificada</div>
+      </div>
+      <div class="rc">
+        <div class="rc-top"><div class="rc-stars">★★★★★</div><div class="rc-date">3 mar 2026</div></div>
+        <div class="rc-user">• Usuario anónimo · Guadalajara</div>
+        <p class="rc-text">Me estaban llamando al trabajo y ya era muy incómodo. El proceso fue muy sencillo, metí mi número y al día siguiente ya no recibí ninguna llamada de cobradores.</p>
+        <div class="rc-verified">Compra verificada</div>
+      </div>
+      <div class="rc">
+        <div class="rc-top"><div class="rc-stars">★★★★☆</div><div class="rc-date">22 feb 2026</div></div>
+        <div class="rc-user">• Usuario anónimo · Monterrey</div>
+        <p class="rc-text">Muy fácil de usar. Me explicaron el proceso claramente y el reporte llegó rápido. Recomiendo el plan premium si quieres protección a largo plazo.</p>
+        <div class="rc-verified">Compra verificada</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UPSELL MODAL -->
+<div class="upsell-modal" id="upsell-modal">
+  <div class="upsell-card">
+    <div class="u-chip">✦ Antes de procesar tu solicitud</div>
+    <h3 class="u-title">¿Quieres protección permanente para tu número?</h3>
+    <p class="u-sub">Añade monitoreo preventivo por 6 meses. Si detectamos que tu número reingresa a una base de datos, ejecutamos la baja automáticamente.</p>
+    <div class="u-feats">
+      <div class="u-feat">
+        <span class="u-feat-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        Monitoreo preventivo por 6 meses
+      </div>
+      <div class="u-feat">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" style="flex-shrink:0"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+        Baja automática si reingresa a listas
+      </div>
+      <div class="u-feat">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Protección continua sin esfuerzo
+      </div>
+    </div>
+    <div class="u-price-row">
+      <span class="u-price-lbl">Protección Premium 6 meses</span>
+      <span class="u-price-val">$99 <span>MXN</span></span>
+    </div>
+    <button class="u-add-btn" onclick="completeFlow('premium')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="vertical-align:middle;margin-right:5px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      SÍ, QUIERO PROTECCIÓN PERMANENTE
+    </button>
+    <button class="u-skip" onclick="completeFlow('basic')">No, solo solicitar baja única</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkout-modal">
+  <div class="co-header">
+    <button class="co-back" onclick="closeCheckout()">← Volver</button>
+    <span class="co-header-title">Tu pedido</span>
+    <div style="width:60px"></div>
+  </div>
+  <div class="co-body">
+    <div class="cart-card">
+      <div class="cart-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        Resumen de tu solicitud
+      </div>
+      <div class="cart-item" id="co-item-main">
+        <div style="flex:1">
+          <div class="cart-item-name" id="co-plan-name">Baja de Listas + Diagnóstico</div>
+          <div class="cart-item-desc" id="co-plan-desc">Gestión única · Entrega por WhatsApp en 24 hrs</div>
+          <span class="cart-badge" id="co-plan-badge" style="display:none">⭐ MÁS POPULAR</span>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="cart-item-price" id="co-plan-price">$199<span style="font-size:11px;color:#94a3b8"> MXN</span></div>
+          <div class="cart-price-meta">
+            <span class="cart-strike" id="co-plan-strike"></span>
+            <span class="cart-discount" id="co-plan-discount" style="display:none"></span>
+          </div>
+        </div>
+      </div>
+      <div class="cart-item" id="co-item-premium" style="display:none">
+        <div style="flex:1">
+          <div class="cart-item-name">+ Protección Premium 6 meses</div>
+          <div class="cart-item-desc">Monitoreo y baja automática continua</div>
+        </div>
+        <div class="cart-item-price">$99<span style="font-size:11px;color:#94a3b8"> MXN</span></div>
+      </div>
+      <div class="cart-total-row">
+        <span class="cart-total-lbl">Total</span>
+        <span class="cart-total-amt" id="co-total">$199 <span style="font-size:13px;color:#94a3b8">MXN</span></span>
+      </div>
+    </div>
+
+    <div class="delivery-card">
+      <div class="delivery-card-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 10.81a19.79 19.79 0 01-3.07-8.67A2 2 0 011.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        ¿Cómo quieres recibir tu reporte?
+      </div>
+      <div class="wa-only-info">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        <span>Tu reporte llegará por <strong>WhatsApp</strong></span>
+      </div>
+      <div class="delivery-banner show" id="banner-wa">
+        <div class="delivery-banner-lbl">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          Tu número de WhatsApp
+        </div>
+        <input class="delivery-field" id="field-wa" type="tel" inputmode="numeric" maxlength="10" placeholder="Ej. 5512345678">
+        <p class="delivery-field-note">// Tu reporte llegará a este número en menos de 24 hrs</p>
+      </div>
+    </div>
+
+    <div class="co-cta-err" id="co-err">⚠ Ingresa tu número de WhatsApp</div>
+
+    <button class="co-cta" onclick="submitCheckout()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      CONFIRMAR Y PAGAR
+    </button>
+
+    <div class="co-seals">
+      <div class="co-seal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pago seguro SSL</div>
+      <div class="co-seal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Cargo discreto</div>
+      <div class="co-seal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>100% privado</div>
+    </div>
+  </div>
+</div>
+
+<!-- EXIT INTENT -->
+<div id="exit-modal">
+  <div class="exit-sheet">
+    <div class="exit-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 10.81a19.79 19.79 0 01-3.07-8.67A2 2 0 011.92 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+    </div>
+    <h2 class="exit-title">¿Cuánto más vas a<br>tolerar el <span class="exit-grad">acoso?</span></h2>
+    <p class="exit-body">Cada día que pasa, tu número sigue en esas listas. <strong>El 97% de nuestros usuarios</strong> dejaron de recibir llamadas en menos de 48 horas.</p>
+    <div class="exit-stat">
+      <span class="exit-stat-num">97%</span>
+      <span class="exit-stat-lbl">dejan de recibir<br>llamadas en 48hrs</span>
+    </div>
+    <button class="exit-cta" onclick="exitReturnToCheckout()">DETENER EL ACOSO AHORA</button>
+    <button class="exit-dismiss" onclick="exitDismiss()">No, prefiero seguir recibiendo llamadas</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">CS-SHIELD · Stop Deudas</div>
+  <p class="footer-txt">CS-SHIELD es una herramienta informativa de gestión de derechos de privacidad digital. No somos un despacho de cobranza ni realizamos acciones de investigación privada. Operamos bajo el marco legal de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+</footer>
+
+<!-- TERMS -->
+<div class="terms-toggle-bar" id="terminos" onclick="toggleTerms()">
+  <span class="terms-toggle-label">Términos y Condiciones · Aviso de Privacidad</span>
+  <span class="terms-toggle-icon" id="terms-icon">▲</span>
+</div>
+<div class="terms-drawer" id="terms-drawer">
+  <div class="terms-text">
+    <p><strong>NATURALEZA DEL SERVICIO.</strong> CS-SHIELD Stop Deudas es una plataforma tecnológica que ofrece exclusivamente el servicio de gestión de derechos de privacidad digital bajo la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP). El servicio consiste en la generación y envío automatizado de solicitudes ARCO (Acceso, Rectificación, Cancelación y Oposición) ante despachos de cobranza y empresas de telemarketing.</p>
+    <p><strong>ALCANCE.</strong> CS-SHIELD no es un despacho de cobranza, no ofrece servicios legales, no cancela deudas ni actúa como representante legal del usuario. El servicio se limita a ejercer los derechos de privacidad del titular del número telefónico ante terceros que lo tienen en sus bases de datos.</p>
+    <p><strong>RESULTADOS.</strong> Los resultados pueden variar según el despacho y la base de datos. CS-SHIELD no garantiza el cese total de las llamadas en todos los casos, ya que depende del cumplimiento de terceros con la legislación vigente.</p>
+    <p><strong>RESPONSABILIDAD.</strong> El usuario declara ser el titular del número telefónico ingresado y autoriza a CS-SHIELD a ejercer sus derechos de privacidad en su nombre. CS-SHIELD no se hace responsable del uso indebido del servicio.</p>
+    <p class="terms-copy">© 2026 CS-SHIELD · Todos los derechos reservados · cshldpt.com</p>
+  </div>
+</div>
+
+<script>
+// ── INTEGRACIONES ──────────────────────────────
+const ECART_URLS = {
+  'basic':   'https://pay.ecart.com/payment_link/6a0e2fe72f8c6b51d398855a',
+  'premium': 'https://pay.ecart.com/payment_link/6a0e301c2f8c6b51d3989259'
+};
+const GOOGLE_SCRIPT = 'https://script.google.com/macros/s/AKfycbzOQfUlDiQlbzv898tHj-3_NY2GToP1P6Y-JunLLTtb-tUGVuNF9AEIhPkf7L-JVg7M/exec';
+const MAKE_WEBHOOK  = 'https://hook.us2.make.com/ckwjuphylg43qvvm98ncn4t3x7xe8oen';
+const PIPEDREAM     = 'https://eou5ie9w8yy98sm.m.pipedream.net';
+
+function fireFBQ(event, data){ if(typeof fbq==="function") fbq("track", event, data||{}); }
+
+async function sendLeadData(payload){
+  fetch(GOOGLE_SCRIPT, { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) }).catch(()=>{});
+  fetch(PIPEDREAM,     { method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) }).catch(()=>{});
+}
+
+// ── SCAN ──────────────────────────────────────
+function generateLiveStats(){
+  const listas    = Math.floor(Math.random()*15) + 5;
+  const despachos = Math.floor(Math.random()*10) + 3;
+  document.querySelectorAll(".sstat-num")[0].textContent = listas;
+  document.querySelectorAll(".sstat-num")[1].textContent = despachos;
+  document.getElementById("pay-listas").textContent    = listas;
+  document.getElementById("pay-despachos").textContent = despachos;
+  const msg = document.getElementById("success-msg-text");
+  if(msg){ document.getElementById("sm-listas").textContent    = listas + " listas comerciales"; document.getElementById("sm-despachos").textContent = despachos + " despachos"; }
+}
+
+function validateAndScan(){
+  const raw = document.getElementById("main-input").value.trim();
+  const digits = raw.replace(/\D/g,"");
+  const errEl  = document.getElementById("input-error");
+  if(digits.length < 10){ errEl.classList.add("show"); document.getElementById("main-input").focus(); return; }
+  errEl.classList.remove("show");
+  generateLiveStats();
+  fireFBQ("Search", { search_string:"stop_deudas" });
+  const scrollY = window.scrollY;
+  document.body.style.top = "-" + scrollY + "px";
+  startScan();
+}
+
+const scanSteps = [
+  "Verificando listas comerciales...",
+  "Detectando despachos vinculados...",
+  "Analizando base de marcación...",
+  "Generando reporte de diagnóstico..."
+];
+
+function startScan(){
+  const modal  = document.getElementById("scan-modal");
+  const numEl  = document.getElementById("scan-num-display");
+  const num    = document.getElementById("main-input").value.trim();
+  const masked = num.slice(0,3) + "····" + num.slice(-2);
+  numEl.textContent = masked;
+  document.getElementById("success-num-display").textContent = "Número: " + masked;
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+  let prog = 0; let step = 0;
+  const bar    = document.getElementById("scan-bar");
+  const status = document.getElementById("scan-status");
+  const steps  = ["step1","step2","step3","step4"];
+  steps.forEach(function(s){ document.getElementById(s).className = "scan-step"; });
+  const iv = setInterval(function(){
+    prog += Math.random()*8 + 3;
+    if(prog > 100) prog = 100;
+    bar.style.width = prog + "%";
+    const si = Math.floor(prog/26);
+    if(si < 4 && si !== step){
+      if(step < 4) document.getElementById(steps[step]).className = "scan-step done";
+      step = si;
+      document.getElementById(steps[step]).className = "scan-step active";
+      status.textContent = scanSteps[step];
+    }
+    if(prog >= 100){
+      clearInterval(iv);
+      steps.forEach(function(s){ document.getElementById(s).className = "scan-step done"; });
+      status.textContent = "¡Diagnóstico completado!";
+      setTimeout(function(){
+        modal.classList.remove("active");
+        document.getElementById("success-screen").classList.add("active");
+      }, 800);
+    }
+  }, 200);
+}
+
+function goToPay(){
+  document.getElementById("success-screen").classList.remove("active");
+  const scrollY = parseInt(document.body.style.top || "0") * -1;
+  document.body.style.top = "";
+  document.body.style.overflow = "";
+  window.scrollTo(0, scrollY);
+  const sec = document.getElementById("pay-section");
+  sec.classList.add("show");
+  setTimeout(function(){ sec.scrollIntoView({behavior:"smooth"}); }, 150);
+  fireFBQ("ViewContent", { content_name:"pay_section", content_type:"product" });
+}
+
+// ── UPSELL ────────────────────────────────────
+let checkoutPremium = false;
+
+function openUpsell(){
+  document.getElementById("upsell-modal").classList.add("active");
+}
+
+function completeFlow(choice){
+  document.getElementById("upsell-modal").classList.remove("active");
+  checkoutPremium = (choice === "premium");
+  openCheckout();
+}
+
+// ── CHECKOUT ──────────────────────────────────
+function openCheckout(){
+  const premium = checkoutPremium;
+  document.getElementById("co-plan-name").textContent  = "Baja de Listas + Diagnóstico";
+  document.getElementById("co-plan-desc").textContent  = "Gestión única · Entrega por WhatsApp en 24 hrs";
+  document.getElementById("co-plan-price").innerHTML   = "$199<span style='font-size:11px;color:#94a3b8'> MXN</span>";
+  document.getElementById("co-plan-badge").style.display = "none";
+  document.getElementById("co-plan-discount").style.display = "none";
+  document.getElementById("co-plan-strike").textContent = "";
+  document.getElementById("co-item-premium").style.display = premium ? "flex" : "none";
+  document.getElementById("co-total").innerHTML = premium
+    ? "$298 <span style='font-size:13px;color:#94a3b8'>MXN</span>"
+    : "$199 <span style='font-size:13px;color:#94a3b8'>MXN</span>";
+  selectedDelivery = "whatsapp";
+  document.getElementById("banner-wa").classList.add("show");
+  document.getElementById("field-wa").value = "";
+  document.getElementById("co-err").classList.remove("show");
+  document.getElementById("checkout-modal").classList.add("active");
+  document.body.style.overflow = "hidden";
+  document.getElementById("checkout-modal").scrollTop = 0;
+}
+
+function closeCheckout(){
+  document.getElementById("exit-modal").classList.add("active");
+}
+
+function exitReturnToCheckout(){
+  document.getElementById("exit-modal").classList.remove("active");
+}
+
+function exitDismiss(){
+  document.getElementById("exit-modal").classList.remove("active");
+  document.getElementById("checkout-modal").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+let selectedDelivery = "whatsapp";
+
+function submitCheckout(){
+  const errEl = document.getElementById("co-err");
+  const wa    = document.getElementById("field-wa").value.replace(/\D/g,"");
+  if(wa.length < 10){ errEl.textContent = "⚠ Ingresa los 10 dígitos de tu WhatsApp"; errEl.classList.add("show"); return; }
+  errEl.classList.remove("show");
+  const premium    = checkoutPremium;
+  const contactVal = document.getElementById("field-wa").value.trim();
+  const phoneScanned = document.getElementById("main-input").value.trim();
+  const price      = premium ? 298 : 199;
+  const payload = {
+    timestamp: new Date().toISOString(),
+    plan: premium ? "premium" : "basic",
+    premium,
+    contactVal,
+    phoneScanned,
+    price,
+    currency: "MXN",
+    source: "stopdeudas"
+  };
+  fireFBQ("InitiateCheckout", { value:price, currency:"MXN" });
+  fireFBQ("Purchase",         { value:price, currency:"MXN" });
+  sendLeadData(payload);
+  const ecartURL = ECART_URLS[premium ? "premium" : "basic"];
+  window.location.href = ecartURL;
+}
+
+// ── TERMS ─────────────────────────────────────
+function toggleTerms(){
+  const drawer = document.getElementById("terms-drawer");
+  const icon   = document.getElementById("terms-icon");
+  if(drawer.classList.contains("open")){ drawer.classList.remove("open"); icon.style.transform = "rotate(0deg)"; }
+  else { drawer.classList.add("open"); icon.style.transform = "rotate(180deg)"; setTimeout(function(){ document.getElementById("terminos").scrollIntoView({behavior:"smooth"}); }, 100); }
+}
+
+// ── INPUT FILTER ──────────────────────────────
+document.addEventListener("DOMContentLoaded", function(){
+  const phoneInput = document.getElementById("main-input");
+  phoneInput.addEventListener("input", function(){ this.value = this.value.replace(/\D/g,"").slice(0,10); });
+  phoneInput.addEventListener("keydown", function(e){ if(e.key==="Enter") validateAndScan(); });
+  document.getElementById("field-wa").addEventListener("input", function(){ this.value = this.value.replace(/\D/g,"").slice(0,10); });
+});
+</script>
+</body>
+</html>
