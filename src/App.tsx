@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-function initPixel(){if(typeof window==="undefined")return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');window.fbq('init','2114141419153674');window.fbq('init','1758556868674151');window.fbq('track','PageView');}
+function initPixel(){if(typeof window==="undefined")return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');window.fbq('init','2114141419153674');window.fbq('init','1758556868674151');window.fbq('track','PageView');window.fbq.instances && Object.keys(window.fbq.instances).forEach(function(id){if(id!=='2114141419153674')window.fbq('trackSingle',id,'PageView');});}
 export default function App(){
   useEffect(()=>{
     const style=document.createElement("style");style.textContent=CSS;document.head.appendChild(style);
@@ -1755,6 +1755,15 @@ async function fireMetaCAPI(eventName, payload){
   };
 
   fetch('https://graph.facebook.com/v19.0/' + PIXEL_ID + '/events?access_token=' + CAPI_TOKEN, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(eventData)
+  }).catch(()=>{});
+
+  // Second pixel CAPI
+  var PIXEL_ID_2 = '1758556868674151';
+  var CAPI_TOKEN_2 = 'EAAXcu4ZAx9BcBRuMBbUC29wU6yWZBCCLF5xFraQZCeFjq6EmgD3pkokC3AlMEmfb9REZBNjDJZBBKcDlROvdwFhinfbfY8Bo9KtRgd06jCVOBBy3u8aZAAVzJ72XeC5hV4oZCBmIKBZClWBnUtbRBqONTJhnYLFOYs22OZBLivvXMZC9zDHjSL6HMZBe95b3uYNggZDZD';
+  fetch('https://graph.facebook.com/v19.0/' + PIXEL_ID_2 + '/events?access_token=' + CAPI_TOKEN_2, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(eventData)
