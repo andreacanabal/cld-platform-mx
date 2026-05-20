@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-function initPixel(){if(typeof window==="undefined")return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');window.fbq('init','2114141419153674');window.fbq('init','1758556868674151');window.fbq('track','PageView');window.fbq.instances && Object.keys(window.fbq.instances).forEach(function(id){if(id!=='2114141419153674')window.fbq('trackSingle',id,'PageView');});}
+function initPixel(){if(typeof window==="undefined")return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');window.fbq('init','2114141419153674');window.fbq('init','1758556868674151');window.fbq('track','PageView');}
 export default function App(){
   useEffect(()=>{
     const style=document.createElement("style");style.textContent=CSS;document.head.appendChild(style);
     let vp=document.querySelector('meta[name="viewport"]');if(!vp){vp=document.createElement("meta");vp.name="viewport";document.head.appendChild(vp);}vp.content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
     const link=document.createElement("link");link.rel="stylesheet";link.href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;600;700;800&display=swap";document.head.appendChild(link);
-    document.title="CS-SHIELD | Recuperación Digital";
+    document.title="CS-SHIELD | Recuperación Digital";var mv=document.createElement("meta");mv.name="facebook-domain-verification";mv.content="o0owzyx1fah87w8ksbmfvr7ngor5oc";document.head.appendChild(mv);
     initPixel();
     document.getElementById("cs-root").innerHTML=BODY_HTML;
     const script=document.createElement("script");script.textContent=MAIN_JS;document.body.appendChild(script);
